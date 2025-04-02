@@ -22,7 +22,7 @@ jobs:
           node-version: '20'
 
       - name: PNPM 설치 중..
-        run: npm install -g pnpm@8
+        run: npm install -g pnpm@latest
 
       - name: 종속성 설치 중...
         run: pnpm install --no-frozen-lockfile
