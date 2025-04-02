@@ -20,9 +20,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
+          cache: 'pnpm' 
 
-      - name: PNPM 설치 중..
-        run: npm install -g pnpm@latest
+      - name: Corepack 활성화
+        run: corepack enable
+
+      - name: pnpm 버전 명시 (원하는 버전 지정 가능)
+        run: corepack prepare pnpm@8.15.4 --activate
 
       - name: 종속성 설치 중...
         run: pnpm install --no-frozen-lockfile
