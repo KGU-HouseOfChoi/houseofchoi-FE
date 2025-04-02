@@ -8,11 +8,6 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "packageManager": "pnpm@8.15.5", 
-  "engines": {
-    "node": "20.x",
-    "pnpm": "8.x"
-  },
   "dependencies": {
     "next": "15.2.4",
     "react": "^19.0.0",
