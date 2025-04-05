@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./fe
+
+    steps:
+      - name: 레포지토리 체크아웃 중..
+        uses: actions/checkout@v3
+
+      - name: Node.js 설치 중..
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: PNPM 설치 중..
+        run: npm install -g pnpm@8
+
+      - name: 종속성 설치 중...
+        run: pnpm install --no-frozen-lockfile
+
+      - name: 빌드 중...
+        run: pnpm build
