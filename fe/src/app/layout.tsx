@@ -16,7 +16,7 @@ export default function RootLayout({
       <body className="bg-bgColor-default text-textColor-body text-[18px] leading-relaxed">
         <div className="w-full min-h-screen flex justify-center">
           <main className="w-full max-w-[414px] min-h-screen bg-white shadow-lg flex flex-col mx-auto">
-            {/* 상단 헤더 (반응형 여백 포함) */}
+            {/* 상단 헤더 */}
             <header className="h-[64px] px-6 md:px-8 lg:px-10 flex items-center border-b border-borderColor-default">
               <h1 className="text-xl md:text-2xl font-bold">어르심</h1>
             </header>
