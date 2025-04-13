@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="bg-bgColor-default text-textColor-body text-[18px] leading-relaxed">
+      <body className="bg-bgColor-default text-textColor-body text-[18px] leading-relaxed font-sans">
         <div className="w-full min-h-screen flex justify-center">
           <main className="w-full max-w-[414px] min-h-screen bg-white shadow-lg flex flex-col mx-auto">
             {/* 상단 헤더 */}
@@ -22,12 +22,12 @@ export default function RootLayout({
             </header>
 
             {/* 콘텐츠 영역 */}
-            <div className="flex-1 overflow-y-auto px-6 md:px-8 py-5">
+            <section className="flex-1 overflow-y-auto px-6 md:px-8 py-5">
               {children}
-            </div>
+            </section>
 
             {/* 하단 네비게이션 */}
-            <footer className="h-[124px] border-t border-borderColor-default flex items-center justify-around px-6 md:px-8 lg:px-10">
+            <footer className="min-h-[124px] border-t border-borderColor-default flex items-center justify-around px-6 md:px-8 lg:px-10">
               {/* 나중에 네비게이션 버튼 추가 */}
             </footer>
           </main>
