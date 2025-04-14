@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import OnboardingStep from "./OnboardingStep";
+import OnboardingSlide from "./OnboardingStep";
 import OnboardingHeader from "./OnboardingHeader";
 import Button from "@/components/common/Button";
 import SplitButton from "@/components/common/SplitButton";
 
-import "swiper/css";
-import "swiper/css/pagination";
-
-const steps = [
+const slides = [
   {
     image: "/images/logo.svg",
     isIntro: true,
@@ -38,8 +35,8 @@ export default function OnboardingFlow() {
   const router = useRouter();
 
   const isFirst = current === 0;
-  const isLast = current === steps.length - 1;
-  const step = steps[current];
+  const isLast = current === slides.length - 1;
+  const slide = slides[current];
 
   const handleNext = () => {
     if (isLast) {
@@ -58,15 +55,15 @@ export default function OnboardingFlow() {
   return (
     <main className="relative min-h-screen bg-grayscale-0 flex flex-col items-center justify-center px-6 text-center">
       {current > 0 && (
-        <OnboardingHeader current={current} total={steps.length - 1} />
+        <OnboardingHeader current={current} total={slides.length - 1} />
       )}
 
       <div className="w-full h-full z-0">
-        <OnboardingStep {...step} isProgressSlide={current > 0} />
+        <OnboardingSlide {...slide} isProgressSlide={current > 0} />
       </div>
 
       <div className="absolute bottom-[54px] left-0 right-0 flex justify-center z-10">
-        {step.isIntro ? (
+        {slide.isIntro ? (
           <div className="flex flex-col items-center gap-3">
             <div className="w-[331px]">
               <Button onClick={handleNext} fullWidth>
@@ -82,12 +79,14 @@ export default function OnboardingFlow() {
             </button>
           </div>
         ) : (
-          <SplitButton
-            left="이전"
-            right={isLast ? "어르심 시작하기" : "다음으로 넘어가기"}
-            onClickLeft={handlePrev}
-            onClickRight={handleNext}
-          />
+          <div className="w-[331px]">
+            <SplitButton
+              left="이전"
+              right={isLast ? "어르심 시작하기" : "다음으로 넘어가기"}
+              onClickLeft={handlePrev}
+              onClickRight={handleNext}
+            />
+          </div>
         )}
       </div>
     </main>

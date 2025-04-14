@@ -1,7 +1,7 @@
 "use client";
 
-import OnboardingSlider from "@/components/onboarding/OnboardingFlow";
+import OnboardingFlow from "@/components/onboarding/OnboardingFlow";
 
 export default function OnboardingPage() {
-  return <OnboardingSlider />;
+  return <OnboardingFlow />;
 }

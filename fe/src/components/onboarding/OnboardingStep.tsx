@@ -1,18 +1,18 @@
 import Image from "next/image";
 
-interface StepProps {
+interface OnboardingSlideProps {
   image: string;
   title?: string;
   description: string;
   isProgressSlide?: boolean;
 }
 
-export default function OnboardingStep({
+export default function OnboardingSlide({
   image,
   title,
   description,
   isProgressSlide,
-}: StepProps) {
+}: OnboardingSlideProps) {
   return (
     <div
       className={`flex flex-col items-center justify-center h-screen text-center px-6 ${
