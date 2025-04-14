@@ -1,19 +1,24 @@
 import Image from "next/image";
 
-interface SlideProps {
+interface StepProps {
   image: string;
   title?: string;
   description: string;
   isProgressSlide?: boolean;
 }
 
-export default function OnboardingSlide({
+export default function OnboardingStep({
   image,
   title,
   description,
-}: SlideProps) {
+  isProgressSlide,
+}: StepProps) {
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-center px-6]">
+    <div
+      className={`flex flex-col items-center justify-center h-screen text-center px-6 ${
+        isProgressSlide ? "pt-[100px]" : ""
+      }`}
+    >
       <div className="flex flex-col items-center justify-center max-w-[320px] w-full">
         <Image
           src={image}
@@ -22,6 +27,7 @@ export default function OnboardingSlide({
           height={240}
           className="mb-6"
         />
+
         <p className="text-xl text-gray-700 leading-relaxed whitespace-pre-line mb-6">
           {title && (
             <span className="block font-bold text-[20px] mb-2">{title}</span>
