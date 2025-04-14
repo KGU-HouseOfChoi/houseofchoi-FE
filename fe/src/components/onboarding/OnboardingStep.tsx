@@ -7,7 +7,7 @@ interface OnboardingSlideProps {
   isProgressSlide?: boolean;
 }
 
-export default function OnboardingSlide({
+export default function OnboardingStep({
   image,
   title,
   description,
