@@ -22,18 +22,18 @@ const slides = [
   },
   {
     image: "/images/logo.svg",
-    title: "1. 성향 분석 기반 추천",
-    description: "간단한 선택만으로 나에게 맞는\n활동을 안내해드려요.",
+    title: "성향 분석 기반 추천",
+    description: "몇 가지 선택만으로\n나에게 꼭 맞는 활동을 알려드려요.",
   },
   {
     image: "/images/logo.svg",
-    title: "2. 가족 연동 기능",
-    description: "자녀나 보호자와 계정을 연결해\n일정을 함께 확인할 수 있어요.",
+    title: "가족과 함께 쓰는 어르심",
+    description: "자녀나 보호자와\n계정을 연결해 함께 일정을 확인할 수 있어요.",
   },
   {
     image: "/images/logo.svg",
-    title: "3. 일정 관리 기능",
-    description: "마음에 드는 활동을 등록하고\n한눈에 확인해보세요.",
+    title: "일정도 손쉽게 관리",
+    description: "음에 드는 활동을 등록하고\n캘린더에서 한눈에 볼 수 있어요.",
   },
 ];
 
@@ -82,15 +82,24 @@ export default function OnboardingSlider() {
 
       <div className="absolute bottom-[54px] left-0 right-0 flex justify-center z-10">
         {slide.isIntro ? (
-          <div className="w-[331px]">
-            <Button onClick={handleNext} fullWidth>
-              다음
-            </Button>
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-[331px]">
+              <Button onClick={handleNext} fullWidth>
+                어르심, 어떤 서비스인가요?
+              </Button>
+            </div>
+
+            <button
+              onClick={() => router.push("/")}
+              className="text-lg text-gray-400 underline"
+            >
+              바로 시작하기
+            </button>
           </div>
         ) : (
           <SplitButton
             left="이전"
-            right={isLast ? "시작하기" : "다음"}
+            right={isLast ? "어르심 시작하기" : "다음으로 넘어가기"}
             onClickLeft={handlePrev}
             onClickRight={handleNext}
           />

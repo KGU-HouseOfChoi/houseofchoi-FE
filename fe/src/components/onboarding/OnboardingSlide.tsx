@@ -13,7 +13,7 @@ export default function OnboardingSlide({
   description,
 }: SlideProps) {
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-center px-6 pt-[100px]">
+    <div className="flex flex-col items-center justify-center h-screen text-center px-6]">
       <div className="flex flex-col items-center justify-center max-w-[320px] w-full">
         <Image
           src={image}
