@@ -2,6 +2,7 @@
 
 import ChatbotNav from "@/components/chatbot/ChatbotNav";
 import ChatbotBottom from "@/components/chatbot/ChatbotBottom";
+import ChatbotMessageList from "@/components/chatbot/ChatbotMessageList";
 
 export default function ChatbotPage() {
   return (
@@ -11,8 +12,7 @@ export default function ChatbotPage() {
 
       {/* 채팅 메시지 및 콘텐츠 영역 */}
       <main className="flex-1 p-4 overflow-auto">
-        <p>챗봇 콘텐츠 영역입니다</p>
-        {/* 여기에 메시지 컴포넌트들 나열하면 됨 */}
+        <ChatbotMessageList />
       </main>
 
       {/* 하단 입력창 */}
