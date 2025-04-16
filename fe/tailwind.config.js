@@ -84,6 +84,8 @@ module.exports = {
           info: "#2196F3",
           neutral: "#BDBDBD",
         },
+
+        
       },
     },
   },

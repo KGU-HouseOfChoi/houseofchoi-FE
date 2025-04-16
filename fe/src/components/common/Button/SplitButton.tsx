@@ -20,7 +20,7 @@ export default function SplitButton({
         onClick={onClickLeft}
         className="w-1/3 h-full px-4 bg-grayscale-10 text-textColor-body text-2xl font-semibold font-pretendard
           flex justify-center items-center gap-2
-          hover:bg-gray-200 active:bg-gray-300"
+          hover-supported:bg-gray-200 active:bg-gray-300"
       >
         {left}
       </button>
@@ -30,7 +30,7 @@ export default function SplitButton({
         onClick={onClickRight}
         className="w-2/3 h-full px-4 bg-brand-normal text-white text-2xl font-semibold font-pretendard
           flex justify-center items-center gap-2
-          hover:bg-brand-hover active:bg-brand-active
+          hover-supported:bg-brand-hover active:bg-brand-active
           disabled:bg-gray-300 disabled:cursor-not-allowed"
       >
         {right}
