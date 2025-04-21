@@ -1,10 +1,12 @@
-'use client';
+"use client";
 
 import ChatbotNav from "@/components/chatbot/ChatbotNav";
 import ChatbotBottom from "@/components/chatbot/ChatbotBottom";
 import ChatbotMessageList from "@/components/chatbot/ChatbotMessageList";
 
 export default function ChatbotPage() {
+  const handleSend = () => {}; // 기능 없이
+
   return (
     <div className="flex flex-col h-screen bg-gray-50">
       {/* 상단 네비게이션 */}
@@ -16,7 +18,7 @@ export default function ChatbotPage() {
       </main>
 
       {/* 하단 입력창 */}
-      <ChatbotBottom />
+      <ChatbotBottom onSend={handleSend} />
     </div>
   );
 }

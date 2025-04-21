@@ -1,13 +1,14 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useState } from "react";
+
+import { FiMic } from "react-icons/fi";
 
 const VoiceInput = () => {
-  const [isListening, setIsListening] = useState(false);
+  const [, setIsListening] = useState(false);
 
   const handleVoiceClick = () => {
-    setIsListening(prev => !prev);
+    setIsListening((prev) => !prev);
   };
 
   return (
@@ -16,12 +17,7 @@ const VoiceInput = () => {
         onClick={handleVoiceClick}
         className="w-[54px] h-[54px] rounded-[23px] bg-brand-normal flex items-center justify-center p-2"
       >
-        <Image
-          src="/vuesax/bold/microphone-2.svg"
-          width={37}
-          height={38}
-          alt="음성 입력"
-        />
+        <FiMic size={28} color="white" />
       </button>
     </div>
   );
