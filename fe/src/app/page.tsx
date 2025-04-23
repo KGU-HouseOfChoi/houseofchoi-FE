@@ -1,4 +1,4 @@
-import BottonNavBar from "@/components/common/BottomNavBar";
+import BottomNavBar from "@/components/common/BottomNavBar";
 
 export default function Home() {
   return (
@@ -57,7 +57,7 @@ export default function Home() {
           </p>
         </section>
       </main>
-      <BottonNavBar />
+      <BottomNavBar />
     </>
   );
 }
