@@ -1,7 +1,6 @@
 "use client";
 
 import ChatbotNav from "@/components/chatbot/ChatbotNav";
-import ChatbotBottom from "@/components/chatbot/ChatbotBottom";
 import ChatbotMessageList from "@/components/chatbot/ChatbotMessageList";
 
 export default function ChatbotPage() {
@@ -12,13 +11,10 @@ export default function ChatbotPage() {
       {/* 상단 네비게이션 */}
       <ChatbotNav />
 
-      {/* 채팅 메시지 및 콘텐츠 영역 */}
-      <main className="flex-1 p-4 overflow-auto">
-        <ChatbotMessageList />
-      </main>
-
-      {/* 하단 입력창 */}
-      <ChatbotBottom onSend={handleSend} />
+      {/* 채팅 영역 */}
+      <div className="flex-1 overflow-y-auto min-h-0">
+        <ChatbotMessageList /> {/* <- 여기 안에서 ChatbotBottom까지 관리하도록 */}
+      </div>
     </div>
   );
 }
