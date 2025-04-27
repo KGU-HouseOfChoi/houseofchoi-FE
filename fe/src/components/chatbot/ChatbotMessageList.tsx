@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MessageGroup from "@/components/chatbot/MessageGroup";
 import ChatbotBottom from "@/components/chatbot/ChatbotBottom";
+import ChatbotGreeting from "@/components/chatbot/ChatbotGreeting";
 import { groupMessages } from "@/lib/groupMessages";
 import { Message } from "@/types/message";
 
@@ -16,6 +17,14 @@ const ChatbotMessageList = () => {
       isUser: false,
     },
   ]);
+
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]); 
+
 
   const handleSend = async (text: string) => {
     const userMessage: Message = {
@@ -35,10 +44,14 @@ const ChatbotMessageList = () => {
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto p-4 min-h-0">
+
+        <ChatbotGreeting username="최서희" />
+
         {grouped.map((group, idx) => (
           <MessageGroup key={idx} {...group} />
         ))}
-      </div>
+      <div ref={bottomRef} />
+    </div>
 
       
       <ChatbotBottom onSend={handleSend} />

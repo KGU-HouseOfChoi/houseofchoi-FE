@@ -1,4 +1,4 @@
-// types/message.ts
+
 export type MessageType = 'text' | 'activity';
 
 export interface Message {

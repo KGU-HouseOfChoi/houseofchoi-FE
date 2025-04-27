@@ -8,11 +8,15 @@ const ChatBubble = ({ type, text }: ChatBubbleProps) => {
 
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
-      <div className={`px-4 py-2 rounded-2xl max-w-[80%] w-fit text-[16px] font-pretendard ${
-        isUser
-          ? 'bg-brand-normal text-white self-end'
-          : 'bg-white text-black self-start'
-      }`}>
+      <div
+        className={`
+          px-4 py-2 
+          rounded-2xl 
+          min-w-[40px] max-w-[100%] 
+          text-[20px] font-pretendard
+          ${isUser ? 'bg-brand-normal text-white' : 'bg-white text-black'}
+        `}
+      >
         {text}
       </div>
     </div>
