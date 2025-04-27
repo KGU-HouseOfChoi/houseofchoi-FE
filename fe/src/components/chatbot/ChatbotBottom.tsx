@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { FiSend } from "react-icons/fi";
+import SendIcon from "@/asset/icons/send-2.svg";
 import VoiceInput from "@/components/chatbot/VoiceInput";
 
 interface ChatbotBottomProps {
@@ -36,7 +36,7 @@ const ChatbotBottom: React.FC<ChatbotBottomProps> = ({ onSend }) => {
           className="w-full bg-transparent outline-none text-[16px] placeholder-gray-400"
         />
         <button onClick={handleSend}>
-          <FiSend size={24} className="text-gray-500" />
+          <SendIcon width={36} height={36} className="text-gray-500" />
         </button>
       </div>
     </div>

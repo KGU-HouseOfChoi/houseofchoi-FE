@@ -24,7 +24,7 @@ const ChatBubble: FC<ChatBubbleProps> = ({ type, text }) => {
       )}
 
       <div
-        className={`px-4 py-2 rounded-2xl w-fit max-w-[80%] text-[16px] font-pretendard ${
+        className={`px-4 py-2 rounded-2xl w-fit max-w-[80%] text-[20px] font-pretendard ${
           isUser
             ? "bg-brand-normal text-white self-end"
             : "bg-white text-black self-start"
