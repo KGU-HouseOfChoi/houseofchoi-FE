@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import ChatBubble from './ChatBubble';
 import { Message } from '@/types/message';
+import ButtonGroup from "@/components/chatbot/ButtonGroup";
 import type { FC } from 'react';
 import { formatTime } from '@/lib/formatTime';
 
@@ -16,14 +17,14 @@ const MessageGroup: FC<MessageGroupProps> = ({ sender, profileUrl, timestamp, is
   return (
     <div className="flex flex-col gap-1">
       {/* 프로필 (bot일 때만) */}
-      {!isUser && (
+      {!isUser  && items[0].type !== 'button' &&(
         <div className="flex items-center gap-2 mb-1">
           <Image src={profileUrl} alt={sender} width={36} height={36} className="rounded-full" />
         </div>
       )}
 
       {/* 말풍선 그룹 */}
-      <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} gap-1`}>
+      <div className={`flex flex-col  ${isUser ? 'items-end' : 'items-start'} gap-2`}>
         {items.map((msg, idx) => {
           const isLast = idx === items.length - 1;
           const isDifferentNext =
@@ -36,11 +37,23 @@ const MessageGroup: FC<MessageGroupProps> = ({ sender, profileUrl, timestamp, is
                 msg.isUser ? 'items-end' : 'items-start'
               } ${isDifferentNext ? 'mb-8' : ''}`} 
             >
-              <ChatBubble
-                text={msg.content}
-                type={msg.isUser ? 'user' : 'bot'}
-              />
-              {isLast && (
+              {msg.type === "button" && msg.buttons ? (
+                <div className="mb-6">
+                <ButtonGroup
+                  buttons={msg.buttons}
+                  onClick={(value) => {
+                    console.log("선택한 버튼 값:", value);
+                    
+                  }}
+                />
+               </div>
+              ) : (
+                <ChatBubble
+                  text={msg.content}
+                  type={msg.isUser ? "user" : "bot"}
+                />
+              )}
+              {isLast && msg.type !== 'button' && (
                 <span className="text-xs text-gray-400 mt-1">
                   {formatTime(timestamp)}
                 </span>

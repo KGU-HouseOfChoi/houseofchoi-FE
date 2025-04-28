@@ -1,5 +1,9 @@
+export type MessageType = 'text' | 'activity' | 'button';
 
-export type MessageType = 'text' | 'activity';
+export interface ButtonOption {
+  label: string;
+  value: string;
+}
 
 export interface Message {
   id: string;
@@ -9,4 +13,5 @@ export interface Message {
   content: string;
   timestamp: string;
   isUser?: boolean;
+  buttons?: ButtonOption[]; 
 }

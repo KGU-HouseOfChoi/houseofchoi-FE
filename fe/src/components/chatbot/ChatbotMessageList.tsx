@@ -12,9 +12,33 @@ const ChatbotMessageList = () => {
       sender: "노락노락",
       profileUrl: "/images/Chatlogo.svg",
       type: "activity",
-      content: "최서희님께 추천하는 활동이에요!",
+      content: "어떤활동을 찾고 계신가요?",
       timestamp: new Date().toISOString(),
       isUser: false,
+    },
+
+    {
+      id: "init-2",
+      sender: "노락노락",
+      profileUrl: "/images/Chatlogo.svg",
+      type: "text", 
+      content: "직접 입력하거나 버튼을 눌러 추천받아 보세요!",
+      timestamp: new Date().toISOString(),
+      isUser: false,
+    },
+
+    {
+      id: "init-3",
+      sender: "",
+      profileUrl: "/images/Chatlogo.svg",
+      type: "button",  
+      content: "",
+      timestamp: new Date().toISOString(),
+      isUser: false,
+      buttons: [
+        { label: "실내 활동", value: "indoor" },
+        { label: "실외 활동", value: "outdoor" },
+      ],
     },
   ]);
 
