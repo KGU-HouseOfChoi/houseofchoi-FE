@@ -11,9 +11,10 @@ interface MessageGroupProps {
   timestamp: string;
   isUser?: boolean;
   items: Message[];
+  onButtonClick?: (value: string, label: string) => void;
 }
 
-const MessageGroup: FC<MessageGroupProps> = ({ sender, profileUrl, timestamp, isUser, items }) => {
+const MessageGroup: FC<MessageGroupProps> = ({ sender, profileUrl, timestamp, isUser, items, onButtonClick }) => {
   return (
     <div className="flex flex-col gap-1">
       {/* 프로필 (bot일 때만) */}
@@ -41,8 +42,10 @@ const MessageGroup: FC<MessageGroupProps> = ({ sender, profileUrl, timestamp, is
                 <div className="mb-6">
                 <ButtonGroup
                   buttons={msg.buttons}
-                  onClick={(value) => {
-                    console.log("선택한 버튼 값:", value);
+                  onClick={(value,label) => {
+                    if (onButtonClick){
+                      onButtonClick(value,label);
+                    }
                     
                   }}
                 />
