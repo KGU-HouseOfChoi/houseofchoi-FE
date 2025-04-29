@@ -13,7 +13,8 @@ export default function ChatbotPage() {
 
       {/* 채팅 영역 */}
       <div className="flex-1 overflow-y-auto min-h-0">
-        <ChatbotMessageList /> {/* <- 여기 안에서 ChatbotBottom까지 관리하도록 */}
+        <ChatbotMessageList />{" "}
+        {/* <- 여기 안에서 ChatbotBottom까지 관리하도록 */}
       </div>
     </div>
   );

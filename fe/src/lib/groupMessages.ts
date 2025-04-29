@@ -1,4 +1,4 @@
-import { Message } from '@/types/message';
+import { Message } from "@/types/chatbot";
 
 export function groupMessages(messages: Message[]) {
   const groups: {
