@@ -15,7 +15,7 @@ const mockData = [
 
 export default function ActivityCardList() {
   return (
-    <section className="flex flex-col items-center gap-4">
+    <section className="flex flex-col items-center gap-5">
       {mockData.map((item, idx) => (
         <ActivityCard
           key={idx}

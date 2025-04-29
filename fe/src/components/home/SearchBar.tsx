@@ -1,11 +1,16 @@
 "use client";
 
-import Image from "next/image";
+import SearchIcon from "@/asset/icons/search.svg";
 
 export default function SearchBar() {
   return (
-    <div className="fixed top sw-[329px] h-[60px] bg-[#FFE9C8] opacity-80 rounded-xl shadow-lg flex items-center justify-between px-6 text-textColor-sub text-2xl">
-      <span>검색어를 입력하세요</span>
+    <div className="relative z-0 w-full max-w-[329px] h-[65px] bg-[#FFE9C8] bg-opacity-50 rounded-xl shadow-lg flex items-center justify-between px-5 text-textColor-sub text-xl mx-auto">
+      <input
+        type="text"
+        placeholder="검색어를 입력하세요"
+        className="flex-1 bg-transparent outline-none placeholder:text-textColor-sub"
+      />
+      <SearchIcon className="w-10 h-10 text-brand-normal flex-shrink-0" />
     </div>
   );
 }

@@ -15,7 +15,7 @@ export default function ActivityCard({
   location,
 }: ActivityCardProps) {
   return (
-    <div className="w-full max-w-[329px] h-[350px] bg-bgColor-default rounded-2xl shadow-md overflow-hidden mx-auto text-center">
+    <div className="w-full max-w-[329px] h-[350px] bg-bgColor-default rounded-2xl shadow-[0px_3px_10px_rgba(142,_142,_142,_0.3)] overflow-hidden mx-auto text-center">
       {/* 활동 이미지 */}
       <div className="w-[284px] h-40 mt-[15px] mx-auto rounded-xl border border-borderColor-default overflow-hidden">
         <Image
