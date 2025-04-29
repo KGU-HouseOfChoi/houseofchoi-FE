@@ -3,7 +3,7 @@ import BottomNavBar from "@/components/common/BottomNavBar";
 export default function Home() {
   return (
     <>
-      <main className=" w-full max-w-[414px] mx-auto p-10 pb-[124px] bg-bgColor-light  font-sans">
+      <main className=" w-full max-w-[414px] mx-auto p-10 pb-[124px] bg-bgColor-light font-sans">
         {/* 제목 */}
         <h1 className="text-3xl font-bold text-brand-normal mb-6">
           Pretendard 폰트 & 커스텀 색상 테스트
