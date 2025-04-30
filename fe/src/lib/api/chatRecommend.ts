@@ -1,4 +1,3 @@
-// lib/api/chatRecommend.ts
 import { ChatRecommendRequest, ChatRecommendResponse } from "@/types/chatbot";
 
 export async function fetchChatRecommendation(
@@ -24,6 +23,6 @@ export async function fetchChatRecommendation(
           place: "한강 공원",
         });
       }
-    }, 500); // 약간의 delay (선택사항)
+    }, 500); 
   });
 }
