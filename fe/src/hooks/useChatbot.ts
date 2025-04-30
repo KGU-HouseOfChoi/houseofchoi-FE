@@ -1,14 +1,13 @@
-// hooks/useChatbot.ts
 "use client";
 
 import { useState, useRef, useEffect } from "react";
 import { groupMessages } from "@/lib/groupMessages";
 import { Message } from "@/types/chatbot";
 import { fetchChatRecommendation } from "@/lib/api/chatRecommend";
+import { fetchChatAnswer } from "@/lib/api/chat"; 
 
 export function useChatbot(username: string) {
   const [messages, setMessages] = useState<Message[]>([
-   
     {
       id: "greeting",
       sender: "",
@@ -48,10 +47,10 @@ export function useChatbot(username: string) {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  
   const handleSend = async (text: string) => {
+    console.log("handleSend 호출됨:", text);
     if (!text.trim()) return;
-
+  
     const userMessage: Message = {
       id: Date.now().toString(),
       sender: "",
@@ -61,13 +60,27 @@ export function useChatbot(username: string) {
       timestamp: new Date().toISOString(),
       isUser: true,
     };
-
     setMessages((prev) => [...prev, userMessage]);
-
-    // 여기에 GPT 채팅 API 호출
+  
+    try {
+      const answer = await fetchChatAnswer("1", text); 
+  
+      const botMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        sender: "",
+        profileUrl: "/images/Chatlogo.svg",
+        type: "text",
+        content: answer,
+        timestamp: new Date().toISOString(),
+        isUser: false,
+      };
+  
+      setMessages((prev) => [...prev, botMessage]);
+    } catch (error) {
+      console.error("GPT API 호출 실패:", error);
+    }
   };
 
-  
   const handleButtonClick = async (value: string, label: string) => {
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -78,11 +91,9 @@ export function useChatbot(username: string) {
       timestamp: new Date().toISOString(),
       isUser: true,
     };
-
     setMessages((prev) => [...prev, userMessage]);
 
-    
-    const program = await fetchChatRecommendation({type: value});
+    const program = await fetchChatRecommendation({ type: value });
 
     const responseMsgs: Message[] = [
       {
@@ -121,33 +132,21 @@ export function useChatbot(username: string) {
     setMessages((prev) => [...prev, ...responseMsgs]);
   };
 
-  
   const handleScheduleConfirm = (value: string) => {
+    const message: Message = {
+      id: Date.now().toString(),
+      sender: "",
+      profileUrl: "/images/Chatlogo.svg",
+      type: "text",
+      content:
+        value === "yes"
+          ? "일정이 등록되었습니다!"
+          : "다른 궁금한 사항이 있다면 질문해주세요!",
+      timestamp: new Date().toISOString(),
+      isUser: false,
+    };
 
-    if (value === "yes") {
-      const successMessage: Message = {
-        id: Date.now().toString(),
-        sender: "",
-        profileUrl: "/images/Chatlogo.svg",
-        type: "text",
-        content: "일정이 등록되었습니다!",
-        timestamp: new Date().toISOString(),
-        isUser: false,
-      };
-      setMessages((prev) => [...prev, successMessage]);
-
-    } else {
-      const cancelMessage: Message = {
-        id: Date.now().toString(),
-        sender: "",
-        profileUrl: "/images/Chatlogo.svg",
-        type: "text",
-        content: "다른 궁금한 사항이 있다면 질문해주세요!",
-        timestamp: new Date().toISOString(),
-        isUser: false,
-      };
-      setMessages((prev) => [...prev, cancelMessage]);
-    }
+    setMessages((prev) => [...prev, message]);
   };
 
   const groupedMessages = groupMessages(messages);
