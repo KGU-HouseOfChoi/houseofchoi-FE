@@ -1,4 +1,9 @@
-export type MessageType = "text" | "activity" | "button" | "system" | "schedule-confirm";
+export type MessageType =
+  | "text"
+  | "activity"
+  | "button"
+  | "system"
+  | "schedule-confirm";
 
 export interface ButtonOption {
   label: string;
@@ -17,7 +22,7 @@ export interface Message {
 }
 
 export interface ChatRecommendRequest {
-  type: string; 
+  type: string;
 }
 
 export interface ChatRecommendResponse {

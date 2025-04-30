@@ -1,11 +1,10 @@
 import { ChatRecommendRequest, ChatRecommendResponse } from "@/types/chatbot";
 
 export async function fetchChatRecommendation(
-  req: ChatRecommendRequest
+  req: ChatRecommendRequest,
 ): Promise<ChatRecommendResponse> {
   const { type } = req;
 
- 
   return new Promise((resolve) => {
     setTimeout(() => {
       if (type === "indoor") {
@@ -23,6 +22,6 @@ export async function fetchChatRecommendation(
           place: "한강 공원",
         });
       }
-    }, 500); 
+    }, 500);
   });
 }

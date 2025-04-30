@@ -22,11 +22,11 @@ const ChatbotMessageList = () => {
           <MessageGroup
             key={idx}
             {...group}
-            onButtonClick={(value,label) => {
+            onButtonClick={(value, label) => {
               if (value === "yes" || value === "no") {
                 handleScheduleConfirm(value);
               } else {
-                handleButtonClick(value, label); 
+                handleButtonClick(value, label);
               }
             }}
           />

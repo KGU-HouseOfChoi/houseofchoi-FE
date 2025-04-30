@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { groupMessages } from "@/lib/groupMessages";
 import { Message } from "@/types/chatbot";
 import { fetchChatRecommendation } from "@/lib/api/chatRecommend";
-import { fetchChatAnswer } from "@/lib/api/chat"; 
+import { fetchChatAnswer } from "@/lib/api/chat";
 
 export function useChatbot(username: string) {
   const [messages, setMessages] = useState<Message[]>([
@@ -50,7 +50,7 @@ export function useChatbot(username: string) {
   const handleSend = async (text: string) => {
     console.log("handleSend 호출됨:", text);
     if (!text.trim()) return;
-  
+
     const userMessage: Message = {
       id: Date.now().toString(),
       sender: "",
@@ -61,10 +61,10 @@ export function useChatbot(username: string) {
       isUser: true,
     };
     setMessages((prev) => [...prev, userMessage]);
-  
+
     try {
-      const answer = await fetchChatAnswer("1", text); 
-  
+      const answer = await fetchChatAnswer("1", text);
+
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         sender: "",
@@ -74,7 +74,7 @@ export function useChatbot(username: string) {
         timestamp: new Date().toISOString(),
         isUser: false,
       };
-  
+
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       console.error("GPT API 호출 실패:", error);

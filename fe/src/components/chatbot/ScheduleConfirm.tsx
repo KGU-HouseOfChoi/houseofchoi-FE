@@ -13,14 +13,14 @@ const ScheduleConfirm: FC<ScheduleConfirmProps> = ({ onConfirm, onCancel }) => {
       <div className="w-[186px] flex flex-col items-start gap-2.5 z-10 text-darkslategray">
         <button
           onClick={onConfirm}
-         className="w-full relative rounded-lg bg-brand-normal overflow-hidden flex flex-row items-center justify-center w-[186px] py-[7px]  box-border text-left text-[20px] text-darkslategray font-pretendard"
-         >
+          className="w-full relative rounded-lg bg-brand-normal overflow-hidden flex flex-row items-center justify-center w-[186px] py-[7px]  box-border text-left text-[20px] text-darkslategray font-pretendard"
+        >
           예
         </button>
         <button
           onClick={onCancel}
-          className="w-full relative rounded-lg bg-grayscale-20 overflow-hidden flex flex-row items-center justify-center w-[186px] py-[7px] box-border text-left text-[20px] text-darkslategray font-pretendard">
-        
+          className="w-full relative rounded-lg bg-grayscale-20 overflow-hidden flex flex-row items-center justify-center w-[186px] py-[7px] box-border text-left text-[20px] text-darkslategray font-pretendard"
+        >
           아니요
         </button>
       </div>

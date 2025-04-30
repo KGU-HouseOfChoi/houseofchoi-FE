@@ -6,7 +6,6 @@ import type { FC } from "react";
 import { formatTime } from "@/lib/formatTime";
 import ScheduleConfirm from "@/components/chatbot/ScheduleConfirm";
 
-
 interface MessageGroupProps {
   sender: string;
   profileUrl: string;
@@ -56,34 +55,33 @@ const MessageGroup: FC<MessageGroupProps> = ({
               } ${isDifferentNext ? "mb-8" : ""}`}
             >
               {msg.type === "schedule-confirm" ? (
-                  <ScheduleConfirm
-                    onConfirm={() => onButtonClick?.("yes", "예")}
-                    onCancel={() => onButtonClick?.("no", "아니요")}
+                <ScheduleConfirm
+                  onConfirm={() => onButtonClick?.("yes", "예")}
+                  onCancel={() => onButtonClick?.("no", "아니요")}
+                />
+              ) : msg.type === "button" && msg.buttons ? (
+                <div className="mb-6">
+                  <ButtonGroup
+                    buttons={msg.buttons}
+                    onClick={(value, label) => {
+                      if (onButtonClick) {
+                        onButtonClick(value, label);
+                      }
+                    }}
                   />
-                ) : msg.type === "button" && msg.buttons ? (
-                  <div className="mb-6">
-                    <ButtonGroup
-                      buttons={msg.buttons}
-                      onClick={(value, label) => {
-                        if (onButtonClick) {
-                          onButtonClick(value, label);
-                        }
-                      }}
-                    />
-                  </div>
-                ) : (
-                  <ChatBubble
-                    text={msg.content}
-                    type={msg.isUser ? "user" : "bot"}
-                  />
-                )}
+                </div>
+              ) : (
+                <ChatBubble
+                  text={msg.content}
+                  type={msg.isUser ? "user" : "bot"}
+                />
+              )}
 
               {isLast && msg.type !== "button" && (
                 <span className="text-xs text-gray-400 mt-1">
                   {formatTime(timestamp)}
                 </span>
               )}
-              
             </div>
           );
         })}
