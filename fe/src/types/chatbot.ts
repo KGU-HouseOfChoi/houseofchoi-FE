@@ -1,4 +1,4 @@
-export type MessageType = "text" | "activity" | "button" | "system";
+export type MessageType = "text" | "activity" | "button" | "system" | "schedule-confirm";
 
 export interface ButtonOption {
   label: string;
