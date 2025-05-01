@@ -45,8 +45,7 @@ const MessageGroup: FC<MessageGroupProps> = ({
         {items.map((msg, idx) => {
           const isGroupLast = idx === items.length - 1;
           const isDifferentNext =
-            idx !== items.length - 1 &&
-            items[idx + 1].isUser !== msg.isUser;
+            idx !== items.length - 1 && items[idx + 1].isUser !== msg.isUser;
 
           return (
             <div

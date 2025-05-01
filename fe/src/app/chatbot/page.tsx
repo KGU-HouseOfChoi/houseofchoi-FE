@@ -4,8 +4,6 @@ import ChatbotNav from "@/components/chatbot/ChatbotNav";
 import ChatbotMessageList from "@/components/chatbot/ChatbotMessageList";
 
 export default function ChatbotPage() {
-  const handleSend = () => {}; // 기능 없이
-
   return (
     <div className="flex flex-col h-screen h-screen bg-[#F8F8F8]">
       {/* 상단 네비게이션 */}

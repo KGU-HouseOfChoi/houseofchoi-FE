@@ -5,7 +5,6 @@ export interface ButtonOption {
   value: string;
 }
 
-
 export interface Message {
   id: string;
   sender: string;
