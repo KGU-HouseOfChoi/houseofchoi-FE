@@ -12,7 +12,6 @@ export function groupMessages(messages: Message[]) {
   for (const msg of messages) {
     const lastGroup = groups[groups.length - 1];
     const msgDate = new Date(msg.timestamp);
-    const msgTime = `${msgDate.getHours()}:${msgDate.getMinutes()}`;
 
     if (
       lastGroup &&
@@ -20,8 +19,10 @@ export function groupMessages(messages: Message[]) {
       lastGroup.isUser === msg.isUser &&
       (() => {
         const lastDate = new Date(lastGroup.timestamp);
-        return lastDate.getHours() === msgDate.getHours() && 
-        lastDate.getMinutes() === msgDate.getMinutes();
+        return (
+          lastDate.getHours() === msgDate.getHours() &&
+          lastDate.getMinutes() === msgDate.getMinutes()
+        );
       })()
     ) {
       lastGroup.items.push(msg);

@@ -17,9 +17,9 @@ export interface Message {
 }
 
 export interface ChatRecommendRequest {
-  requestType: "activity"; 
+  requestType: "activity";
   category: "indoor" | "outdoor";
-  }
+}
 
 export interface ChatRecommendResponse {
   name: string;

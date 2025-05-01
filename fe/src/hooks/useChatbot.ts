@@ -14,7 +14,7 @@ export function useChatbot() {
       type: "text",
       content: `어떤 활동을 찾고 계신가요?`,
       timestamp: new Date().toISOString(),
-      isUser: false,  
+      isUser: false,
     },
     {
       id: "greeting-1",

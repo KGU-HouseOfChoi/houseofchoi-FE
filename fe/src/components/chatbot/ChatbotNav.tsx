@@ -17,7 +17,7 @@ const ChatbotNav: NextPage = () => {
 
       {/* 챗봇 제목 - 가운데 정렬 */}
       <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 font-medium text-xl md:text-2xl">
-       어르심
+        어르심
       </div>
     </div>
   );
