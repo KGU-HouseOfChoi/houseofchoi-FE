@@ -15,6 +15,14 @@ interface MessageGroupProps {
   onButtonClick?: (value: string, label: string) => void;
 }
 
+// 🕒 시:분(HH:mm) 포맷으로 시간 비교용
+const getTimeHM = (iso: string) =>
+  new Date(iso).toLocaleTimeString("ko-KR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+
 const MessageGroup: FC<MessageGroupProps> = ({
   sender,
   profileUrl,
@@ -43,9 +51,19 @@ const MessageGroup: FC<MessageGroupProps> = ({
         className={`flex flex-col ${isUser ? "items-end" : "items-start"} gap-2`}
       >
         {items.map((msg, idx) => {
-          const isGroupLast = idx === items.length - 1;
           const isDifferentNext =
             idx !== items.length - 1 && items[idx + 1].isUser !== msg.isUser;
+
+          const nextDisplayable = items
+            .slice(idx + 1)
+            .find((m) => m.type !== "button");
+
+          const currTime = getTimeHM(msg.timestamp);
+          const nextTime = nextDisplayable
+            ? getTimeHM(nextDisplayable.timestamp)
+            : null;
+
+          const shouldShowTime = currTime !== nextTime;
 
           return (
             <div
@@ -60,9 +78,9 @@ const MessageGroup: FC<MessageGroupProps> = ({
                     onConfirm={() => onButtonClick?.("yes", "예")}
                     onCancel={() => onButtonClick?.("no", "아니요")}
                   />
-                  {isGroupLast && (
+                  {shouldShowTime && (
                     <span className="text-xs text-gray-400 mt-1 pr-1">
-                      {formatTime(timestamp)}
+                      {formatTime(msg.timestamp)}
                     </span>
                   )}
                 </div>
@@ -81,9 +99,9 @@ const MessageGroup: FC<MessageGroupProps> = ({
                     text={msg.content}
                     type={msg.isUser ? "user" : "bot"}
                   />
-                  {isGroupLast && (
+                  {shouldShowTime && (
                     <span className="text-xs text-gray-400 mt-1 pr-1">
-                      {formatTime(timestamp)}
+                      {formatTime(msg.timestamp)}
                     </span>
                   )}
                 </div>
