@@ -4,19 +4,20 @@ import ArrowBackIcon from "@/asset/icons/arrow_back.svg";
 
 const ChatbotNav: NextPage = () => {
   return (
-    <div className="w-full relative bg-white h-16 overflow-hidden flex flex-row items-center justify-start py-3 pl-[9px] pr-2.5 box-border text-center text-[24px] text-gray font-pretendard">
-      <div className="w-[196px] flex flex-row items-center justify-start gap-[114px]">
-        <Link href="/">
-          <ArrowBackIcon
-            width={40}
-            height={40}
-            className="text-gray-800 cursor-pointer"
-          />
-        </Link>
+    <div className="w-full relative bg-white h-14 md:h-16 flex items-center px-4 md:px-6 text-gray font-pretendard">
+      {/* ← 뒤로가기 버튼 */}
+      <Link href="/">
+        <ArrowBackIcon
+          width={40}
+          height={40}
+          className="text-gray-800 cursor-pointer"
+          aria-label="뒤로 가기"
+        />
+      </Link>
 
-        <div className="w-[42px] h-[29px] font-medium flex items-center justify-center shrink-0">
-          챗봇
-        </div>
+      {/* 챗봇 제목 - 가운데 정렬 */}
+      <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 font-medium text-xl md:text-2xl">
+       챗봇
       </div>
     </div>
   );

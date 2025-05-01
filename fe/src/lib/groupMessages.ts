@@ -11,13 +11,18 @@ export function groupMessages(messages: Message[]) {
 
   for (const msg of messages) {
     const lastGroup = groups[groups.length - 1];
-    const msgTime = new Date(msg.timestamp).toTimeString().slice(0, 5);
+    const msgDate = new Date(msg.timestamp);
+    const msgTime = `${msgDate.getHours()}:${msgDate.getMinutes()}`;
 
     if (
       lastGroup &&
       lastGroup.sender === msg.sender &&
       lastGroup.isUser === msg.isUser &&
-      new Date(lastGroup.timestamp).toTimeString().slice(0, 5) === msgTime
+      (() => {
+        const lastDate = new Date(lastGroup.timestamp);
+        return lastDate.getHours() === msgDate.getHours() && 
+        lastDate.getMinutes() === msgDate.getMinutes();
+      })()
     ) {
       lastGroup.items.push(msg);
     } else {

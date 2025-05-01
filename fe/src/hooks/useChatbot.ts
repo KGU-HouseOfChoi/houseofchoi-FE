@@ -77,8 +77,11 @@ export function useChatbot(username: string) {
 
     setMessages((prev) => [...prev, userMessage]);
 
-    const program = await fetchChatRecommendation({ type: value });
-
+    const program = await fetchChatRecommendation({
+      requestType: "activity",
+      category: value as "indoor" | "outdoor",
+    });
+    
     const responseMsgs: Message[] = [
       {
         id: (Date.now() + 1).toString(),

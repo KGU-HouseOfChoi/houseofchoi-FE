@@ -9,24 +9,16 @@ import ScheduleConfirm from "@/components/chatbot/ScheduleConfirm";
 interface MessageGroupProps {
   sender: string;
   profileUrl: string;
-  timestamp: string;
   isUser?: boolean;
   items: Message[];
   onButtonClick?: (value: string, label: string) => void;
 }
 
-// 🕒 시:분(HH:mm) 포맷으로 시간 비교용
-const getTimeHM = (iso: string) =>
-  new Date(iso).toLocaleTimeString("ko-KR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
+const getTimeHM = (iso: string) => formatTime(iso);
 
 const MessageGroup: FC<MessageGroupProps> = ({
   sender,
   profileUrl,
-  timestamp,
   isUser,
   items,
   onButtonClick,

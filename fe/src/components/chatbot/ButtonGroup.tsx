@@ -1,11 +1,7 @@
 "use client";
 
 import type { FC } from "react";
-
-interface ButtonOption {
-  label: string;
-  value: string;
-}
+import { ButtonOption } from "@/types/chatbot";
 
 interface ButtonGroupProps {
   buttons: ButtonOption[];
