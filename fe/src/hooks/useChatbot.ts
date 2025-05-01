@@ -5,16 +5,16 @@ import { groupMessages } from "@/lib/groupMessages";
 import { Message } from "@/types/chatbot";
 import { fetchChatRecommendation } from "@/lib/api/chatRecommend";
 
-export function useChatbot(username: string) {
+export function useChatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "greeting",
       sender: "",
       profileUrl: "/images/Chatlogo.svg",
       type: "text",
-      content: "어떤 활동을 찾고 계신가요?",
+      content: `어떤 활동을 찾고 계신가요?`,
       timestamp: new Date().toISOString(),
-      isUser: false,
+      isUser: false,  
     },
     {
       id: "greeting-1",
@@ -81,7 +81,7 @@ export function useChatbot(username: string) {
       requestType: "activity",
       category: value as "indoor" | "outdoor",
     });
-    
+
     const responseMsgs: Message[] = [
       {
         id: (Date.now() + 1).toString(),
