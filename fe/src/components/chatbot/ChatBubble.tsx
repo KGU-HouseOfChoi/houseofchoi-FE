@@ -1,3 +1,5 @@
+import React from "react";
+
 interface ChatBubbleProps {
   type: "user" | "bot";
   text: string;
@@ -5,6 +7,15 @@ interface ChatBubbleProps {
 
 const ChatBubble = ({ type, text }: ChatBubbleProps) => {
   const isUser = type === "user";
+
+  // 줄바꿈 지원 렌더링 함수
+  const renderTextWithLineBreaks = (text: string) =>
+    text.split("\n").map((line, index) => (
+      <React.Fragment key={index}>
+        {line}
+        {index < text.split("\n").length - 1 && <br />}
+      </React.Fragment>
+    ));
 
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
@@ -17,7 +28,7 @@ const ChatBubble = ({ type, text }: ChatBubbleProps) => {
           ${isUser ? "bg-brand-normal text-white" : "bg-white text-black"}
         `}
       >
-        {text}
+        {renderTextWithLineBreaks(text)}
       </div>
     </div>
   );

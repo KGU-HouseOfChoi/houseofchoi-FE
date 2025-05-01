@@ -7,26 +7,33 @@ export async function fetchChatRecommendation(
 
   // 모의 환경에서만 사용하는 코드
   if (process.env.NODE_ENV === 'development') {  
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      if (category === "indoor") {
-        resolve({
-          name: "요가 교실",
-          date: new Date(2023, 2, 20).toISOString(),
-          price: 0,
-          place: "서울 복지관",
-        });
-      } else {
-        resolve({
-          name: "산책 모임",
-          date: new Date(2023, 2, 22).toISOString(),
-          price: 0,
-          place: "한강 공원",
-        });
-      }
-    }, 500);
-  });
-}
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const formatDate = (date: Date) =>
+          date.toLocaleDateString("ko-KR", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+
+        if (category === "indoor") {
+          resolve({
+            name: "요가 교실",
+            date: formatDate(new Date(2023, 2, 20)), 
+            price: 0,
+            place: "서울 복지관",
+          });
+        } else {
+          resolve({
+            name: "산책 모임",
+            date: formatDate(new Date(2023, 2, 22)),
+            price: 0,
+            place: "한강 공원",
+          });
+        }
+      }, 500);
+    });
+  }
   
   // 실제 API 호출 로직
   try {
