@@ -1,14 +1,10 @@
-export type MessageType =
-  | "text"
-  | "activity"
-  | "button"
-  | "system"
-  | "schedule-confirm";
+export type MessageType = "text" | "activity" | "button" | "schedule-confirm";
 
 export interface ButtonOption {
   label: string;
   value: string;
 }
+
 
 export interface Message {
   id: string;
