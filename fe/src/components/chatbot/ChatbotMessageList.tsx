@@ -1,6 +1,6 @@
 "use client";
 
-import { useChatbot } from "@/hooks/useChatbot";
+import { useChatbot } from "@/hooks/chatbot/useChatbot";
 import ChatbotGreeting from "@/components/chatbot/ChatbotGreeting";
 import ChatbotBottom from "@/components/chatbot/ChatbotBottom";
 import MessageGroup from "@/components/chatbot/MessageGroup";
