@@ -5,7 +5,6 @@ import { groupMessages } from "@/lib/chatbot/groupMessages";
 import { Message } from "@/types/chatbot";
 import { fetchChatRecommendation } from "@/apis/chatbot/chatRecommend";
 
-
 export function useChatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
