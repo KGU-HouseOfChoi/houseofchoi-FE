@@ -18,7 +18,7 @@ export default function BackButton({
   const router = useRouter();
 
   const handleClick = () => {
-    if (href) return; 
+    if (href) return;
     router.back(); //단순히 브라우저 뒤로가기
   };
 

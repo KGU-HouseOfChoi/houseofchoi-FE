@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { groupMessages } from "@/lib/groupMessages";
+import { groupMessages } from "@/lib/chatbot/groupMessages";
 import { Message } from "@/types/chatbot";
-import { fetchChatRecommendation } from "@/lib/api/chatRecommend";
+import { fetchChatRecommendation } from "@/apis/chatbot/chatRecommend";
 
 export function useChatbot() {
   const [messages, setMessages] = useState<Message[]>([

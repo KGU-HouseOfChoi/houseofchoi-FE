@@ -3,7 +3,7 @@ import ChatBubble from "./ChatBubble";
 import { Message } from "@/types/chatbot";
 import ButtonGroup from "@/components/chatbot/ButtonGroup";
 import type { FC } from "react";
-import { formatTime } from "@/lib/formatTime";
+import { formatTime } from "@/lib/chatbot/formatTime";
 import ScheduleConfirm from "@/components/chatbot/ScheduleConfirm";
 
 interface MessageGroupProps {
@@ -65,19 +65,19 @@ const MessageGroup: FC<MessageGroupProps> = ({
               } ${isDifferentNext ? "mb-8" : ""}`}
             >
               {msg.type === "schedule-confirm" ? (
-                <div className="flex flex-col items-end">
+                <div className="flex flex-col items-end relative w-fit">
                   <ScheduleConfirm
                     onConfirm={() => onButtonClick?.("yes", "예")}
                     onCancel={() => onButtonClick?.("no", "아니요")}
                   />
                   {shouldShowTime && (
-                    <span className="text-xs text-gray-400 mt-1 pr-1">
+                    <span className="absolute right-1 -bottom-5 text-xs text-gray-400">
                       {formatTime(msg.timestamp)}
                     </span>
                   )}
                 </div>
               ) : msg.type === "button" && msg.buttons ? (
-                <div className="mb-6">
+                <div className="mt-[8px] mb-4">
                   <ButtonGroup
                     buttons={msg.buttons}
                     onClick={(value, label) => {
@@ -86,13 +86,13 @@ const MessageGroup: FC<MessageGroupProps> = ({
                   />
                 </div>
               ) : (
-                <div className="flex flex-col items-end">
+                <div className="flex flex-col items-end relative w-fit">
                   <ChatBubble
                     text={msg.content}
                     type={msg.isUser ? "user" : "bot"}
                   />
                   {shouldShowTime && (
-                    <span className="text-xs text-gray-400 mt-1 pr-1">
+                    <span className="absolute right-1 -bottom-5 text-sm text-gray-400">
                       {formatTime(msg.timestamp)}
                     </span>
                   )}

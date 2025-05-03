@@ -8,7 +8,6 @@ interface ChatBubbleProps {
 const ChatBubble = ({ type, text }: ChatBubbleProps) => {
   const isUser = type === "user";
 
-  // 줄바꿈 지원 렌더링 함수
   const renderTextWithLineBreaks = (text: string) =>
     text.split("\n").map((line, index) => (
       <React.Fragment key={index}>
