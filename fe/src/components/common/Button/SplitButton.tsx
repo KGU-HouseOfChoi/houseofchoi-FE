@@ -15,7 +15,6 @@ export default function SplitButton({
 }: SplitButtonProps) {
   return (
     <div className="w-[331px] h-[58px] rounded-[16px] flex overflow-hidden">
-      {/* 왼쪽: 취소 */}
       <button
         onClick={onClickLeft}
         className="w-1/3 h-full px-4 bg-grayscale-10 text-textColor-body text-2xl font-semibold font-pretendard
@@ -25,7 +24,6 @@ export default function SplitButton({
         {left}
       </button>
 
-      {/* 오른쪽: 다음 */}
       <button
         onClick={onClickRight}
         className="w-2/3 h-full px-4 bg-brand-normal text-white text-2xl font-semibold font-pretendard

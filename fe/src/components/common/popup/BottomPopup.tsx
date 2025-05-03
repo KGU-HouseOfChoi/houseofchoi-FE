@@ -7,7 +7,11 @@ interface BottomPopupProps {
   children: React.ReactNode;
 }
 
-export default function BottomPopup({ isOpen, onClose, children }: BottomPopupProps) {
+export default function BottomPopup({
+  isOpen,
+  onClose,
+  children,
+}: BottomPopupProps) {
   useEffect(() => {
     if (isOpen) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "";
@@ -21,13 +25,12 @@ export default function BottomPopup({ isOpen, onClose, children }: BottomPopupPr
       onClick={onClose}
     >
       <div
-  className="w-full max-w-[375px] h-[330px] rounded-t-[20px] bg-white animate-slide-up"
-  onClick={(e) => e.stopPropagation()}
->
-  {children}
-</div>
-
+        className="w-full max-w-[375px] h-[330px] rounded-t-[20px] bg-white animate-slide-up"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {children}
+      </div>
     </div>,
-    document.body
+    document.body,
   );
 }
