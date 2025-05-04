@@ -1,21 +1,24 @@
 import { useEffect } from "react";
 import { useVoiceRecorder } from "@/hooks/chatbot/useVoiceRecorder";
-import { useChatbot } from "@/hooks/chatbot/useChatbot"
+import { useChatbot } from "@/hooks/chatbot/useChatbot";
 
 export default function VoicePopup({ onClose }: { onClose: () => void }) {
   const { startRecording, stopRecording } = useVoiceRecorder();
   const { handleSend } = useChatbot();
 
   useEffect(() => {
+    
     startRecording((blob, transcript) => {
-      onClose();
-      if (transcript.trim()) handleSend(transcript);
+      if (transcript.trim()) {
+        handleSend(transcript);
+      }
+      onClose(); 
     });
   }, []);
 
   const handleStopClick = () => {
-    stopRecording();
-    onClose();
+    stopRecording(); 
+    onClose();      
   };
 
   return (

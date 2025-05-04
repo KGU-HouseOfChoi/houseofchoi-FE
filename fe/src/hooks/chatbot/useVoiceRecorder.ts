@@ -1,50 +1,49 @@
 import { useCallback, useRef } from "react";
+// @ts-ignore
+import Recorder from "recorder-js";
+import { fetchSpeechToText } from "@/apis/chatbot/stt"; 
 
 export function useVoiceRecorder() {
-  const recorderRef = useRef<MediaRecorder | null>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const recorderRef = useRef<Recorder | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+
+  const logBlobInfo = (blob: Blob, context: string) => {
+    console.log(`🎧 [${context}] 녹음된 파일 정보:`);
+    console.log("📦 Type:", blob.type);
+    console.log("📏 Size:", blob.size, "bytes");
+    console.log("🧾 Name: recording.wav");
+  };
 
   const startRecording = useCallback(
     async (onComplete: (blob: Blob, transcript: string) => void) => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        const recorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
+        const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+        const recorder = new Recorder(audioContext);
+
+        await recorder.init(stream);
+
         recorderRef.current = recorder;
-
-        const chunks: Blob[] = [];
-
-        recorder.ondataavailable = (e) => {
-          if (e.data.size > 0) chunks.push(e.data);
-        };
-
-        recorder.onstop = async () => {
-          const audioBlob = new Blob(chunks, { type: "audio/webm" });
-          if (audioBlob.size === 0) {
-            console.warn("❌ 녹음된 파일이 비어 있습니다.");
-            return;
-          }
-
-          console.log("✅ 녹음 완료:", audioBlob);
-
-          const formData = new FormData();
-          formData.append("audio", audioBlob);
-
-          const res = await fetch("/api/stt", {
-            method: "POST",
-            body: formData,
-          });
-
-          const data = await res.json();
-          console.log("📝 STT 결과:", data.text);
-          onComplete(audioBlob, data.text);
-        };
+        audioContextRef.current = audioContext;
+        streamRef.current = stream;
 
         recorder.start();
         console.log("🎙️ 녹음 시작");
-        timeoutRef.current = setTimeout(() => {
-          recorder.stop();
-          console.log("🛑 자동 종료 (10초)");
-        }, 10000);
+
+        setTimeout(async () => {
+          const { blob } = await recorder.stop();
+          stream.getTracks().forEach((track) => track.stop());
+
+          logBlobInfo(blob, "자동");
+
+          const url = URL.createObjectURL(blob);
+          console.log("🔗 자동 녹음 파일 URL:", url);
+
+          const transcript = await fetchSpeechToText(blob);
+          console.log("📝 자동 STT 결과:", transcript);
+          onComplete(blob, transcript);
+        }, 4000);
       } catch (err) {
         console.error("❌ 마이크 접근 실패:", err);
       }
@@ -52,11 +51,21 @@ export function useVoiceRecorder() {
     []
   );
 
-  const stopRecording = useCallback(() => {
-    if (recorderRef.current && recorderRef.current.state === "recording") {
-      recorderRef.current.stop();
-      console.log("🛑 수동 종료");
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  const stopRecording = useCallback(async () => {
+    if (recorderRef.current && streamRef.current) {
+      const { blob } = await recorderRef.current.stop();
+      streamRef.current.getTracks().forEach((track) => track.stop());
+
+      logBlobInfo(blob, "수동");
+
+      const url = URL.createObjectURL(blob);
+      console.log("🔗 수동 녹음 파일 URL:", url);
+
+      const audio = new Audio(url);
+      audio.play();
+
+      const transcript = await fetchSpeechToText(blob);
+      console.log("📝 수동 STT 결과:", transcript);
     }
   }, []);
 

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import MicrophoneIcon from "@/asset/icons/microphone-2.svg";
-import VoicePopup from "@/components/chatbot/VoicePopup"; // STT 팝업 컴포넌트
+import VoicePopup from "@/components/chatbot/VoicePopup"; 
 
 const VoiceInput = () => {
   const [isListening, setIsListening] = useState(false);
