@@ -25,9 +25,32 @@ export default function FormInput({
   onChange,
   error,
   type = "text",
+  inputMode,
+  pattern,
+  maxLength,
   autoFocus = false,
   debounceDelay = 0,
 }: Props) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [active, setActive] = useState(false);
+  const debouncedOnChange = useDebounce(onChange, debounceDelay);
+
+  return (
+    <input
+      ref={inputRef}
+      type={type}
+      value={value}
+      placeholder={placeholder}
+      inputMode={inputMode}
+      pattern={pattern}
+      maxLength={maxLength}
+      onChange={(e) => debouncedOnChange(e.target.value)}
+      autoFocus={autoFocus}
+      className={`px-4 py-4 rounded-2xl border-2 w-full text-base outline-none transition
+        ${error ? "border-red-400" : active ? "border-brand-normal" : "border-gray-300"}`}
+    />
+  );
+}
   const [active, setActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
