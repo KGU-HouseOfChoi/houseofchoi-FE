@@ -13,10 +13,7 @@ export function useLogout() {
       // TODO: 서버 로그아웃 API 연결
       // await authApi.post('/logout');
 
-      localStorage.removeItem("access_token");
-      // localStorage.removeItem("refresh_token");
-
-      useAuthStore.getState().reset();
+      useAuthStore.getState().reset(); // 상태 초기화 (persist 포함)
       router.push("/login");
     } catch (error) {
       console.error("로그아웃 실패:", error);
