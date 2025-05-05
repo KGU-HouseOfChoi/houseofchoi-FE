@@ -5,15 +5,18 @@ import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.
 
 export async function sendSMS(
   phone: string,
-  router: AppRouterInstance,
+  router?: AppRouterInstance,
 ): Promise<void> {
   try {
-    const res = await axiosInstance.post("/v1/auth/send-sms", {
+    await axiosInstance.post("/v1/auth/send-sms", {
       phoneNum: phone,
     });
-    console.log("✅ 인증번호 전송 성공:", res.data);
+
+    if (process.env.NODE_ENV !== "production") {
+      console.log("인증번호 전송 성공");
+    }
   } catch (error) {
-    handleApiError(error, "SMS 전송 중 오류가 발생했습니다.", router);
+    throw handleApiError(error, "SMS 전송 중 오류가 발생했습니다.", router);
   }
 }
 
@@ -41,16 +44,20 @@ export interface SignUpAPIResponse {
 
 export async function signUpAPI(
   data: SignUpRequest,
-  router: AppRouterInstance,
+  router?: AppRouterInstance,
 ): Promise<SignUpAPIResponse> {
   try {
-    console.log("📦 보낼 데이터:", JSON.stringify(data, null, 2));
+    if (process.env.NODE_ENV !== "production") {
+      console.log("회원가입 요청 전송");
+    }
+
     const res: AxiosResponse<SignUpAPIResponse> = await axiosInstance.post(
       "/v1/auth/sign-up",
       data,
     );
+
     return res.data;
   } catch (error) {
-    handleApiError(error, "회원가입 중 오류가 발생했습니다.", router);
+    throw handleApiError(error, "회원가입 중 오류가 발생했습니다.", router);
   }
 }

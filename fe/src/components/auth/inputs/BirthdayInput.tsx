@@ -45,6 +45,20 @@ export default function BirthdayInput({
     debouncedOnChange(f + l);
   };
 
+  const isValidDate = (yymmdd: string) => {
+    if (yymmdd.length !== 6) return false;
+    const year = parseInt(`19${yymmdd.slice(0, 2)}`);
+    const month = parseInt(yymmdd.slice(2, 4));
+    const day = parseInt(yymmdd.slice(4, 6));
+
+    const date = new Date(year, month - 1, day);
+    return (
+      date.getFullYear() === year &&
+      date.getMonth() === month - 1 &&
+      date.getDate() === day
+    );
+  };
+
   return (
     <div className="w-full flex flex-col gap-2">
       <label className="text-xl text-gray-500">
@@ -60,8 +74,21 @@ export default function BirthdayInput({
           onChange={(e) => {
             const val = e.target.value.replace(/\D/g, "").slice(0, 6);
             setFront(val);
+
+            // '-' 문자가 있으면 바로 다음 칸으로 이동
+            if (e.target.value.includes("-") && val.length > 0) {
+              lastInputRef.current?.focus();
+              return;
+            }
+
             handleChange(val, last);
+
             if (val.length === 6) {
+              if (!isValidDate(val)) {
+                console.error("❌ 유효하지 않은 날짜입니다.");
+                // 여기에 오류 상태를 setError 등으로 추가해도 좋음
+                return;
+              }
               lastInputRef.current?.focus();
             }
           }}

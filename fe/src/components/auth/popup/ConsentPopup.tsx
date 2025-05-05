@@ -32,13 +32,18 @@ export default function ConsentPopup({
   return (
     <div
       className="fixed inset-0 bg-black/50 z-50 flex justify-center items-end"
-      onClick={onCancel} // ✅ 배경 클릭 시 닫기
+      onClick={onCancel}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") {
+          onCancel();
+        }
+      }}
+      tabIndex={-1}
     >
       <div
         className="w-full max-w-md bg-white rounded-t-2xl p-6 space-y-4 max-h-[90vh] relative"
-        onClick={(e) => e.stopPropagation()} // ✅ 내부 클릭은 이벤트 막기
+        onClick={(e) => e.stopPropagation()}
       >
-        {/* X 버튼 */}
         <button
           onClick={onCancel}
           className="absolute top-4 right-4 p-1 rounded hover:bg-gray-100"

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signUpAPI } from "@/apis/auth/auth";
 import { useAuthStore } from "@/store/useAuthStore";
-import type { AxiosError } from "axios";
+import { handleApiError } from "@/utils/common/handleApiError";
 
 export interface SignUpParams {
   code: string;
@@ -15,8 +15,15 @@ export interface SignUpParams {
 export function useSignup() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { name, birthday, phoneNumber, setIsLoggedIn, setUserInfo, reset } =
-    useAuthStore();
+  const {
+    name,
+    birthday,
+    phoneNumber,
+    setIsLoggedIn,
+    setUserInfo,
+    setAccessToken,
+    resetSignupState,
+  } = useAuthStore();
 
   const handleSignUp = async ({ code, onSuccess, onError }: SignUpParams) => {
     setLoading(true);
@@ -36,18 +43,24 @@ export function useSignup() {
       const { accessToken, isNewUser, userId, name: serverName } = res.data;
 
       if (accessToken) {
-        localStorage.setItem("accessToken", accessToken);
+        setAccessToken(accessToken);
         setUserInfo(serverName, userId);
-        reset();
+        resetSignupState();
         setIsLoggedIn(true);
       }
 
       const status = isNewUser ? "NEW_USER" : "EXISTING_USER";
       onSuccess(status);
     } catch (error) {
-      const err = error as AxiosError<{ message: string }>;
-      console.error("handleSignUp 에러:", err);
-      onError(err.response?.data?.message || "인증 실패");
+      try {
+        handleApiError(error, "회원가입 중 오류가 발생했습니다.", router);
+      } catch (handledError) {
+        if (handledError instanceof Error) {
+          onError(handledError.message);
+        } else {
+          onError("예상치 못한 오류가 발생했습니다.");
+        }
+      }
     } finally {
       setLoading(false);
     }

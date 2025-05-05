@@ -3,14 +3,16 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
-import Step1_Name from "./steps/Step1_Name";
-import Step2_Birthday from "./steps/Step2_Birthday";
-import Step3_Carrier from "./steps/Step3_Carrier";
-import Step4_PhoneNumber from "./steps/Step4_PhoneNumber";
-import Step5_VerificationCode from "./steps/Step5_VerificationCode";
-import ConsentPopup from "./popup/ConsentPopup";
-import BottomButton from "../common/Button/BottomButton";
+import Step1_Name from "./Step1_Name";
+import Step2_Birthday from "./Step2_Birthday";
+import Step3_Carrier from "./Step3_Carrier";
+import Step4_PhoneNumber from "./Step4_PhoneNumber";
+import Step5_VerificationCode from "./Step5_VerificationCode";
+import ConsentPopup from "../popup/ConsentPopup";
+import BottomButton from "../../common/Button/BottomButton";
 import { sendSMS } from "@/apis/auth/auth";
+import Toast from "@/components/common/Toast";
+import { handleApiError } from "@/utils/common/handleApiError";
 
 export default function StepContainer() {
   const { step, phoneNumber } = useAuthStore();
@@ -25,7 +27,7 @@ export default function StepContainer() {
   const handleBottomClick = () => {
     if (step === 4) {
       if (!isValidPhone) {
-        alert("유효한 전화번호를 입력해주세요");
+        setError("유효한 전화번호를 입력해주세요");
         return;
       }
       setShowConsent(true);
@@ -39,8 +41,12 @@ export default function StepContainer() {
       setShowConsent(false);
       router.push("/auth/verify");
     } catch (error) {
-      console.error("인증번호 전송 실패:", error);
-      alert("인증번호 전송에 실패했습니다. 다시 시도해주세요.");
+      const errorMessage = handleApiError(
+        error,
+        "인증번호 전송에 실패했습니다.",
+        router,
+      );
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -103,6 +109,8 @@ export default function StepContainer() {
           )}
         </>
       )}
+
+      {error && <Toast message={error} onClose={() => setError("")} />}
     </div>
   );
 }

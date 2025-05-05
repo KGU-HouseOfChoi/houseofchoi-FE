@@ -2,8 +2,11 @@
 
 import { CheckCircle } from "lucide-react";
 import Button from "@/components/common/Button/Button";
+import { useRouter } from "next/navigation";
 
 export default function CompletePage() {
+  const router = useRouter();
+
   return (
     <main className="relative min-h-screen bg-white px-6 pt-[100px] pb-[150px] flex flex-col items-center justify-center gap-6 text-center">
       <CheckCircle size={72} className="text-brand-normal mb-2" />
@@ -18,7 +21,7 @@ export default function CompletePage() {
       </p>
 
       <div className="absolute bottom-[54px] left-0 right-0 px-6 z-10">
-        <Button fullWidth onClick={() => (window.location.href = "/")}>
+        <Button fullWidth onClick={() => router.replace("/")}>
           어르심 시작하기
         </Button>
       </div>

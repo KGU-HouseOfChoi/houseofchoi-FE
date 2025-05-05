@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import axios, { AxiosError } from "axios";
 import Toast from "@/components/common/Toast";
 import { sendSMS } from "@/apis/auth/auth";
 import { useAuthStore } from "@/store/useAuthStore";
 import BottomButton from "@/components/common/Button/BottomButton";
-import type { AxiosError } from "axios";
 
 interface Step5VerificationProps {
   code: string;
@@ -75,8 +75,15 @@ export default function Step5_VerificationCode({
       setCanResend(false);
       startTimer();
     } catch (error) {
-      const err = error as AxiosError<{ message: string }>;
-      setError(err.response?.data?.message || "인증번호 전송에 실패했습니다.");
+      if (axios.isAxiosError(error)) {
+        const err = error as AxiosError<{ message: string }>;
+        setError(
+          err.response?.data?.message || "인증번호 전송에 실패했습니다.",
+        );
+      } else {
+        setError("인증번호 전송에 실패했습니다.");
+        console.error("SMS 전송 중 예상치 못한 오류:", error);
+      }
     }
   };
 

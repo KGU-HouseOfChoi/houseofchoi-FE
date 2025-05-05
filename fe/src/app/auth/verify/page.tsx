@@ -1,10 +1,11 @@
 "use client";
 
 import { useSignup } from "@/hooks/auth/useSignup";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import Step5_VerificationCode from "@/components/auth/steps/Step5_VerificationCode";
 import { useRouter } from "next/navigation";
+import Toast from "@/components/common/Toast";
 
 export default function VerifyPage() {
   const router = useRouter();
@@ -12,6 +13,12 @@ export default function VerifyPage() {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const { handleSignUp, loading } = useSignup();
+
+  useEffect(() => {
+    if (!phoneNumber) {
+      router.replace("/auth");
+    }
+  }, [name, birthday, phoneNumber, router]);
 
   const handleSuccess = (verifiedCode: string) => {
     console.log("🔥 상태 확인", {
@@ -52,6 +59,8 @@ export default function VerifyPage() {
         onSuccess={handleSuccess}
         loading={loading}
       />
+
+      {error && <Toast message={error} onClose={() => setError("")} />}
     </div>
   );
 }

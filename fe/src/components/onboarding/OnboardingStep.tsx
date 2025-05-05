@@ -22,7 +22,7 @@ export default function OnboardingStep({
       <div className="flex flex-col items-center justify-center max-w-[320px] w-full">
         <Image
           src={image}
-          alt="onboarding"
+          alt={title || description.split("\n")[0] || "온보딩 이미지"}
           width={240}
           height={240}
           className="mb-6"
