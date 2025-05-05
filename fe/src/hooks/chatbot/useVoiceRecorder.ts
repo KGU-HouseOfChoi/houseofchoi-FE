@@ -2,6 +2,7 @@ import { useCallback, useRef } from "react";
 // @ts-ignore
 import Recorder from "recorder-js";
 import { fetchSpeechToText } from "@/apis/chatbot/stt"; 
+import { STTResponse } from "@/types/chatbot";
 
 export function useVoiceRecorder() {
   const recorderRef = useRef<Recorder | null>(null);
@@ -21,7 +22,6 @@ export function useVoiceRecorder() {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
         const recorder = new Recorder(audioContext);
-
         await recorder.init(stream);
 
         recorderRef.current = recorder;
@@ -40,34 +40,36 @@ export function useVoiceRecorder() {
           const url = URL.createObjectURL(blob);
           console.log("🔗 자동 녹음 파일 URL:", url);
 
-          const transcript = await fetchSpeechToText(blob);
+          const transcript: STTResponse = await fetchSpeechToText(blob);
           console.log("📝 자동 STT 결과:", transcript);
-          onComplete(blob, transcript);
-        }, 4000);
+
+          const text = transcript?.results?.utterances?.[0]?.msg;
+          if (text && typeof text === "string") {
+            onComplete(blob, text); // ✅ 자동으로 채팅 입력
+          } else {
+            console.warn("⚠️ 추출된 텍스트가 없음");
+            onComplete(blob, ""); // 실패하더라도 종료
+          }
+        }, 6000);
       } catch (err) {
         console.error("❌ 마이크 접근 실패:", err);
       }
     },
-    []
+    [],
   );
 
-  const stopRecording = useCallback(async () => {
-    if (recorderRef.current && streamRef.current) {
-      const { blob } = await recorderRef.current.stop();
+  const stopRecording = useCallback(() => {
+    if (recorderRef.current) {
+      recorderRef.current.stop();
+      console.log("🛑 수동 녹음 중지");
+    }
+    if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
-
-      logBlobInfo(blob, "수동");
-
-      const url = URL.createObjectURL(blob);
-      console.log("🔗 수동 녹음 파일 URL:", url);
-
-      const audio = new Audio(url);
-      audio.play();
-
-      const transcript = await fetchSpeechToText(blob);
-      console.log("📝 수동 STT 결과:", transcript);
     }
   }, []);
 
-  return { startRecording, stopRecording };
+  return {
+    startRecording,
+    stopRecording,
+  };
 }

@@ -27,3 +27,16 @@ export interface ChatRecommendResponse {
   price: number;
   place: string;
 }
+
+export interface STTResponse {
+  id: string;
+  status: string;
+  results: {
+    utterances: {
+      msg: string;
+      [key: string]: any;
+    }[];
+    verified: boolean;
+    detected_languages: string[];
+  };
+}
