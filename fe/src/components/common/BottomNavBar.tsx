@@ -11,7 +11,7 @@ import ProfileIcon from "@/asset/icons/profile-circle.svg";
 const navItems = [
   { label: "처음", href: "/", icon: HomeIcon },
   { label: "일정", href: "/schedule", icon: CalendarIcon },
-  { label: "대화", href: "/chat", icon: MessagesIcon },
+  { label: "대화", href: "/chatbot", icon: MessagesIcon },
   { label: "설정", href: "/settings", icon: ProfileIcon },
 ];
 
