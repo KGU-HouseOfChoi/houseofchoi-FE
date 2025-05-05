@@ -1,4 +1,4 @@
-import axiosInstance from "./axios";
+import axiosInstance from "../common/axiosMainInstance";
 import { handleApiError } from "@/utils/common/handleApiError";
 import type { AxiosResponse } from "axios";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -31,7 +31,6 @@ export interface SignUpAPIResponse {
   success: boolean;
   timestamp: string;
   data: {
-    accessToken: string;
     isNewUser: boolean;
     name: string;
     userId: number;
