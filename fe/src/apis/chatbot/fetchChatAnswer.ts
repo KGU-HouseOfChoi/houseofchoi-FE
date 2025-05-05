@@ -6,10 +6,18 @@ export async function fetchChatAnswer(
   message: string,
 ): Promise<string> {
   try {
-    const res = await axiosInstance.post("/ai/chat", {
-      user_id: userId,
-      message,
-    });
+    const res = await axiosInstance.post(
+      "/chat",
+      {
+        user_id: userId,
+        message,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const { chatbot_response } = res.data;
 

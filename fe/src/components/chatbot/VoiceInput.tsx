@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import MicrophoneIcon from "@/asset/icons/microphone-2.svg";
-import VoicePopup from "@/components/chatbot/VoicePopup"; 
+import VoicePopup from "@/components/chatbot/popup/VoicePopup";
 
 const VoiceInput = () => {
   const [isListening, setIsListening] = useState(false);
 
   const handleVoiceClick = () => {
-    setIsListening(true); // 팝업 열기
+    setIsListening(true);
   };
 
   return (
@@ -20,9 +20,10 @@ const VoiceInput = () => {
         <MicrophoneIcon width={37} height={38} />
       </button>
 
-      {isListening && (
-        <VoicePopup onClose={() => setIsListening(false)} />
-      )}
+      <VoicePopup
+        isOpen={isListening}
+        onClose={() => setIsListening(false)}
+      />
     </div>
   );
 };
