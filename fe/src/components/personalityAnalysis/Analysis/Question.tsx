@@ -17,7 +17,9 @@ export default function Question({
 }: QuestionProps) {
   return (
     <div className="flex flex-col items-center">
-      <div className="text-2xl font-semibold text-center mb-6">{question}</div>
+      <div className="text-2xl font-semibold text-center text-textColor-heading mb-6">
+        {question}
+      </div>
       <div className="flex flex-col gap-4 w-full max-w-xs">
         {choices.map((choice, index) => (
           <ChoiceButton

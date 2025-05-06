@@ -4,19 +4,15 @@ import axiosAiInstance from "@/apis/common/axiosAiInstance";
  * 성향 질문 목록 가져오기
  */
 export async function getPersonalityQuestions() {
-  const res = await axiosAiInstance.get("/personality/questions");
+  const res = await axiosAiInstance.get("/personality/analysis");
   return res.data;
 }
 
 /**
  * 성향 분석 결과 요청
- * @param userId 사용자 ID
  * @param answers A/B 배열 (길이 13)
  */
-export async function postPersonalityAnalyze(
-  userId: string,
-  answers: string[],
-) {
+export async function postPersonalityAnalyze(answers: string[]) {
   const cleanedAnswers = answers.filter((ans) => ans === "A" || ans === "B");
 
   if (cleanedAnswers.length !== 13) {
@@ -24,7 +20,6 @@ export async function postPersonalityAnalyze(
   }
 
   const res = await axiosAiInstance.post("/personality/analyze", {
-    user_id: userId,
     answers: cleanedAnswers,
   });
 

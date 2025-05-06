@@ -64,8 +64,9 @@ export default function FormInput({
   }, [autoFocus]);
 
   return (
-    <div className="w-full flex flex-col gap-2">
-      <label className="text-xl text-gray-500">{label}</label>
+    <div className="w-full max-w-[327px] flex flex-col gap-2">
+      <label className="text-xl text-textColor-sub">{label}</label>
+
       <input
         ref={inputRef}
         type={type}
@@ -76,10 +77,17 @@ export default function FormInput({
         maxLength={maxLength}
         onChange={(e) => debouncedOnChange(e.target.value)}
         autoFocus={autoFocus}
-        className={`px-4 py-4 rounded-2xl border-2 w-full text-base outline-none transition
-          ${error ? "border-red-400" : active ? "border-brand-normal" : "border-gray-300"}`}
+        className={`w-full h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors
+          ${
+            error
+              ? "border-danger-50"
+              : active
+                ? "border-brand-normal"
+                : "border-borderColor-default"
+          }`}
       />
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+
+      {error && <p className="text-danger-50 text-sm font-medium">{error}</p>}
     </div>
   );
 }

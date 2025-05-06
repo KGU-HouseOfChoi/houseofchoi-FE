@@ -11,13 +11,13 @@ export default function OnboardingHeader({ current, total }: Props) {
 
   return (
     <div className="absolute top-0 left-0 w-full px-6 pt-6 z-10 max-w-[414px] mx-auto">
-      <div className="flex justify-between items-center text-lg text-gray-500 mb-2">
+      <div className="flex justify-between items-center text-lg text-textColor-body mb-2">
         <span>
           {current} / {total}
         </span>
         <button
           onClick={() => router.push("/")}
-          className="inline-flex items-center gap-1 text-lg text-gray-400 hover:text-brand-normal"
+          className="inline-flex items-center gap-1 text-lg text-textColor-sub hover:text-brand-normal"
         >
           <span>건너뛰기</span>
           <svg
@@ -35,7 +35,7 @@ export default function OnboardingHeader({ current, total }: Props) {
           </svg>
         </button>
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+      <div className="w-full bg-grayscale-20 rounded-full h-2 overflow-hidden">
         <div
           className="bg-brand-normal h-full transition-all duration-300"
           style={{ width: `${progress}%` }}

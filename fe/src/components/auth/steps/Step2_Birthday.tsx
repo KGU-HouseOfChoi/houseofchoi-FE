@@ -14,8 +14,8 @@ export default function Step2_Birthday() {
       return;
     }
 
-    const month = parseInt(val.substring(2, 4));
-    const day = parseInt(val.substring(4, 6));
+    const month = parseInt(val.substring(2, 4), 10);
+    const day = parseInt(val.substring(4, 6), 10);
 
     if (month < 1 || month > 12) {
       setError("birthday", "존재하지 않는 월입니다");

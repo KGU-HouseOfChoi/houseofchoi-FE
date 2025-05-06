@@ -19,7 +19,7 @@ export default function BackButton({
 
   const handleClick = () => {
     if (href) return;
-    router.back(); //단순히 브라우저 뒤로가기
+    router.back();
   };
 
   const icon = (

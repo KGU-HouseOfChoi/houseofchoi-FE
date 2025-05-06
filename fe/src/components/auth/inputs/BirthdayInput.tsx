@@ -60,10 +60,11 @@ export default function BirthdayInput({
   };
 
   return (
-    <div className="w-full max-w-[400px] flex flex-col gap-2">
-      <label className="text-xl text-gray-500">
+    <div className="w-full max-w-[327px] flex flex-col gap-2">
+      <label className="text-xl text-textColor-sub">
         주민등록번호를 입력해주세요
       </label>
+
       <div className="flex gap-2 w-full">
         <input
           type="tel"
@@ -91,11 +92,19 @@ export default function BirthdayInput({
             }
           }}
           autoFocus={autoFocus}
-          className={`flex-grow px-4 py-4 rounded-2xl border-2 text-base outline-none transition
-            ${error ? "border-red-400" : front ? "border-brand-normal" : "border-gray-300"}`}
+          className={`w-full h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors
+            ${
+              error
+                ? "border-danger-50"
+                : front
+                  ? "border-brand-normal"
+                  : "border-borderColor-default"
+            }`}
           placeholder="예: 700123"
         />
+
         <span className="mt-[14px]">-</span>
+
         <input
           ref={lastInputRef}
           type="tel"
@@ -108,12 +117,19 @@ export default function BirthdayInput({
             setLast(val);
             handleChange(front, val);
           }}
-          className={`w-[60px] px-4 py-4 rounded-[16px] border-2 text-base text-center outline-none transition
-            ${error ? "border-red-400" : last ? "border-brand-normal" : "border-gray-300"}`}
+          className={`w-[60px] h-[60px] px-4 rounded-xl border-2 text-base text-center outline-none transition-colors
+            ${
+              error
+                ? "border-danger-50"
+                : last
+                  ? "border-brand-normal"
+                  : "border-borderColor-default"
+            }`}
           placeholder="1"
         />
       </div>
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+
+      {error && <p className="text-danger-50 text-sm font-medium">{error}</p>}
     </div>
   );
 }

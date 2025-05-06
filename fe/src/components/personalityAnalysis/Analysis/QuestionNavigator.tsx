@@ -16,11 +16,7 @@ interface Question {
   choices: string[];
 }
 
-interface QuestionNavigatorProps {
-  userId: number | null;
-}
-
-export default function QuestionNavigator({ userId }: QuestionNavigatorProps) {
+export default function QuestionNavigator() {
   const router = useRouter();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -54,7 +50,6 @@ export default function QuestionNavigator({ userId }: QuestionNavigatorProps) {
       setCurrentIndex((prev) => prev + 1);
     } else {
       try {
-        // A/B 값만 추출: "(B) 미리 연락이 좋다" → "B"
         const cleanedAnswers = answers.map((ans) => {
           if (!ans) return "";
           const match = ans.match(/\(([AB])\)/);
@@ -69,8 +64,8 @@ export default function QuestionNavigator({ userId }: QuestionNavigatorProps) {
           );
         }
 
-        await postPersonalityAnalyze(String(userId), cleanedAnswers);
-        router.push("member/personalityAnalysis/result");
+        await postPersonalityAnalyze(cleanedAnswers);
+        router.push("/member"); // ✅ 분석 완료 후 홈페이지로 이동
       } catch (error) {
         handleApiError(error, "분석 요청에 실패했습니다.", router);
       }
@@ -89,7 +84,17 @@ export default function QuestionNavigator({ userId }: QuestionNavigatorProps) {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-full">로딩 중...</div>
+      <div className="flex justify-center items-center h-full">
+        질문을 불러오는 중...
+      </div>
+    );
+  }
+
+  if (!questions[currentIndex]) {
+    return (
+      <div className="flex justify-center items-center h-full">
+        질문 데이터가 없습니다.
+      </div>
     );
   }
 
@@ -111,7 +116,7 @@ export default function QuestionNavigator({ userId }: QuestionNavigatorProps) {
               className={`w-full h-[58px] rounded-[16px] text-2xl font-semibold font-pretendard transition ${
                 currentAnswer
                   ? "bg-brand-normal text-white hover:bg-brand-hover active:bg-brand-active"
-                  : "bg-gray-200 text-gray-500 cursor-not-allowed"
+                  : "bg-grayscale-20 text-textColor-body cursor-not-allowed"
               }`}
             >
               다음

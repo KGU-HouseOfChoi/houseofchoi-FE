@@ -9,13 +9,13 @@ export default function PersonalityAnalysisHeader() {
   return (
     <>
       <div className="absolute top-0 left-0 w-full px-6 pt-6 z-10 max-w-[414px] mx-auto">
-        <div className="flex justify-between items-center text-lg text-gray-500 mb-2">
+        <div className="flex justify-between items-center text-lg text-textColor-body mb-2">
           <h1 className="text-xl font-bold text-textColor-heading">
             성향 분석
           </h1>
           <button
             onClick={() => setIsLogoutPopupOpen(true)}
-            className="inline-flex items-center gap-1 text-lg text-gray-400 hover:text-brand-normal"
+            className="inline-flex items-center gap-1 text-lg text-textColor-sub hover:text-brand-normal"
           >
             <span>로그아웃</span>
             <svg

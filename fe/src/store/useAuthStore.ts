@@ -18,12 +18,14 @@ interface AuthState {
     >
   >;
 
+  setStep: (step: number) => void;
   nextStep: () => void;
   setField: <
     K extends Exclude<
       keyof AuthState,
       | "errors"
       | "step"
+      | "setStep"
       | "nextStep"
       | "setField"
       | "setError"
@@ -62,6 +64,8 @@ export const useAuthStore = create<AuthState>()(
       isNewUser: false,
       isLoggedIn: false,
       errors: {},
+
+      setStep: (newStep) => set(() => ({ step: newStep })),
 
       nextStep: () => set((state) => ({ step: state.step + 1 })),
 
