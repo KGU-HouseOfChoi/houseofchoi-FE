@@ -1,7 +1,7 @@
 "use client";
 
 import { useSignup } from "@/hooks/auth/useSignup";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import Step5_VerificationCode from "@/components/auth/steps/Step5_VerificationCode";
 import { useRouter } from "next/navigation";
@@ -13,12 +13,6 @@ export default function VerifyPage() {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const { handleSignUp, loading } = useSignup();
-
-  useEffect(() => {
-    if (!phoneNumber) {
-      router.replace("/auth");
-    }
-  }, [name, birthday, phoneNumber, router]);
 
   const handleSuccess = (verifiedCode: string) => {
     console.log("🔥 상태 확인", {
@@ -34,7 +28,7 @@ export default function VerifyPage() {
       onSuccess: (status) => {
         console.log("가입 상태:", status);
         if (status === "EXISTING_USER") {
-          router.push("/test");
+          router.push("/auth/complete");
         } else {
           router.push("/auth/complete");
         }

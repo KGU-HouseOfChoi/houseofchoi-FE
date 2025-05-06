@@ -5,6 +5,7 @@ interface SplitButtonProps {
   right: ReactNode;
   onClickLeft?: () => void;
   onClickRight?: () => void;
+  rightDisabled?: boolean;
 }
 
 export default function SplitButton({
@@ -12,6 +13,7 @@ export default function SplitButton({
   right,
   onClickLeft,
   onClickRight,
+  rightDisabled = false,
 }: SplitButtonProps) {
   return (
     <div className="w-[331px] h-[58px] rounded-[16px] flex overflow-hidden">
@@ -26,6 +28,7 @@ export default function SplitButton({
 
       <button
         onClick={onClickRight}
+        disabled={rightDisabled}
         className="w-2/3 h-full px-4 bg-brand-normal text-white text-2xl font-semibold font-pretendard
           flex justify-center items-center gap-2
           hover-supported:bg-brand-hover active:bg-brand-active

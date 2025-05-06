@@ -5,7 +5,6 @@ interface AuthState {
   step: number;
   name: string;
   userId: number | null;
-  accessToken: string | null;
   birthday: string;
   phoneNumber: string;
   carrier: string;
@@ -20,7 +19,6 @@ interface AuthState {
   >;
 
   nextStep: () => void;
-
   setField: <
     K extends Exclude<
       keyof AuthState,
@@ -35,7 +33,6 @@ interface AuthState {
       | "reset"
       | "resetSignupState"
       | "setUserInfo"
-      | "setAccessToken"
     >,
   >(
     field: K,
@@ -43,7 +40,6 @@ interface AuthState {
   ) => void;
 
   setUserInfo: (name: string, userId: number) => void;
-  setAccessToken: (token: string | null) => void;
   setError: (field: keyof AuthState["errors"], message: string) => void;
   clearError: (field: keyof AuthState["errors"]) => void;
   setIsNewUser: (value: boolean) => void;
@@ -59,7 +55,6 @@ export const useAuthStore = create<AuthState>()(
       step: 1,
       name: "",
       userId: null,
-      accessToken: null,
       birthday: "",
       phoneNumber: "",
       carrier: "",
@@ -70,14 +65,9 @@ export const useAuthStore = create<AuthState>()(
 
       nextStep: () => set((state) => ({ step: state.step + 1 })),
 
-      setField: (field, value) =>
-        set(() => ({
-          [field]: value,
-        })),
+      setField: (field, value) => set(() => ({ [field]: value })),
 
       setUserInfo: (name, userId) => set(() => ({ name, userId })),
-
-      setAccessToken: (token) => set(() => ({ accessToken: token })),
 
       setError: (field, message) =>
         set((state) => ({
@@ -92,7 +82,6 @@ export const useAuthStore = create<AuthState>()(
         }),
 
       setIsNewUser: (value) => set({ isNewUser: value }),
-
       setIsLoggedIn: (value) => set({ isLoggedIn: value }),
 
       reset: () =>
@@ -100,7 +89,6 @@ export const useAuthStore = create<AuthState>()(
           step: 1,
           name: "",
           userId: null,
-          accessToken: null,
           birthday: "",
           phoneNumber: "",
           carrier: "",
@@ -122,7 +110,6 @@ export const useAuthStore = create<AuthState>()(
           errors: {},
           isLoggedIn: state.isLoggedIn,
           userId: state.userId,
-          accessToken: state.accessToken,
         })),
     }),
     {
@@ -130,7 +117,6 @@ export const useAuthStore = create<AuthState>()(
       partialize: (state) => ({
         isLoggedIn: state.isLoggedIn,
         userId: state.userId,
-        accessToken: state.accessToken,
       }),
     },
   ),
