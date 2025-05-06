@@ -10,8 +10,7 @@ export function useVoiceRecorder() {
   const isRecordingRef = useRef<boolean>(false);
 
   const stopAndProcess = async (
-    onComplete: (blob: Blob, transcript: string) => void,
-    userId: string
+    onComplete: (blob: Blob, transcript: string) => void
   ) => {
     if (!isRecordingRef.current) return;
     isRecordingRef.current = false;
@@ -27,10 +26,14 @@ export function useVoiceRecorder() {
 
       console.log("🎧 녹음된 파일:", blob);
 
-      const transcript: STTResponse = await fetchSpeechToText(blob, userId);
-      const text = transcript?.results?.utterances?.[0]?.msg ?? "";
+      const transcript: STTResponse = await fetchSpeechToText(blob, "4");
+      console.log("📝 STT 응답 결과:", transcript);
+
+      const text = transcript?.user_message ?? "";
+      console.log("🗣️ 텍스트 추출 결과:", text);
 
       onComplete(blob, typeof text === "string" ? text : "");
+      console.log("✅ onComplete 호출 완료");
     } catch (err) {
       console.error("❌ 녹음 처리 실패:", err);
       onComplete(new Blob(), "");
@@ -38,10 +41,7 @@ export function useVoiceRecorder() {
   };
 
   const startRecording = useCallback(
-    async (
-      onComplete: (blob: Blob, transcript: string) => void,
-      userId: string
-    ) => {
+    async (onComplete: (blob: Blob, transcript: string) => void) => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -55,9 +55,8 @@ export function useVoiceRecorder() {
         recorder.start();
         console.log("🎙️ 녹음 시작");
 
-        
         setTimeout(() => {
-          stopAndProcess(onComplete, userId);
+          stopAndProcess(onComplete);
         }, 6000);
       } catch (err) {
         console.error("❌ 마이크 접근 실패:", err);
@@ -67,12 +66,9 @@ export function useVoiceRecorder() {
   );
 
   const stopRecording = useCallback(
-    (
-      onComplete: (blob: Blob, transcript: string) => void,
-      userId: string
-    ) => {
+    (onComplete: (blob: Blob, transcript: string) => void) => {
       if (!isRecordingRef.current) return;
-      stopAndProcess(onComplete, userId);
+      stopAndProcess(onComplete);
     },
     []
   );

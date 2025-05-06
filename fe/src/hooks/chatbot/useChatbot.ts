@@ -65,7 +65,7 @@ export function useChatbot() {
     setMessages((prev) => [...prev, userMessage]);
     //응답처리
     try {
-      const answer = await fetchChatAnswer("1", text);
+      const answer = await fetchChatAnswer("4", text);
 
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),

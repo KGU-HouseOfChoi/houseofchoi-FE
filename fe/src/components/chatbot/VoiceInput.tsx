@@ -4,7 +4,11 @@ import { useState } from "react";
 import MicrophoneIcon from "@/asset/icons/microphone-2.svg";
 import VoicePopup from "@/components/chatbot/popup/VoicePopup";
 
-const VoiceInput = () => {
+interface VoiceInputProps {
+  handleSend: (text: string) => void;
+}
+
+const VoiceInput = ({ handleSend }: VoiceInputProps) => {
   const [isListening, setIsListening] = useState(false);
 
   const handleVoiceClick = () => {
@@ -20,9 +24,11 @@ const VoiceInput = () => {
         <MicrophoneIcon width={37} height={38} />
       </button>
 
+      {/* ✅ props로 받은 handleSend 전달 */}
       <VoicePopup
         isOpen={isListening}
         onClose={() => setIsListening(false)}
+        handleSend={handleSend}
       />
     </div>
   );

@@ -31,6 +31,8 @@ export interface ChatRecommendResponse {
 export interface STTResponse {
   id: string;
   status: string;
+  user_message: string;
+  chatbot_response: string;
   results: {
     utterances: {
       msg: string;
