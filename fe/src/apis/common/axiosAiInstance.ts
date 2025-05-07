@@ -4,7 +4,6 @@ import { useAuthStore } from "@/store/useAuthStore";
 const axiosAiInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_AI_API_URL,
   timeout: 5000,
-  withCredentials: true,
 });
 
 axiosAiInstance.interceptors.request.use((config) => {
@@ -14,3 +13,5 @@ axiosAiInstance.interceptors.request.use((config) => {
   }
   return config;
 });
+
+export default axiosAiInstance;

@@ -25,9 +25,7 @@ interface QuestionNavigatorProps {
   setIsCompleted: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function QuestionNavigator({
-  setIsCompleted,
-}: QuestionNavigatorProps) {
+export default function QuestionNavigator({ setIsCompleted }: QuestionNavigatorProps) {
   const router = useRouter();
   const [questions, setQuestions] = useState<QuestionItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -35,7 +33,6 @@ export default function QuestionNavigator({
 
   useEffect(() => {
     async function fetchQuestions() {
-      setLoading(true);
       try {
         const data = await getPersonalityQuestions();
         console.log("✅ getPersonalityQuestions 응답:", data);
@@ -69,7 +66,7 @@ export default function QuestionNavigator({
 
     try {
       const cleanedAnswers = answers.map(
-        (ans) => ans?.match(/\(([AB])\)/)?.[1] ?? "",
+        (ans) => ans?.match(/\(([AB])\)/)?.[1] ?? ""
       );
 
       console.log("✅ 제출 answers (A/B만):", cleanedAnswers);
@@ -78,8 +75,7 @@ export default function QuestionNavigator({
         throw new Error("⚠️ 모든 질문에 답변해주세요.");
       }
 
-      const result: AnalysisResult =
-        await postPersonalityAnalyze(cleanedAnswers);
+      const result: AnalysisResult = await postPersonalityAnalyze(cleanedAnswers);
       console.log("✅ 분석 결과:", result);
 
       router.push("/member");
