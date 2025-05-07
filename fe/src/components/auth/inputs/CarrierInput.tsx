@@ -22,7 +22,7 @@ export default function CarrierInput({
       <button
         type="button"
         onClick={onClick}
-        className={`relative w-full h-[60px] px-4 rounded-xl border-2 text-left transition-colors flex items-center justify-between
+        className={`relative w-full h-[60px] rounded-xl border-2 text-left flex items-center px-4 pr-12 transition-colors
           ${
             error
               ? "border-danger-50 hover:bg-danger-50/10"
@@ -37,7 +37,7 @@ export default function CarrierInput({
           {value || "통신사를 선택해주세요"}
         </span>
 
-        <span className="text-iconColor-sub">
+        <span className="absolute right-4 text-iconColor-sub">
           {isOpen ? (
             <ChevronUp className="w-5 h-5" />
           ) : (

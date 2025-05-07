@@ -23,7 +23,7 @@ export default function CompletedMessage({
       description: "잠시 후 메인 페이지로 이동합니다.",
     },
     alreadyCompleted: {
-      message: "이미 성향 분석을 완료한 사용자입니다.",
+      message: "이미 성향 분석을 완료한 \n 사용자입니다.",
       description: "잠시 후 메인 페이지로 이동합니다.",
     },
   };

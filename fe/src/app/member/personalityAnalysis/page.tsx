@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import QuestionNavigator from "@/components/personalityAnalysis/Analysis/QuestionNavigator";
+import QuestionNavigator from "@/components/personalityAnalysis/analysis/QuestionNavigator";
 import PersonalityAnalysisHeader from "@/components/personalityAnalysis/PersonalityAnalysisHeader";
-import PersonalityAnalysisIntroPopup from "@/components/personalityAnalysis/Popup/PersonalityAnalysisIntroPopup";
-import CompletedMessage from "@/components/personalityAnalysis/Analysis/CompletionNotice";
+import PersonalityAnalysisIntroPopup from "@/components/personalityAnalysis/popup/PersonalityAnalysisIntroPopup";
+import CompletedMessage from "@/components/personalityAnalysis/analysis/CompletionNotice";
 import { getPersonalityQuestions } from "@/utils/personalityAnalysis";
 
 export default function PersonalityAnalysisPage() {

@@ -92,7 +92,7 @@ export default function BirthdayInput({
             }
           }}
           autoFocus={autoFocus}
-          className={`w-full h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors
+          className={`flex-1 h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors
             ${
               error
                 ? "border-danger-50"

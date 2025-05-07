@@ -5,16 +5,18 @@ import { useState } from "react";
 
 export function useLogout() {
   const [toastMessage, setToastMessage] = useState("");
-  const accessToken = useAuthStore.getState().accessToken;
 
   const logout = async (redirectPath = "/guest") => {
     try {
+      const accessToken = useAuthStore.getState().accessToken;
+
       await fetch("/v1/auth/logout", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
           "Content-Type": "application/json",
         },
+        credentials: "include",
       });
 
       useAuthStore.getState().reset();
