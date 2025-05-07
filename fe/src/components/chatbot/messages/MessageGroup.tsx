@@ -57,11 +57,9 @@ const MessageGroup: FC<MessageGroupProps> = ({
 
           const shouldAddTopMargin =
             !isFirst &&
-            (
-              msg.isUser !== prevMsg?.isUser ||
+            (msg.isUser !== prevMsg?.isUser ||
               prevMsg?.type === "button" ||
-              prevMsg?.type === "schedule-confirm"
-            );
+              prevMsg?.type === "schedule-confirm");
 
           return (
             <div

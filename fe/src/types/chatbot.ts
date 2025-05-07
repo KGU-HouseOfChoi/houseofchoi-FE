@@ -29,16 +29,6 @@ export interface ChatRecommendResponse {
 }
 
 export interface STTResponse {
-  id: string;
-  status: string;
   user_message: string;
   chatbot_response: string;
-  results: {
-    utterances: {
-      msg: string;
-      [key: string]: any;
-    }[];
-    verified: boolean;
-    detected_languages: string[];
-  };
 }

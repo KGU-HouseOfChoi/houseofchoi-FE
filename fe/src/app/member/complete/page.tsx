@@ -1,7 +1,7 @@
 "use client";
 
 import { CheckCircle } from "lucide-react";
-import Button from "@/components/common/buttons/Button";
+import Button from "@/components/common/button/Button";
 import { useRouter } from "next/navigation";
 
 export default function CompletePage() {

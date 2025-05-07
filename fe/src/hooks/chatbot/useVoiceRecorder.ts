@@ -1,5 +1,5 @@
 import { useCallback, useRef } from "react";
-// @ts-ignore
+// @ts-expect-error: Recorder는 타입 정의가 없는 라이브러리입니다.
 import Recorder from "recorder-js";
 import { fetchSpeechToText } from "@/apis/chatbot/stt";
 import { STTResponse } from "@/types/chatbot";
@@ -8,9 +8,11 @@ export function useVoiceRecorder() {
   const recorderRef = useRef<Recorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const isRecordingRef = useRef<boolean>(false);
+  const isCancelledRef = useRef<boolean>(false);
 
   const stopAndProcess = async (
-    onComplete: (blob: Blob, transcript: string) => void
+    onComplete: (blob: Blob, transcript: string) => void,
+    isCancelled: boolean = false,
   ) => {
     if (!isRecordingRef.current) return;
     isRecordingRef.current = false;
@@ -26,7 +28,13 @@ export function useVoiceRecorder() {
 
       console.log("🎧 녹음된 파일:", blob);
 
-      const transcript: STTResponse = await fetchSpeechToText(blob, "4");
+      if (isCancelled) {
+        console.log("🛑 STT API 호출이 취소되었습니다.");
+        onComplete(new Blob(), "");
+        return;
+      }
+
+      const transcript: STTResponse = await fetchSpeechToText(blob);
       console.log("📝 STT 응답 결과:", transcript);
 
       const text = transcript?.user_message ?? "";
@@ -34,8 +42,12 @@ export function useVoiceRecorder() {
 
       onComplete(blob, typeof text === "string" ? text : "");
       console.log("✅ onComplete 호출 완료");
-    } catch (err) {
-      console.error("❌ 녹음 처리 실패:", err);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("❌ 녹음 처리 실패:", err.message);
+      } else {
+        console.error("❌ 녹음 처리 실패: 알 수 없는 오류 발생");
+      }
       onComplete(new Blob(), "");
     }
   };
@@ -43,8 +55,17 @@ export function useVoiceRecorder() {
   const startRecording = useCallback(
     async (onComplete: (blob: Blob, transcript: string) => void) => {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+        isCancelledRef.current = false;
+        const stream: MediaStream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+        });
+
+        const audioContext = new (window.AudioContext ||
+          (
+            window as Window &
+              typeof globalThis & { webkitAudioContext: typeof AudioContext }
+          ).webkitAudioContext)();
+
         const recorder = new Recorder(audioContext);
         await recorder.init(stream);
 
@@ -56,21 +77,29 @@ export function useVoiceRecorder() {
         console.log("🎙️ 녹음 시작");
 
         setTimeout(() => {
-          stopAndProcess(onComplete);
+          stopAndProcess(onComplete, isCancelledRef.current);
         }, 6000);
-      } catch (err) {
-        console.error("❌ 마이크 접근 실패:", err);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.error("❌ 마이크 접근 실패:", err.message);
+        } else {
+          console.error("❌ 마이크 접근 실패: 알 수 없는 오류 발생");
+        }
       }
     },
-    []
+    [],
   );
 
   const stopRecording = useCallback(
-    (onComplete: (blob: Blob, transcript: string) => void) => {
+    (
+      onComplete: (blob: Blob, transcript: string) => void,
+      isCancelled: boolean = false,
+    ) => {
       if (!isRecordingRef.current) return;
-      stopAndProcess(onComplete);
+      isCancelledRef.current = isCancelled;
+      stopAndProcess(onComplete, isCancelled);
     },
-    []
+    [],
   );
 
   return {

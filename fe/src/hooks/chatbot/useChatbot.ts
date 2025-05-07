@@ -48,7 +48,6 @@ export function useChatbot() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  
   const handleSend = async (text: string) => {
     if (!text.trim()) return;
 
@@ -65,7 +64,7 @@ export function useChatbot() {
     setMessages((prev) => [...prev, userMessage]);
     //응답처리
     try {
-      const answer = await fetchChatAnswer("4", text);
+      const answer = await fetchChatAnswer(text);
 
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -83,7 +82,6 @@ export function useChatbot() {
     }
   };
 
-  
   const handleButtonClick = async (value: string, label: string) => {
     const userMessage: Message = {
       id: Date.now().toString(),

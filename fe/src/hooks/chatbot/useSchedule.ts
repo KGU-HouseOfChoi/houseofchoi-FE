@@ -20,7 +20,6 @@ export function useSchedule() {
 
       if (!res.ok) throw new Error("등록 실패");
 
-      
       router.push("/calendar");
     } catch (err) {
       console.error("❌ 일정 등록 실패:", err);

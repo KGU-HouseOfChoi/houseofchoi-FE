@@ -1,7 +1,7 @@
 import axiosInstance from "@/apis/common/axiosAiInstance";
 import { STTResponse } from "@/types/chatbot";
 
-export async function fetchSpeechToText(audioBlob: Blob, userId: string): Promise<STTResponse> {
+export async function fetchSpeechToText(audioBlob: Blob): Promise<STTResponse> {
   const formData = new FormData();
   formData.append("audio_file", audioBlob, "recording.wav");
 
