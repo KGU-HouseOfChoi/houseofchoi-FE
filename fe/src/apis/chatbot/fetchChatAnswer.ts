@@ -1,4 +1,4 @@
-import axiosInstance from "@/apis/chatbot/axios";
+import axiosAiInstance from "@/apis/common/axiosAiInstance";
 import { handleApiError } from "@/utils/common/handleApiError";
 
 export async function fetchChatAnswer(
@@ -6,22 +6,12 @@ export async function fetchChatAnswer(
   message: string,
 ): Promise<string> {
   try {
-    const res = await axiosInstance.post(
-      "/chat",
-      {
-        user_id: userId,
-        message,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await axiosAiInstance.post("/chat/chat", {
+      message,
+    });
 
     const { chatbot_response } = res.data;
 
-    
     if (!chatbot_response || typeof chatbot_response !== "string") {
       throw new Error("GPT 응답 형식이 올바르지 않습니다.");
     }

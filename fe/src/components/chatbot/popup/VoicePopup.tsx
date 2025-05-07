@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 import { useVoiceRecorder } from "@/hooks/chatbot/useVoiceRecorder";
-import BottomPopup from "@/components/common/popup/BottomPopup";
-import PopupButtons from "@/components/common/Button/PopupButtons";
+import BottomPopup from "@/components/common/popups/BottomPopup";
+import PopupButtons from "@/components/common/buttons/PopupButtons";
 import DefaultboldvoiceCricle from "@/asset/icons/voice-cricle.svg";
 
 interface VoicePopupProps {

@@ -1,9 +1,8 @@
-import axiosInstance from "@/apis/chatbot/axios";
+import axiosInstance from "@/apis/common/axiosAiInstance";
 import { STTResponse } from "@/types/chatbot";
 
 export async function fetchSpeechToText(audioBlob: Blob, userId: string): Promise<STTResponse> {
   const formData = new FormData();
-  formData.append("user_id", userId);
   formData.append("audio_file", audioBlob, "recording.wav");
 
   console.log("📤 STT API 요청 전송 중...");

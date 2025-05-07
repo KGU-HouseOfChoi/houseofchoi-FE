@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ChatBubble from "./ChatBubble";
+import ChatBubble from "@/components/chatbot/messages/ChatBubble";
 import { Message } from "@/types/chatbot";
 import ButtonGroup from "@/components/chatbot/ButtonGroup";
 import type { FC } from "react";
