@@ -40,7 +40,7 @@ export default function OnboardingFlow() {
 
   const handleNext = () => {
     if (isLast) {
-      router.push("/");
+      router.push("/guest");
     } else {
       setCurrent((prev) => prev + 1);
     }
