@@ -1,8 +1,8 @@
 "use client";
 
 import { LogOut, X } from "lucide-react";
-import BottomPopup from "@/components/common/popups/BottomPopup";
-import PopupButtons from "@/components/common/buttons/PopupButtons";
+import BottomPopup from "@/components/common/popup/BottomPopup";
+import PopupButtons from "@/components/common/button/PopupButtons";
 import { useLogout } from "@/hooks/auth/useLogout";
 
 interface LogoutConfirmPopupProps {
