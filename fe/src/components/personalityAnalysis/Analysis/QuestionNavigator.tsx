@@ -65,7 +65,7 @@ export default function QuestionNavigator() {
         }
 
         await postPersonalityAnalyze(cleanedAnswers);
-        router.push("/member"); // ✅ 분석 완료 후 홈페이지로 이동
+        router.push("/member");
       } catch (error) {
         handleApiError(error, "분석 요청에 실패했습니다.", router);
       }
