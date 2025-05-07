@@ -60,11 +60,11 @@ export default function BirthdayInput({
   };
 
   return (
-    <div className="w-full flex flex-col gap-2">
+    <div className="w-full max-w-[400px] flex flex-col gap-2">
       <label className="text-xl text-gray-500">
         주민등록번호를 입력해주세요
       </label>
-      <div className="flex gap-2">
+      <div className="flex gap-2 w-full">
         <input
           type="tel"
           inputMode="numeric"
@@ -75,7 +75,6 @@ export default function BirthdayInput({
             const val = e.target.value.replace(/\D/g, "").slice(0, 6);
             setFront(val);
 
-            // '-' 문자가 있으면 바로 다음 칸으로 이동
             if (e.target.value.includes("-") && val.length > 0) {
               lastInputRef.current?.focus();
               return;
@@ -86,14 +85,13 @@ export default function BirthdayInput({
             if (val.length === 6) {
               if (!isValidDate(val)) {
                 console.error("❌ 유효하지 않은 날짜입니다.");
-                // 여기에 오류 상태를 setError 등으로 추가해도 좋음
                 return;
               }
               lastInputRef.current?.focus();
             }
           }}
           autoFocus={autoFocus}
-          className={`flex-1 px-4 py-4 rounded-2xl border-2 text-base outline-none transition
+          className={`flex-grow px-4 py-4 rounded-2xl border-2 text-base outline-none transition
             ${error ? "border-red-400" : front ? "border-brand-normal" : "border-gray-300"}`}
           placeholder="예: 700123"
         />
