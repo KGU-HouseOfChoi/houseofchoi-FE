@@ -27,7 +27,8 @@ export async function getPersonalityQuestions() {
  * @param answers A/B 배열 (길이 13)
  */
 export async function postPersonalityAnalyze(answers: string[]) {
-  const isValid = answers.length === 13 && answers.every((ans) => ans === "A" || ans === "B");
+  const isValid =
+    answers.length === 13 && answers.every((ans) => ans === "A" || ans === "B");
 
   if (!isValid) {
     throw new Error("정확히 13개의 A/B 답변이 필요합니다.");
