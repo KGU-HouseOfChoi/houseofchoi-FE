@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import QuestionNavigator from "@/components/personality/analysis/QuestionNavigator";
 import PersonalityAnalysisHeader from "@/components/personality/PersonalityAnalysisHeader";
-import PersonalityAnalysisIntroPopup from "@/components/personality/popup/PersonalityAnalysisIntroPopup";
+import PersonalityAnalysisIntroPopup from "@/components/personality/popups/PersonalityAnalysisIntroPopup";
 import CompletedMessage from "@/components/personality/analysis/CompletionNotice";
 import { getPersonalityQuestions } from "@/utils/personalityAnalysis";
 

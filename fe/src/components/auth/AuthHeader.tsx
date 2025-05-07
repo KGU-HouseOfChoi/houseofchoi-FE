@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import GuestConfirmPopup from "@/components/auth/popup/GuestConfirmPopup";
+import GuestConfirmPopup from "@/components/auth/popups/GuestConfirmPopup";
 
 export default function AuthHeader() {
   const router = useRouter();

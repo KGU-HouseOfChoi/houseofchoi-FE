@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
-import CarrierPopup from "../popup/CarrierPopup";
+import CarrierPopup from "../popups/CarrierPopup";
 import CarrierInput from "../inputs/CarrierInput";
 
 export default function Step3_Carrier() {

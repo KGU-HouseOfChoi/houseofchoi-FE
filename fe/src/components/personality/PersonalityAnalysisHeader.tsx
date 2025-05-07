@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import LogoutConfirmPopup from "@/components/auth/popup/LogoutConfirmPopup";
+import LogoutConfirmPopup from "@/components/auth/popups/LogoutConfirmPopup";
 
 export default function PersonalityAnalysisHeader() {
   const [isLogoutPopupOpen, setIsLogoutPopupOpen] = useState(false);

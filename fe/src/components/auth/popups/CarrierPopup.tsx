@@ -1,6 +1,6 @@
 "use client";
 
-import BottomPopup from "../../common/popup/BottomPopup";
+import BottomPopup from "../../common/popups/BottomPopup";
 import { X } from "lucide-react";
 
 interface CarrierPopupProps {
