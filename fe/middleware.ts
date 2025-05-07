@@ -5,7 +5,7 @@ export function middleware(req: NextRequest) {
   const accessToken = req.cookies.get("accessToken");
 
   if (!accessToken) {
-    return NextResponse.redirect(new URL("/gest", req.url));
+    return NextResponse.redirect(new URL("/guest", req.url));
   }
 
   return NextResponse.next();
