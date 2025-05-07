@@ -8,17 +8,14 @@ export async function getPersonalityQuestions() {
   const res = await axiosAiInstance.get("/personality/analysis");
   console.log("✅ getPersonalityQuestions 응답:", res.data);
 
-  // 응답에 mbti → 분석 완료된 사용자
   if (res.data && "mbti" in res.data) {
     return res.data; // { mbti: string, personality_tags: string[] }
   }
 
-  // 응답에 data → 질문 배열
   if (res.data && Array.isArray(res.data.data)) {
     return res.data.data; // QuestionItem[]
   }
 
-  // fallback → 빈 배열
   return [];
 }
 

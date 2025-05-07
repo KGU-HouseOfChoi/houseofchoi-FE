@@ -35,6 +35,7 @@ export default function QuestionNavigator({
 
   useEffect(() => {
     async function fetchQuestions() {
+      setLoading(true);
       try {
         const data = await getPersonalityQuestions();
         console.log("✅ getPersonalityQuestions 응답:", data);

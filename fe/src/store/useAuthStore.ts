@@ -22,7 +22,6 @@ interface AuthState {
     >
   >;
 
-  // methods
   setStep: (step: number) => void;
   nextStep: () => void;
   setField: <
