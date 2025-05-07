@@ -18,16 +18,16 @@ export default function CarrierPopup({
 }: CarrierPopupProps) {
   return (
     <BottomPopup isOpen={isOpen} onClose={onClose}>
-      <div className="relative pt-6 pb-3">
+      <div className="relative w-full max-w-[327px] mx-auto pt-6 pb-3">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1 rounded hover:bg-gray-100"
+          className="absolute top-4 right-4 p-1 rounded hover:bg-bgColor-surface"
           aria-label="닫기"
         >
-          <X className="w-6 h-6 text-gray-400" />
+          <X className="w-6 h-6 text-iconColor-sub" />
         </button>
 
-        <h3 className="text-xl font-semibold text-gray-900 text-left px-6 mb-6">
+        <h3 className="text-xl font-semibold text-textColor-heading text-left px-6 mb-6">
           통신사를 선택해주세요
         </h3>
 
@@ -36,8 +36,8 @@ export default function CarrierPopup({
             <button
               key={carrier}
               onClick={() => onSelect(carrier)}
-              className="w-full text-left py-4 px-6 text-lg text-gray-800 transition
-                         hover:bg-gray-100 active:bg-gray-200"
+              className="w-full text-left py-4 px-6 text-lg text-textColor-body transition-colors
+                         hover:bg-bgColor-light active:bg-bgColor-surface"
             >
               {carrier}
             </button>

@@ -103,9 +103,12 @@ export default function Step5_VerificationCode({
 
   return (
     <>
-      <div className="flex flex-col gap-4 pb-[70px]">
+      <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <label htmlFor="verificationCode" className="text-xl text-gray-500">
+          <label
+            htmlFor="verificationCode"
+            className="text-xl text-textColor-sub"
+          >
             인증번호
           </label>
 
@@ -119,15 +122,21 @@ export default function Step5_VerificationCode({
               onChange={(e) => handleVerify(e.target.value)}
               placeholder="6자리 입력"
               maxLength={6}
-              className={`w-full px-4 py-4 pr-[80px] rounded-[16px] border-2 text-base outline-none transition
-                ${error ? "border-red-400" : code ? "border-brand-normal" : "border-gray-300"}`}
+              className={`w-full px-4 py-3 pr-20 rounded-xl border-2 text-base outline-none transition-colors
+                ${
+                  error
+                    ? "border-danger-50"
+                    : code
+                      ? "border-brand-normal"
+                      : "border-borderColor-default"
+                }`}
               autoFocus
             />
             <span
               className={`absolute top-1/2 right-4 -translate-y-1/2 text-sm font-medium ${
                 secondsLeft < 30
-                  ? "text-red-500 animate-pulse"
-                  : "text-gray-500"
+                  ? "text-danger-50 animate-pulse"
+                  : "text-iconColor-default"
               }`}
             >
               {Math.floor(secondsLeft / 60)}:
@@ -135,17 +144,19 @@ export default function Step5_VerificationCode({
             </span>
           </div>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {error && (
+            <p className="text-danger-50 text-sm font-medium">{error}</p>
+          )}
         </div>
 
         <button
           disabled={!canResend}
           onClick={handleResend}
-          className={`px-3 py-2 border rounded-md text-sm font-semibold transition
+          className={`px-3 py-2 border rounded-lg text-sm font-semibold transition-colors
             ${
               canResend
                 ? "text-brand-normal border-brand-normal hover:bg-brand-normal hover:text-white"
-                : "text-gray-400 border-gray-300 cursor-not-allowed"
+                : "text-iconColor-disabled border-borderColor-default cursor-not-allowed"
             }`}
         >
           인증번호 다시 받기

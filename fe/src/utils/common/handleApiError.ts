@@ -30,13 +30,13 @@ export function handleApiError(
         fallbackMessage,
       );
 
-      if (status === 401 || status === 403) {
+      if (status === 401) {
         console.warn("토큰 만료 → 로그아웃 처리");
         const { reset } = useAuthStore.getState();
         reset();
 
         if (router && typeof router.push === "function") {
-          router.push("/onbording");
+          router.push("/guest");
         }
       }
 

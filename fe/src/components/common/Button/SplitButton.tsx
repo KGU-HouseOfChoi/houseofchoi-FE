@@ -21,7 +21,7 @@ export default function SplitButton({
         onClick={onClickLeft}
         className="w-1/3 h-full px-4 bg-grayscale-10 text-textColor-body text-2xl font-semibold font-pretendard
           flex justify-center items-center gap-2
-          hover-supported:bg-gray-200 active:bg-gray-300"
+          hover:bg-grayscale-20 active:bg-grayscale-30"
       >
         {left}
       </button>
@@ -31,8 +31,8 @@ export default function SplitButton({
         disabled={rightDisabled}
         className="w-2/3 h-full px-4 bg-brand-normal text-white text-2xl font-semibold font-pretendard
           flex justify-center items-center gap-2
-          hover-supported:bg-brand-hover active:bg-brand-active
-          disabled:bg-gray-300 disabled:cursor-not-allowed"
+          hover:bg-brand-hover active:bg-brand-active
+          disabled:bg-grayscale-30 disabled:cursor-not-allowed"
       >
         {right}
       </button>

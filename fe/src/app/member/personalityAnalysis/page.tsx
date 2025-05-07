@@ -1,13 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useAuthStore } from "@/store/useAuthStore";
 import QuestionNavigator from "@/components/personalityAnalysis/Analysis/QuestionNavigator";
 import PersonalityAnalysisHeader from "@/components/personalityAnalysis/PersonalityAnalysisHeader";
 import PersonalityAnalysisIntroPopup from "@/components/personalityAnalysis/Popup/PersonalityAnalysisIntroPopup";
 
 export default function PersonalityAnalysisPage() {
-  const { userId } = useAuthStore();
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
@@ -15,11 +13,11 @@ export default function PersonalityAnalysisPage() {
   }, []);
 
   return (
-    <main className="relative min-h-screen bg-grayscale-0 flex flex-col items-center justify-center px-6 text-center">
+    <main className="relative min-h-screen bg-bgColor-default flex flex-col items-center px-4 text-center">
       <PersonalityAnalysisHeader />
 
-      <div className="w-full max-w-md pt-[72px] pb-[108px] flex flex-col items-center justify-center">
-        <QuestionNavigator userId={userId} />
+      <div className="w-full max-w-[327px] pt-20 pb-28 flex flex-col items-center">
+        <QuestionNavigator />
       </div>
 
       <PersonalityAnalysisIntroPopup

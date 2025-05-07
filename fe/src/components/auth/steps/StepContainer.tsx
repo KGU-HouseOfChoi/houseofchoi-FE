@@ -14,20 +14,22 @@ import { sendSMS } from "@/apis/auth/auth";
 import Toast from "@/components/common/Toast";
 import { handleApiError } from "@/utils/common/handleApiError";
 
-export default function StepContainer() {
-  const { step, phoneNumber } = useAuthStore();
+interface StepContainerProps {
+  onNext?: () => void;
+}
+
+export default function StepContainer({ onNext }: StepContainerProps) {
+  const { step, errors, phoneNumber, setStep } = useAuthStore();
   const router = useRouter();
   const [showConsent, setShowConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
 
-  const isValidPhone = /^01[016789][0-9]{7,8}$/.test(phoneNumber);
-
   const handleBottomClick = () => {
     if (step === 4) {
-      if (!isValidPhone) {
-        setError("유효한 전화번호를 입력해주세요");
+      if (errors.phoneNumber) {
+        setError(errors.phoneNumber);
         return;
       }
       setShowConsent(true);
@@ -39,7 +41,11 @@ export default function StepContainer() {
     try {
       await sendSMS(phoneNumber, router);
       setShowConsent(false);
-      router.push("/auth/verify");
+      if (onNext) {
+        onNext();
+      } else {
+        setStep(5);
+      }
     } catch (error) {
       const errorMessage = handleApiError(
         error,
@@ -74,8 +80,10 @@ export default function StepContainer() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-white px-6 pt-[100px] pb-[150px] flex flex-col gap-10">
-      <h2 className="text-2xl font-semibold text-black">{renderTitle()}</h2>
+    <div className="min-h-screen w-full bg-bgColor-default px-0 flex flex-col gap-10">
+      <h2 className="text-2xl font-semibold text-textColor-heading">
+        {renderTitle()}
+      </h2>
 
       {step === 5 ? (
         <Step5_VerificationCode
@@ -95,7 +103,7 @@ export default function StepContainer() {
 
           <BottomButton
             onClick={handleBottomClick}
-            disabled={step < 4 || !isValidPhone || loading}
+            disabled={step < 4 || loading}
           >
             {loading ? "처리 중..." : "인증번호 받기"}
           </BottomButton>

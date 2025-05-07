@@ -14,28 +14,25 @@ export default function BottomNavBar() {
   const pathname = usePathname();
   const router = useRouter();
   const { isGuest, hydrated } = useAuth();
-
   const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   if (!hydrated) return null;
 
-  // ✅ 게스트/회원용 nav 항목 분리
-  const navItems = isGuest
-    ? [
-        { label: "처음", href: "/", icon: HomeIcon },
-        { label: "일정", href: "/member/schedule", icon: CalendarIcon },
-        { label: "대화", href: "/member/chatbot", icon: MessagesIcon },
-        { label: "설정", href: "/member/mypage", icon: ProfileIcon },
-      ]
-    : [
-        { label: "처음", href: "/member", icon: HomeIcon },
-        { label: "일정", href: "/member/schedule", icon: CalendarIcon },
-        { label: "대화", href: "/member/chatbot", icon: MessagesIcon },
-        { label: "설정", href: "/member/mypage", icon: ProfileIcon },
-      ];
+  const navItems = [
+    {
+      label: "처음",
+      href: isGuest ? "/guest" : "/member",
+      icon: HomeIcon,
+    },
+    { label: "일정", href: "/member/schedule", icon: CalendarIcon },
+    { label: "대화", href: "/member/chatbot", icon: MessagesIcon },
+    { label: "설정", href: "/member/mypage", icon: ProfileIcon },
+  ];
 
   const handleNavClick = (href: string) => {
-    if (isGuest && href !== "/") {
+    const isProtected =
+      !href.startsWith("/guest") && href !== (isGuest ? "/guest" : "/member");
+    if (isGuest && isProtected) {
       setShowLoginPopup(true);
     } else {
       router.push(href);
