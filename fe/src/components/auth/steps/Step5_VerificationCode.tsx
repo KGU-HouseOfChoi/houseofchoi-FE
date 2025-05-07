@@ -6,7 +6,7 @@ import axios, { AxiosError } from "axios";
 import Toast from "@/components/common/Toast";
 import { sendSMS } from "@/apis/auth/auth";
 import { useAuthStore } from "@/store/useAuthStore";
-import BottomButton from "@/components/common/button/BottomButton";
+import BottomButton from "@/components/common/buttons/BottomButton";
 
 interface Step5VerificationProps {
   code: string;

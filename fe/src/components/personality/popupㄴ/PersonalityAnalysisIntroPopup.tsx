@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Info, X } from "lucide-react";
 import BottomPopup from "@/components/common/popups/BottomPopup";
 import PopupButtons from "@/components/common/buttons/PopupButtons";
-import LogoutConfirmPopup from "@/components/auth/popup/LogoutConfirmPopup";
+import LogoutConfirmPopup from "@/components/auth/popups/LogoutConfirmPopup";
 
 interface PersonalityAnalysisIntroPopupProps {
   isOpen: boolean;

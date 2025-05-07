@@ -9,7 +9,7 @@ import Step3_Carrier from "./Step3_Carrier";
 import Step4_PhoneNumber from "./Step4_PhoneNumber";
 import Step5_VerificationCode from "./Step5_VerificationCode";
 import ConsentPopup from "../popup/ConsentPopup";
-import BottomButton from "../../common/button/BottomButton";
+import BottomButton from "../../common/buttons/BottomButton";
 import { sendSMS } from "@/apis/auth/auth";
 import Toast from "@/components/common/Toast";
 import { handleApiError } from "@/utils/common/handleApiError";
