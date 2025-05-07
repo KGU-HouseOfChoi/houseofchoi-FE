@@ -16,7 +16,7 @@ export default function OnboardingHeader({ current, total }: Props) {
           {current} / {total}
         </span>
         <button
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/guest")}
           className="inline-flex items-center gap-1 text-lg text-textColor-sub hover:text-brand-normal"
         >
           <span>건너뛰기</span>

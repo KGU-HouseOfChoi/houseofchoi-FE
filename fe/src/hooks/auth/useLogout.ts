@@ -8,8 +8,14 @@ export function useLogout() {
 
   const logout = async (redirectPath = "/guest") => {
     try {
+      const accessToken = useAuthStore.getState().accessToken;
+
       await fetch("/v1/auth/logout", {
         method: "POST",
+        headers: {
+          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+          "Content-Type": "application/json",
+        },
         credentials: "include",
       });
 

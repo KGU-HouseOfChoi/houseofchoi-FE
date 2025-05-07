@@ -1,31 +1,36 @@
-import ActivityCard from "./ActivityCard";
+"use client";
 
-const mockData = [
-  {
-    imageUrl: "/images/logo.svg",
-    title: "요가 클래스",
-    location: "서초동 복지관",
-  },
-  {
-    imageUrl: "/images/logo.svg",
-    title: "스마트폰 교실",
-    location: "강남 노인회관",
-  },
-];
+import { useEffect, useState } from "react";
+import ActivityCard from "./ActivityCard";
+import { fetchProgramList, Program } from "@/apis/main/program";
 
 export default function ActivityCardList() {
+  const [programs, setPrograms] = useState<Program[]>([]);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await fetchProgramList();
+        setPrograms(data.slice(0, 5));
+      } catch (error) {
+        console.error("활동 목록 불러오기 실패:", error);
+      }
+    }
+
+    loadData();
+  }, []);
+
   return (
     <section className="flex flex-col items-center gap-5">
-      {mockData.map((item, idx) => (
+      {programs.map((program) => (
         <ActivityCard
-          key={idx}
-          imageUrl={item.imageUrl}
-          title={item.title}
-          location={item.location}
+          key={program.id}
+          imageUrl="/images/logo.svg"
+          title={program.name}
+          location={program.centerName}
         />
       ))}
 
-      {/* 리스트 끝 안내 */}
       <div className="mt-8 mb-32 text-textColor-disabled text-center text-xl">
         추천 활동은 여기까지입니다!
       </div>

@@ -33,12 +33,12 @@ export default function Step3_Carrier() {
   }, [step, carrier, errors.carrier, nextStep]);
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-[327px] mx-auto">
+    <div>
       <CarrierInput
         value={carrier}
         onClick={() => setOpen(!open)}
         error={errors.carrier}
-        isOpen={open} // 아이콘 전환용 prop (CarrierInput에서 활용)
+        isOpen={open}
       />
 
       <CarrierPopup

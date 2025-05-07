@@ -1,5 +1,6 @@
 import axiosInstance from "../common/axiosMainInstance";
 import { handleApiError } from "@/utils/common/handleApiError";
+import { useAuthStore } from "@/store/useAuthStore";
 import type { AxiosResponse } from "axios";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
@@ -8,9 +9,7 @@ export async function sendSMS(
   router?: AppRouterInstance,
 ): Promise<void> {
   try {
-    await axiosInstance.post("/v1/auth/send-sms", {
-      phoneNum: phone,
-    });
+    await axiosInstance.post("/v1/auth/send-sms", { phoneNum: phone });
 
     if (process.env.NODE_ENV !== "production") {
       console.log("인증번호 전송 성공");
@@ -38,6 +37,8 @@ export interface SignUpAPIResponse {
     gender: string;
     role: string | null;
     userCode: string;
+    accessToken: string;
+    refreshToken: string;
   };
 }
 
@@ -54,6 +55,12 @@ export async function signUpAPI(
       "/v1/auth/sign-up",
       data,
     );
+
+    // ✅ accessToken, refreshToken 저장
+    const { accessToken, refreshToken } = res.data.data;
+    const store = useAuthStore.getState();
+    store.setAccessToken(accessToken);
+    store.setRefreshToken(refreshToken);
 
     return res.data;
   } catch (error) {

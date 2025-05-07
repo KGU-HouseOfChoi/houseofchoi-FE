@@ -100,8 +100,8 @@ export default function ConsentPopup({
             disabled={loading}
             className={`flex-1 py-3 rounded-xl font-semibold transition-colors ${
               (!scrolledToBottom && loading) || loading
-                ? "bg-borderColor-strong text-white cursor-not-allowed"
-                : "bg-brand-normal text-white hover:bg-brand-hover active:bg-brand-active"
+                ? "bg-borderColor-strong text-textColor-white cursor-not-allowed"
+                : "bg-brand-normal text-textColor-white hover:bg-brand-hover active:bg-brand-active"
             }`}
           >
             {loading

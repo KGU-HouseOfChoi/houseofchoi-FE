@@ -2,8 +2,7 @@ import axiosInstance from "@/apis/common/axiosMainInstance";
 import { useAuthStore } from "@/store/useAuthStore";
 
 /**
- * 로그인된 사용자의 이름을 조회하는 API
- * @returns 사용자 이름 (string)
+ @returns 사용자 이름 (string)
  */
 export async function getUserName(): Promise<string> {
   const token = useAuthStore.getState().accessToken;
@@ -19,8 +18,18 @@ export async function getUserName(): Promise<string> {
       },
     });
 
-    return res.data.data; // 백엔드 응답 형태에 따라 조정 필요
-  } catch (error) {
+    const { success, data, message } = res.data;
+
+    if (!success) {
+      throw new Error(message || "이름 조회에 실패했습니다.");
+    }
+
+    return data;
+  } catch (error: any) {
+    if (error.response?.data?.message) {
+      throw new Error(error.response.data.message);
+    }
+
     console.error("사용자 이름 조회 실패:", error);
     throw new Error("사용자 이름을 불러오는 데 실패했습니다.");
   }

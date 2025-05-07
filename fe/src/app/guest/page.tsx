@@ -8,15 +8,20 @@ import SearchBar from "@/components/home/SearchBar";
 import ActivityCardList from "@/components/home/ActivityCardList";
 import BottomNavBar from "@/components/common/BottomNavBar";
 import LoginGuidePopup from "@/components/auth/popup/LoginGuidePopup";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function Home() {
-  const [isGuest, setIsGuest] = useState(false);
+  const [isGuest, setIsGuest] = useState(true); // 기본값 true
   const [showLoginModal, setShowLoginModal] = useState(false);
   const router = useRouter();
+  const resetAuth = useAuthStore((state) => state.reset);
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    setIsGuest(!token);
+    // ✅ 진입 시 상태 초기화 (의도적으로 비회원 상태)
+    resetAuth();
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    setIsGuest(true);
   }, []);
 
   const handleProtectedClick = () => {
