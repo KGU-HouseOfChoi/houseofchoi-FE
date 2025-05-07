@@ -11,20 +11,21 @@ import ProgressIndicator from "./ProgressIndicator";
 import SplitButton from "@/components/common/Button/SplitButton";
 import { handleApiError } from "@/utils/common/handleApiError";
 
-interface Question {
+interface QuestionItem {
   question: string;
   choices: string[];
 }
 
 export default function QuestionNavigator() {
   const router = useRouter();
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<QuestionItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<(string | null)[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchQuestions() {
+      setLoading(true);
       try {
         const data = await getPersonalityQuestions();
         console.log("✅ 질문 개수:", data.length);
@@ -58,10 +59,8 @@ export default function QuestionNavigator() {
 
         console.log("✅ 최종 제출 answers (A/B만):", cleanedAnswers);
 
-        if (cleanedAnswers.length !== 13) {
-          throw new Error(
-            `⚠️ 제출 오류: 답변 개수가 ${cleanedAnswers.length}개입니다. 13개가 필요합니다.`,
-          );
+        if (cleanedAnswers.includes("")) {
+          throw new Error("⚠️ 제출 오류: 모든 질문에 답변해주세요.");
         }
 
         await postPersonalityAnalyze(cleanedAnswers);
