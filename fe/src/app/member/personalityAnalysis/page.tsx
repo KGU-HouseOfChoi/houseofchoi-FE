@@ -4,26 +4,50 @@ import { useState, useEffect } from "react";
 import QuestionNavigator from "@/components/personalityAnalysis/Analysis/QuestionNavigator";
 import PersonalityAnalysisHeader from "@/components/personalityAnalysis/PersonalityAnalysisHeader";
 import PersonalityAnalysisIntroPopup from "@/components/personalityAnalysis/Popup/PersonalityAnalysisIntroPopup";
+import CompletedMessage from "@/components/personalityAnalysis/Analysis/CompletionNotice";
+import { getPersonalityQuestions } from "@/utils/personalityAnalysis";
 
 export default function PersonalityAnalysisPage() {
-  const [showPopup, setShowPopup] = useState(false);
+  const [showIntroPopup, setShowIntroPopup] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {
-    setShowPopup(true);
+    async function checkIfCompleted() {
+      try {
+        const data = await getPersonalityQuestions();
+        console.log("✅ getPersonalityQuestions 응답:", data);
+
+        if (!Array.isArray(data)) {
+          setIsCompleted(true);
+        }
+      } catch (error) {
+        console.error("질문 불러오기 에러:", error);
+      } finally {
+        setShowIntroPopup(true);
+      }
+    }
+
+    checkIfCompleted();
   }, []);
 
   return (
-    <main className="relative min-h-screen bg-bgColor-default flex flex-col items-center px-4 text-center">
-      <PersonalityAnalysisHeader />
+    <main className="relative min-h-screen bg-white flex flex-col items-center px-4 text-center">
+      {!isCompleted && <PersonalityAnalysisHeader />}
 
-      <div className="w-full max-w-[327px] pt-20 pb-28 flex flex-col items-center">
-        <QuestionNavigator />
+      <div className="w-full max-w-[327px] flex flex-col items-center">
+        {isCompleted ? (
+          <CompletedMessage version="alreadyCompleted" />
+        ) : (
+          <QuestionNavigator setIsCompleted={setIsCompleted} />
+        )}
       </div>
 
-      <PersonalityAnalysisIntroPopup
-        isOpen={showPopup}
-        onClose={() => setShowPopup(false)}
-      />
+      {!isCompleted && (
+        <PersonalityAnalysisIntroPopup
+          isOpen={showIntroPopup}
+          onClose={() => setShowIntroPopup(false)}
+        />
+      )}
     </main>
   );
 }

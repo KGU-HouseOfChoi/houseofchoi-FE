@@ -11,6 +11,10 @@ interface AuthState {
   verificationCode: string;
   isNewUser: boolean;
   isLoggedIn: boolean;
+  accessToken: string | null;
+  refreshToken: string | null;
+  isAnalyzed: boolean;
+
   errors: Partial<
     Record<
       "name" | "birthday" | "phoneNumber" | "carrier" | "verificationCode",
@@ -18,13 +22,13 @@ interface AuthState {
     >
   >;
 
+  // methods
   setStep: (step: number) => void;
   nextStep: () => void;
   setField: <
-    K extends Exclude<
-      keyof AuthState,
+    K extends keyof Omit<
+      AuthState,
       | "errors"
-      | "step"
       | "setStep"
       | "nextStep"
       | "setField"
@@ -32,9 +36,12 @@ interface AuthState {
       | "clearError"
       | "setIsNewUser"
       | "setIsLoggedIn"
+      | "setAccessToken"
+      | "setRefreshToken"
       | "reset"
       | "resetSignupState"
       | "setUserInfo"
+      | "setIsAnalyzed"
     >,
   >(
     field: K,
@@ -46,6 +53,9 @@ interface AuthState {
   clearError: (field: keyof AuthState["errors"]) => void;
   setIsNewUser: (value: boolean) => void;
   setIsLoggedIn: (value: boolean) => void;
+  setAccessToken: (token: string | null) => void;
+  setRefreshToken: (token: string | null) => void;
+  setIsAnalyzed: (value: boolean) => void;
 
   reset: () => void;
   resetSignupState: () => void;
@@ -63,30 +73,30 @@ export const useAuthStore = create<AuthState>()(
       verificationCode: "",
       isNewUser: false,
       isLoggedIn: false,
+      accessToken: null,
+      refreshToken: null,
+      isAnalyzed: false,
       errors: {},
 
       setStep: (newStep) => set(() => ({ step: newStep })),
-
       nextStep: () => set((state) => ({ step: state.step + 1 })),
-
       setField: (field, value) => set(() => ({ [field]: value })),
-
       setUserInfo: (name, userId) => set(() => ({ name, userId })),
-
       setError: (field, message) =>
         set((state) => ({
           errors: { ...state.errors, [field]: message },
         })),
-
       clearError: (field) =>
         set((state) => {
           const copy = { ...state.errors };
           delete copy[field];
           return { errors: copy };
         }),
-
       setIsNewUser: (value) => set({ isNewUser: value }),
       setIsLoggedIn: (value) => set({ isLoggedIn: value }),
+      setAccessToken: (token) => set({ accessToken: token }),
+      setRefreshToken: (token) => set({ refreshToken: token }),
+      setIsAnalyzed: (value) => set({ isAnalyzed: value }),
 
       reset: () =>
         set(() => ({
@@ -99,6 +109,9 @@ export const useAuthStore = create<AuthState>()(
           verificationCode: "",
           isNewUser: false,
           isLoggedIn: false,
+          accessToken: null,
+          refreshToken: null,
+          isAnalyzed: false,
           errors: {},
         })),
 
@@ -114,6 +127,9 @@ export const useAuthStore = create<AuthState>()(
           errors: {},
           isLoggedIn: state.isLoggedIn,
           userId: state.userId,
+          accessToken: state.accessToken,
+          refreshToken: state.refreshToken,
+          isAnalyzed: state.isAnalyzed,
         })),
     }),
     {
@@ -121,6 +137,9 @@ export const useAuthStore = create<AuthState>()(
       partialize: (state) => ({
         isLoggedIn: state.isLoggedIn,
         userId: state.userId,
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
+        isAnalyzed: state.isAnalyzed,
       }),
     },
   ),
