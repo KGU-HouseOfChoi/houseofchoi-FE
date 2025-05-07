@@ -16,6 +16,14 @@ interface QuestionItem {
   choices: string[];
 }
 
+/**
+ * Displays and manages the flow of a multi-question personality questionnaire.
+ *
+ * Fetches questions, tracks user answers, and handles navigation between questions. Submits the completed answers for analysis and redirects the user upon successful submission.
+ *
+ * @remark
+ * If any question is left unanswered upon submission, an error is thrown and handled via {@link handleApiError}.
+ */
 export default function QuestionNavigator() {
   const router = useRouter();
   const [questions, setQuestions] = useState<QuestionItem[]>([]);

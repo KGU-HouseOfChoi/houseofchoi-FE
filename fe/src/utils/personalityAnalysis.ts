@@ -1,7 +1,9 @@
 import axiosAiInstance from "@/apis/common/axiosAiInstance";
 
 /**
- * 성향 질문 목록 가져오기
+ * Retrieves the list of personality analysis questions from the API.
+ *
+ * @returns The response data containing personality questions.
  */
 export async function getPersonalityQuestions() {
   const res = await axiosAiInstance.get("/personality/analysis");
@@ -9,8 +11,12 @@ export async function getPersonalityQuestions() {
 }
 
 /**
- * 성향 분석 결과 요청
- * @param answers A/B 배열 (길이 13)
+ * Submits a set of 13 "A" or "B" answers for personality analysis and returns the analysis result.
+ *
+ * @param answers - An array of strings representing answers, each being "A" or "B".
+ * @returns The result of the personality analysis from the API.
+ *
+ * @throws {Error} If the filtered {@link answers} array does not contain exactly 13 "A" or "B" values.
  */
 export async function postPersonalityAnalyze(answers: string[]) {
   const cleanedAnswers = answers.filter((ans) => ans === "A" || ans === "B");

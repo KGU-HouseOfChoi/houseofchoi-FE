@@ -9,6 +9,16 @@ interface QuestionProps {
   onSelect: (choice: string) => void;
 }
 
+/**
+ * Renders a multiple-choice question with selectable answer options.
+ *
+ * Displays the provided question text and a list of choices, allowing the user to select one. When a choice is selected, the {@link onSelect} callback is invoked with the selected choice.
+ *
+ * @param question - The question text to display.
+ * @param choices - The array of possible answer choices.
+ * @param selected - The currently selected choice, or null if none is selected.
+ * @param onSelect - Callback invoked with the selected choice when a choice is clicked.
+ */
 export default function Question({
   question,
   choices,

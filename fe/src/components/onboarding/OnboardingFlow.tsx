@@ -30,6 +30,11 @@ const slides = [
   },
 ];
 
+/**
+ * Renders a multi-step onboarding flow with navigation controls and slide content.
+ *
+ * Displays a sequence of onboarding slides, allowing users to navigate forward and backward through the steps. On completion, redirects to the guest page.
+ */
 export default function OnboardingFlow() {
   const [current, setCurrent] = useState(0);
   const router = useRouter();

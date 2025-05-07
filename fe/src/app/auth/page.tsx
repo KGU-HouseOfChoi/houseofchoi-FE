@@ -9,6 +9,11 @@ import Step5_VerificationCode from "@/components/auth/steps/Step5_VerificationCo
 import Toast from "@/components/common/Toast";
 import AuthHeader from "@/components/auth/AuthHeader";
 
+/**
+ * Renders the authentication page with a two-step signup and verification flow.
+ *
+ * Displays a signup form followed by a verification code input. On successful verification, completes the signup process and navigates to the completion page. Shows error messages as toast notifications if verification or signup fails.
+ */
 export default function AuthPage() {
   const router = useRouter();
   const { name, birthday, carrier, phoneNumber } = useAuthStore();

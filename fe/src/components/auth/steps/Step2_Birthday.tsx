@@ -3,6 +3,11 @@
 import { useAuthStore } from "@/store/useAuthStore";
 import BirthdayInput from "../inputs/BirthdayInput";
 
+/**
+ * React component for the second registration step, handling and validating a South Korean resident registration number birthday input.
+ *
+ * Renders a birthday input field, validates the input format and date, displays relevant error messages, and advances to the next step upon successful validation.
+ */
 export default function Step2_Birthday() {
   const { birthday, setField, step, setError, clearError, errors, nextStep } =
     useAuthStore();

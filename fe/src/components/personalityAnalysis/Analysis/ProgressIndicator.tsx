@@ -5,6 +5,12 @@ interface ProgressIndicatorProps {
   total: number;
 }
 
+/**
+ * Displays the current progress as a formatted "current/total" indicator.
+ *
+ * @param current - The current progress value.
+ * @param total - The total value representing completion.
+ */
 export default function ProgressIndicator({
   current,
   total,

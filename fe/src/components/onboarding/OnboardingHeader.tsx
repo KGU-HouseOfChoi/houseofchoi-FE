@@ -5,6 +5,14 @@ interface Props {
   total: number;
 }
 
+/**
+ * Displays an onboarding header with the current step, total steps, a skip button, and a progress bar.
+ *
+ * Renders the current onboarding progress as both text and a visual progress bar. Includes a button that navigates to the home page when clicked.
+ *
+ * @param current - The current onboarding step (1-based).
+ * @param total - The total number of onboarding steps.
+ */
 export default function OnboardingHeader({ current, total }: Props) {
   const router = useRouter();
   const progress = (current / total) * 100;

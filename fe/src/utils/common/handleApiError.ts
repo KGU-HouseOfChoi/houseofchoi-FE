@@ -11,6 +11,17 @@ function extractErrorMessage(
   return fallbackMessage;
 }
 
+/**
+ * Handles errors from API calls, extracting and throwing a user-friendly error message.
+ *
+ * If the error is an Axios error with a response, extracts the HTTP status and message. For a 401 Unauthorized status, resets authentication state and redirects to the "/guest" route if a router is provided. Throws a new error with the extracted or fallback message. Handles generic JavaScript errors and unknown error types by throwing an appropriate error message.
+ *
+ * @param error - The error object thrown during an API call.
+ * @param fallbackMessage - The message to use if no specific error message can be extracted.
+ * @param router - Optional Next.js router instance for navigation on authentication failure.
+ *
+ * @throws {Error} Always throws an error with a relevant message based on the error type and context.
+ */
 export function handleApiError(
   error: unknown,
   fallbackMessage: string,

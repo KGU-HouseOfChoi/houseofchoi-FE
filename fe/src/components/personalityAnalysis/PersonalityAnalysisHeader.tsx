@@ -3,6 +3,9 @@
 import { useState } from "react";
 import LogoutConfirmPopup from "@/components/auth/popup/LogoutConfirmPopup";
 
+/**
+ * Renders the header section for the personality analysis page, including a title and a logout button that opens a confirmation popup.
+ */
 export default function PersonalityAnalysisHeader() {
   const [isLogoutPopupOpen, setIsLogoutPopupOpen] = useState(false);
 

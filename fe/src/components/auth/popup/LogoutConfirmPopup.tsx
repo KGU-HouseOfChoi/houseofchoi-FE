@@ -11,6 +11,15 @@ interface LogoutConfirmPopupProps {
   redirectPath?: string;
 }
 
+/**
+ * Displays a popup dialog prompting the user to confirm logout, with optional redirection after logout.
+ *
+ * Renders a modal with cancel and confirm buttons. On confirmation, logs the user out and redirects to the specified path. If a toast message is present after logout, it is displayed at the bottom of the screen.
+ *
+ * @param isOpen - Whether the popup is visible.
+ * @param onClose - Callback to close the popup.
+ * @param redirectPath - Optional path to redirect to after logout (defaults to "/guest").
+ */
 export default function LogoutConfirmPopup({
   isOpen,
   onClose,

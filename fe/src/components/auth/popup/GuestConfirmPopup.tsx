@@ -10,6 +10,16 @@ interface GuestConfirmPopupProps {
   onConfirm: () => void;
 }
 
+/**
+ * Displays a modal popup prompting the user to confirm whether to continue as a guest.
+ *
+ * Renders a bottom-anchored popup with informational content and two actions: confirming guest access or canceling to proceed with registration.
+ *
+ * @param isOpen - Controls the visibility of the popup.
+ * @param onClose - Callback invoked when the popup is closed or the cancel action is selected.
+ * @param onConfirm - Callback invoked when the user confirms to continue as a guest.
+ * @returns The guest confirmation popup component.
+ */
 export default function GuestConfirmPopup({
   isOpen,
   onClose,

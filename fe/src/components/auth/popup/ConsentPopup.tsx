@@ -10,6 +10,17 @@ interface ConsentPopupProps {
   loading?: boolean;
 }
 
+/**
+ * Displays a modal popup requiring users to review and consent to service terms before proceeding.
+ *
+ * The popup presents a scrollable list of consent clauses and enforces that users scroll to the bottom before allowing confirmation. Includes cancel and confirm actions, with dynamic button states and labels based on scroll and loading status.
+ *
+ * @param onCancel - Callback invoked when the popup is closed or canceled.
+ * @param onConfirm - Callback invoked when the user confirms consent after scrolling to the bottom.
+ * @param loading - Optional. Indicates if a loading state is active, disabling actions and updating button labels.
+ *
+ * @remark The confirm button scrolls to the bottom of the consent text if clicked before the user has reached the end, and only triggers confirmation once the bottom has been reached.
+ */
 export default function ConsentPopup({
   onCancel,
   onConfirm,

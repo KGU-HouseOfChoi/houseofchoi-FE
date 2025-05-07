@@ -10,6 +10,14 @@ interface LoginGuidePopupProps {
   onClose: () => void;
 }
 
+/**
+ * Displays a modal popup guiding users to log in, with options to proceed to authentication or dismiss the popup.
+ *
+ * @param isOpen - Controls whether the popup is visible.
+ * @param onClose - Callback invoked to close the popup.
+ *
+ * @returns The rendered login guide popup component.
+ */
 export default function LoginGuidePopup({
   isOpen,
   onClose,

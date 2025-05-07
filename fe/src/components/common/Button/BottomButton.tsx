@@ -8,6 +8,15 @@ interface BottomButtonProps {
   disabled?: boolean;
 }
 
+/**
+ * Renders a fixed-position button centered at the bottom of the viewport.
+ *
+ * The button displays the provided content and supports optional click handling and disabled state styling.
+ *
+ * @param children - The content to display inside the button.
+ * @param onClick - Optional handler for button click events.
+ * @param disabled - Whether the button is disabled. Defaults to false.
+ */
 export default function BottomButton({
   children,
   onClick,

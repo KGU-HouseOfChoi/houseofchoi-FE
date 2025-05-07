@@ -7,6 +7,16 @@ interface OnboardingSlideProps {
   isProgressSlide?: boolean;
 }
 
+/**
+ * Displays a centered onboarding slide with an image, optional title, and description.
+ *
+ * Renders a full-screen, vertically and horizontally centered layout. The slide includes a fixed-size image, an optional bolded title, and a description with preserved line breaks. Additional top padding is applied if the slide is marked as a progress slide.
+ *
+ * @param image - The URL or path of the image to display.
+ * @param title - Optional title text shown above the description.
+ * @param description - Description text displayed below the title.
+ * @param isProgressSlide - Optional flag to add extra top padding for progress slides.
+ */
 export default function OnboardingStep({
   image,
   title,

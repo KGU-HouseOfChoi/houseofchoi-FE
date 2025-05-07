@@ -5,6 +5,11 @@ import QuestionNavigator from "@/components/personalityAnalysis/Analysis/Questio
 import PersonalityAnalysisHeader from "@/components/personalityAnalysis/PersonalityAnalysisHeader";
 import PersonalityAnalysisIntroPopup from "@/components/personalityAnalysis/Popup/PersonalityAnalysisIntroPopup";
 
+/**
+ * Renders the personality analysis page with a header, question navigator, and an introductory popup.
+ *
+ * Displays the introductory popup automatically when the page loads. The popup can be dismissed by the user.
+ */
 export default function PersonalityAnalysisPage() {
   const [showPopup, setShowPopup] = useState(false);
 

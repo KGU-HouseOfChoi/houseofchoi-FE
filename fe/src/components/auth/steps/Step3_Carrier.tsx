@@ -5,6 +5,11 @@ import { useAuthStore } from "@/store/useAuthStore";
 import CarrierPopup from "../popup/CarrierPopup";
 import CarrierInput from "../inputs/CarrierInput";
 
+/**
+ * React component for selecting a mobile carrier during step 3 of an authentication or registration flow.
+ *
+ * Opens a carrier selection popup when required, validates the user's selection, manages error states, and automatically advances to the next step when a valid carrier is chosen.
+ */
 export default function Step3_Carrier() {
   const { carrier, step, setField, setError, clearError, errors, nextStep } =
     useAuthStore();

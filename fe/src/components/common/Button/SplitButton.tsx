@@ -8,6 +8,17 @@ interface SplitButtonProps {
   rightDisabled?: boolean;
 }
 
+/**
+ * Renders a split button with customizable left and right sections.
+ *
+ * Displays two adjacent buttons: the left button triggers {@link onClickLeft} when clicked, and the right button triggers {@link onClickRight} and can be disabled via {@link rightDisabled}. The content of each button is provided by the {@link left} and {@link right} props.
+ *
+ * @param left - Content to display in the left button.
+ * @param right - Content to display in the right button.
+ * @param onClickLeft - Optional callback for left button clicks.
+ * @param onClickRight - Optional callback for right button clicks.
+ * @param rightDisabled - If true, disables the right button.
+ */
 export default function SplitButton({
   left,
   right,

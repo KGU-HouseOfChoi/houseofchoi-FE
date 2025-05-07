@@ -10,6 +10,17 @@ interface BackButtonProps {
   iconSize?: number;
 }
 
+/**
+ * Renders a back navigation button that either navigates to a specified URL or goes back in browser history.
+ *
+ * If the {@link href} prop is provided, the button renders as a link to that URL. Otherwise, it renders as a button that navigates back in the browser history when clicked.
+ *
+ * @param href - Optional URL to navigate to when the button is clicked.
+ * @param className - Optional CSS class names to apply to the button or link.
+ * @param iconSize - Optional size for the back arrow icon. Defaults to 40.
+ *
+ * @returns A React element representing the back button.
+ */
 export default function BackButton({
   href,
   className,

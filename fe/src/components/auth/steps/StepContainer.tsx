@@ -18,6 +18,13 @@ interface StepContainerProps {
   onNext?: () => void;
 }
 
+/**
+ * Renders a multi-step authentication form for user verification via phone number and SMS code.
+ *
+ * Guides the user through sequential steps to input their name, birthday, carrier, and phone number, then handles consent and SMS code verification. Manages validation errors, asynchronous SMS sending, and displays appropriate UI components for each step.
+ *
+ * @param onNext - Optional callback invoked after successful SMS sending, before advancing to the verification code step.
+ */
 export default function StepContainer({ onNext }: StepContainerProps) {
   const { step, errors, phoneNumber, setStep } = useAuthStore();
   const router = useRouter();

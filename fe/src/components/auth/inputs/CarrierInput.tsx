@@ -9,6 +9,16 @@ interface CarrierInputProps {
   isOpen?: boolean;
 }
 
+/**
+ * Renders a carrier selection input with a label, button, and optional error message.
+ *
+ * Displays the current carrier value or a placeholder if none is selected. The button shows an icon indicating whether the dropdown is open or closed, and triggers the provided callback when clicked. If an error message is provided, it is displayed below the button.
+ *
+ * @param value - The currently selected carrier value.
+ * @param onClick - Callback invoked when the button is clicked.
+ * @param error - Optional error message to display below the input.
+ * @param isOpen - Optional flag indicating if the dropdown is open. Defaults to false.
+ */
 export default function CarrierInput({
   value,
   onClick,

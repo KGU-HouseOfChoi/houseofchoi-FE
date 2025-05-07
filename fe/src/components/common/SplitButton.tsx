@@ -7,6 +7,16 @@ interface SplitButtonProps {
   onClickRight?: () => void;
 }
 
+/**
+ * Renders a split button with customizable left and right sections.
+ *
+ * Displays two adjacent buttons within a styled container. The left and right buttons can display custom content and have independent click handlers.
+ *
+ * @param left - Content to display in the left button.
+ * @param right - Content to display in the right button.
+ * @param onClickLeft - Optional handler for left button clicks.
+ * @param onClickRight - Optional handler for right button clicks.
+ */
 export default function SplitButton({
   left,
   right,

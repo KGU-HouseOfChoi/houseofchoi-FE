@@ -1,5 +1,12 @@
 "use client";
 
+/**
+ * Provides a centered layout wrapper with a constrained main content area.
+ *
+ * Renders its {@link children} inside a flexbox layout, centering content horizontally and applying a background color and maximum width.
+ *
+ * @param children - The content to display within the layout.
+ */
 export default function LayoutWrapper({
   children,
 }: {

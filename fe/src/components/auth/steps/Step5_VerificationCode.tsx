@@ -17,6 +17,18 @@ interface Step5VerificationProps {
   loading: boolean;
 }
 
+/**
+ * React component for entering and verifying a 6-digit SMS authentication code.
+ *
+ * Displays an input field for the verification code, manages a countdown timer, handles code resending, and validates user input. Shows error messages and a toast notification on code resend. Invokes {@link onSuccess} with the code when verification is successful.
+ *
+ * @param code - The current verification code input value.
+ * @param setCode - Function to update the verification code value.
+ * @param error - The current error message to display.
+ * @param setError - Function to update the error message.
+ * @param onSuccess - Callback invoked with the code when verification succeeds.
+ * @param loading - Indicates if a verification process is ongoing.
+ */
 export default function Step5_VerificationCode({
   code,
   setCode,

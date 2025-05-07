@@ -12,6 +12,19 @@ interface BirthdayInputProps {
   debounceDelay?: number;
 }
 
+/**
+ * A React component for entering the birthdate portion of a Korean resident registration number.
+ *
+ * Renders two input fields for the 6-digit birthdate (YYMMDD) and the following single digit, with validation and optional debounced change handling. Displays an error message if provided.
+ *
+ * @param value - The current 7-digit input value.
+ * @param onChange - Callback invoked with the combined input value when it changes.
+ * @param error - Optional error message to display below the inputs.
+ * @param autoFocus - If true, autofocuses the first input field.
+ * @param debounceDelay - Optional debounce delay in milliseconds for the onChange callback.
+ *
+ * @returns The rendered birthday input component.
+ */
 export default function BirthdayInput({
   value,
   onChange,

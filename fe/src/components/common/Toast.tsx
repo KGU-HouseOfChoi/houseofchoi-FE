@@ -7,6 +7,12 @@ interface ToastProps {
   onClose: () => void;
 }
 
+/**
+ * Displays a temporary notification message that automatically disappears after 2 seconds.
+ *
+ * @param message - The text to display in the toast notification.
+ * @param onClose - Callback invoked when the toast is dismissed.
+ */
 export default function Toast({ message, onClose }: ToastProps) {
   useEffect(() => {
     const timer = setTimeout(onClose, 2000);

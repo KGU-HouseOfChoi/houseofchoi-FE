@@ -9,6 +9,15 @@ interface ChoiceButtonProps {
   onClick: () => void;
 }
 
+/**
+ * Renders a selectable button with a label and an icon indicating selection state.
+ *
+ * The button displays the provided {@link label} and shows a check circle icon when selected, or an outlined circle when not selected. Styling and icon appearance change based on the {@link selected} prop. Clicking the button triggers the {@link onClick} callback.
+ *
+ * @param label - The text displayed on the button.
+ * @param selected - Whether the button is currently selected.
+ * @param onClick - Callback invoked when the button is clicked.
+ */
 export default function ChoiceButton({
   label,
   selected,

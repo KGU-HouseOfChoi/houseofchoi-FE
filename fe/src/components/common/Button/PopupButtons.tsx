@@ -7,6 +7,16 @@ interface PopupButtonsProps {
   cancelLabel?: string;
 }
 
+/**
+ * Renders a pair of vertically stacked buttons for confirming or canceling an action.
+ *
+ * @param onConfirm - Callback invoked when the confirm button is clicked.
+ * @param onCancel - Callback invoked when the cancel button is clicked.
+ * @param confirmLabel - Optional label for the confirm button. Defaults to "확인".
+ * @param cancelLabel - Optional label for the cancel button. Defaults to "취소".
+ *
+ * @returns A React element containing confirm and cancel buttons.
+ */
 export default function PopupButtons({
   onConfirm,
   onCancel,

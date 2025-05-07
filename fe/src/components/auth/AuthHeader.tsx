@@ -4,6 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import GuestConfirmPopup from "@/components/auth/popup/GuestConfirmPopup";
 
+/**
+ * Renders a fixed signup header with a guest access option and confirmation popup.
+ *
+ * Displays a header bar titled "회원가입" (Sign Up) and a button allowing users to proceed as a guest. When the guest button is clicked, a confirmation popup appears. Confirming guest access closes the popup and navigates the user to the guest page.
+ */
 export default function AuthHeader() {
   const router = useRouter();
   const [isPopupOpen, setIsPopupOpen] = useState(false);

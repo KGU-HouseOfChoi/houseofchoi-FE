@@ -11,6 +11,11 @@ interface CarrierPopupProps {
 
 const CARRIERS = ["SKT", "KT", "LGU+", "알뜰폰"];
 
+/**
+ * Displays a bottom popup for selecting a mobile carrier.
+ *
+ * Renders a modal with a list of carrier options and a close button. When a carrier is selected, the {@link onSelect} callback is triggered with the selected carrier's name.
+ */
 export default function CarrierPopup({
   isOpen,
   onClose,

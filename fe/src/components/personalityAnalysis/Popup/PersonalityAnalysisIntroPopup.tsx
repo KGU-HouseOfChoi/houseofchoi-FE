@@ -11,6 +11,14 @@ interface PersonalityAnalysisIntroPopupProps {
   onClose: () => void;
 }
 
+/**
+ * Displays a popup prompting the user to start a personality-based activity recommendation or continue as a guest.
+ *
+ * Renders a modal with introductory information and two actions: begin the recommendation process or browse as a guest, which triggers a logout confirmation popup.
+ *
+ * @param isOpen - Whether the main popup is visible.
+ * @param onClose - Callback to close the main popup or confirm starting the activity recommendation.
+ */
 export default function PersonalityAnalysisIntroPopup({
   isOpen,
   onClose,
