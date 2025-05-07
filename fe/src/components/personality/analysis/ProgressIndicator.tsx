@@ -10,7 +10,7 @@ export default function ProgressIndicator({
   total,
 }: ProgressIndicatorProps) {
   return (
-    <div className="mb-2 text-xl text-brand-normal">
+    <div className="mb-2 text-xl font-pretendard font-semibold text-brand-normal">
       {current}/{total}
     </div>
   );

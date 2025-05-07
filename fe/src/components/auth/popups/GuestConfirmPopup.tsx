@@ -1,29 +1,23 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { Info, X } from "lucide-react";
 import BottomPopup from "@/components/common/popups/BottomPopup";
 import PopupButtons from "@/components/common/buttons/PopupButtons";
-import { LogIn, X } from "lucide-react";
 
-interface LoginGuidePopupProps {
+interface GuestConfirmPopupProps {
   isOpen: boolean;
   onClose: () => void;
+  onConfirm: () => void;
 }
 
-export default function LoginGuidePopup({
+export default function GuestConfirmPopup({
   isOpen,
   onClose,
-}: LoginGuidePopupProps) {
-  const router = useRouter();
-
-  const handleJoin = () => {
-    onClose();
-    router.push("/auth");
-  };
-
+  onConfirm,
+}: GuestConfirmPopupProps) {
   return (
     <BottomPopup isOpen={isOpen} onClose={onClose}>
-      <div className="relative flex flex-col items-center text-center w-full max-w-[327px] min-h-[330px] px-6 pt-5 pb-4 mx-auto justify-center gap-4">
+      <div className="relative flex flex-col items-center text-center w-full max-w-[327px] min-h-[300px] px-6 pt-5 pb-4 mx-auto justify-center gap-4">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-1 rounded hover:bg-bgColor-surface"
@@ -32,22 +26,22 @@ export default function LoginGuidePopup({
           <X className="w-6 h-6 text-iconColor-sub" />
         </button>
 
-        <LogIn className="w-10 h-10 text-brand-normal" />
+        <Info className="w-10 h-10 text-brand-normal" />
 
         <h2 className="text-2xl font-semibold text-textColor-heading">
-          로그인하고 더 편하게
+          비회원으로 이용하시겠어요?
         </h2>
 
         <p className="text-base text-textColor-sub leading-relaxed whitespace-pre-line">
-          관심 있는 활동을 저장하고
-          {"\n"}가족과 함께 일정을 확인할 수 있어요.
+          회원가입 없이도 둘러보실 수 있어요.
+          {"\n"}비회원으로 계속하시겠습니까?
         </p>
 
         <PopupButtons
-          onConfirm={handleJoin}
+          onConfirm={onConfirm}
           onCancel={onClose}
-          confirmLabel="전화번호로 시작하기"
-          cancelLabel="나중에 할게요"
+          confirmLabel="네, 비회원으로 이용할게요"
+          cancelLabel="아니요, 계속 가입할게요"
         />
       </div>
     </BottomPopup>

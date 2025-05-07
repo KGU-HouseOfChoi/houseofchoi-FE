@@ -33,11 +33,12 @@ export default function Step3_Carrier() {
   }, [step, carrier, errors.carrier, nextStep]);
 
   return (
-    <>
+    <div>
       <CarrierInput
         value={carrier}
-        onClick={() => setOpen(true)}
+        onClick={() => setOpen(!open)}
         error={errors.carrier}
+        isOpen={open}
       />
 
       <CarrierPopup
@@ -45,6 +46,6 @@ export default function Step3_Carrier() {
         onClose={() => setOpen(false)}
         onSelect={handleSelect}
       />
-    </>
+    </div>
   );
 }

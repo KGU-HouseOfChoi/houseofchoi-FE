@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { Info, X } from "lucide-react";
-import BottomPopup from "@/components/common/popup/BottomPopup";
-import PopupButtons from "@/components/common/Button/PopupButtons";
-import LogoutConfirmPopup from "@/components/auth/popup/LogoutConfirmPopup";
+import BottomPopup from "@/components/common/popups/BottomPopup";
+import PopupButtons from "@/components/common/buttons/PopupButtons";
+import LogoutConfirmPopup from "@/components/auth/popups/LogoutConfirmPopup";
 
 interface PersonalityAnalysisIntroPopupProps {
   isOpen: boolean;
@@ -31,7 +31,7 @@ export default function PersonalityAnalysisIntroPopup({
             className="absolute top-4 right-4 p-1"
             aria-label="닫기"
           >
-            <X className="w-6 h-6 text-gray-400" />
+            <X className="w-6 h-6 text-textColor-sub" />
           </button>
 
           <Info className="w-10 h-10 text-brand-normal" />
@@ -40,7 +40,7 @@ export default function PersonalityAnalysisIntroPopup({
             활동 추천을 시작할까요?
           </h2>
 
-          <p className="text-lg text-grayscale-50 font-pretendard leading-relaxed whitespace-pre-line">
+          <p className="text-lg text-textColor-sub font-pretendard leading-relaxed whitespace-pre-line">
             몇 가지 질문만 답하시면
             {"\n"}어르신께 맞는 활동을 추천해드려요.
             {"\n\n"}비회원으로 둘러보면

@@ -20,8 +20,8 @@ export default function ChoiceButton({
       className={clsx(
         "w-full h-20 px-4 rounded-xl border-2 flex justify-between items-center text-xl font-semibold font-pretendard transition duration-200",
         selected
-          ? "bg-[#FFF5E6] text-brand-normal border-brand-normal"
-          : "bg-grayscale-0 text-grayscale-80 border-grayscale-30 hover:bg-grayscale-10 hover:border-grayscale-40",
+          ? "bg-grayscale-5 text-brand-normal border-brand-normal"
+          : "bg-grayscale-0 text-textColor-heading border-grayscale-30 hover:bg-grayscale-10 hover:border-grayscale-40",
       )}
       style={{ minHeight: "80px", maxHeight: "80px" }}
     >

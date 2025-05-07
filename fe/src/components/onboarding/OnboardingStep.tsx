@@ -28,9 +28,11 @@ export default function OnboardingStep({
           className="mb-6"
         />
 
-        <p className="text-xl text-gray-700 leading-relaxed whitespace-pre-line mb-6">
+        <p className="text-xl text-textColor-body leading-relaxed whitespace-pre-line mb-6">
           {title && (
-            <span className="block font-bold text-[20px] mb-2">{title}</span>
+            <span className="block font-bold text-[20px] mb-2 text-textColor-heading">
+              {title}
+            </span>
           )}
           <span className="font-normal whitespace-pre-line">{description}</span>
         </p>
