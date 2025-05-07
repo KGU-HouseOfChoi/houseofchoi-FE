@@ -8,7 +8,7 @@ import {
 } from "@/utils/personalityAnalysis";
 import Question from "./Question";
 import ProgressIndicator from "./ProgressIndicator";
-import SplitButton from "@/components/common/Button/SplitButton";
+import SplitButton from "@/components/common/button/SplitButton";
 import { handleApiError } from "@/utils/common/handleApiError";
 
 interface QuestionItem {

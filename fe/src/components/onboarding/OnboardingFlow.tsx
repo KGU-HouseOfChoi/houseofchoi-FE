@@ -3,8 +3,8 @@ import { useRouter } from "next/navigation";
 
 import OnboardingSlide from "./OnboardingStep";
 import OnboardingHeader from "./OnboardingHeader";
-import Button from "@/components/common/Button/Button";
-import SplitButton from "@/components/common/Button/SplitButton";
+import Button from "@/components/common/button/Button";
+import SplitButton from "@/components/common/button/SplitButton";
 
 const slides = [
   {

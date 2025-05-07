@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Info, X } from "lucide-react";
 import BottomPopup from "@/components/common/popup/BottomPopup";
-import PopupButtons from "@/components/common/Button/PopupButtons";
+import PopupButtons from "@/components/common/button/PopupButtons";
 import LogoutConfirmPopup from "@/components/auth/popup/LogoutConfirmPopup";
 
 interface PersonalityAnalysisIntroPopupProps {
