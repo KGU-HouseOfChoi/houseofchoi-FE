@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useVoiceRecorder } from "@/hooks/chatbot/useVoiceRecorder";
 import BottomPopup from "@/components/common/popup/BottomPopup";
 import PopupButtons from "@/components/common/button/PopupButtons";
@@ -25,7 +25,6 @@ export default function VoicePopup({
   const [animatedText, setAnimatedText] =
     useState<string>("말씀을 이해하는 중이에요");
 
-  
   useEffect(() => {
     if (isSending) {
       const messages = [
@@ -45,9 +44,8 @@ export default function VoicePopup({
     }
   }, [isSending]);
 
-  
   const handleStopClick = async () => {
-    if (isStopping) return; 
+    if (isStopping) return;
     setIsStopping(true);
 
     if (intervalId) clearInterval(intervalId);
@@ -78,7 +76,7 @@ export default function VoicePopup({
     } finally {
       setIsSending(false);
       setIsRecording(false);
-      setIsStopping(false); 
+      setIsStopping(false);
       onClose();
     }
   };
@@ -98,7 +96,7 @@ export default function VoicePopup({
     const id = setInterval(() => {
       clearInterval(id);
       handleStopClick();
-    }, 6000);
+    }, 8000);
 
     setIntervalId(id);
   };
@@ -117,7 +115,6 @@ export default function VoicePopup({
     }
   };
 
-  // ❌ 취소 버튼 클릭
   const handleCancelClick = () => {
     console.log("🛑 녹음 취소 버튼 클릭됨");
     if (intervalId) clearInterval(intervalId);
@@ -130,11 +127,10 @@ export default function VoicePopup({
 
     setIsRecording(false);
     setIsSending(false);
-    setIsStopping(false); // ✅ 중지 해제
+    setIsStopping(false);
     onClose();
   };
 
-  // ✅ 화면 구성
   return (
     <BottomPopup isOpen={isOpen} onClose={onClose}>
       <div className="text-center flex flex-col items-center justify-center gap-y-5">
