@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "@/store/useAuthStore";
 
 const axiosMainInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_MAIN_API_URL,
   timeout: 5000,
 });
 
