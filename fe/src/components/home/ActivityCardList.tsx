@@ -11,7 +11,7 @@ export default function ActivityCardList() {
     async function loadData() {
       try {
         const data = await fetchProgramList();
-        setPrograms(data.slice(0, 5));
+        setPrograms(data.slice(0, 5)); // 상위 5개만 표시
       } catch (error) {
         console.error("활동 목록 불러오기 실패:", error);
       }
@@ -25,7 +25,7 @@ export default function ActivityCardList() {
       {programs.map((program) => (
         <ActivityCard
           key={program.id}
-          imageUrl="/images/logo.svg"
+          imageUrl={program.imageUrl ?? "/default-image.png"} // 🔄 null-safe 처리
           title={program.name}
           location={program.centerName}
         />

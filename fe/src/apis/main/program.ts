@@ -29,6 +29,7 @@ export interface Program {
   tags: string[];
   centerId: number;
   centerName: string;
+  imageUrl: string;
 }
 
 export async function fetchProgramList(): Promise<Program[]> {

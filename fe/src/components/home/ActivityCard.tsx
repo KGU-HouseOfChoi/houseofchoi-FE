@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import MainButton from "@/components/common/TwoButton";
+import MainButton from "@/components/home/CardButton";
 
 type ActivityCardProps = {
   imageUrl: string;
