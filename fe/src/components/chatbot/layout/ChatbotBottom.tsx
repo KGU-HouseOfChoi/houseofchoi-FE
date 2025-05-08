@@ -21,7 +21,6 @@ const ChatbotBottom: React.FC<ChatbotBottomProps> = ({ onSend }) => {
 
   return (
     <div className="w-full bg-white h-[85px] flex items-center justify-center py-[15px] px-[9px] gap-[9px] text-[19px] text-gray font-pretendard">
-      {/* 👇 수정된 부분: handleSend 전달 */}
       <VoiceInput handleSend={onSend} />
 
       <div className="w-[294px] h-[54px] rounded-2xl bg-whitesmoke border border-gainsboro focus-within:border-brand-normal flex items-center justify-between py-[7px] px-3 gap-3.5 box-border transition">

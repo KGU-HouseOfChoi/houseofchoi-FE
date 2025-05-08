@@ -29,11 +29,13 @@ const MessageGroup: FC<MessageGroupProps> = ({
       {!isUser && items[0].type !== "button" && (
         <div className="flex items-center gap-2 mb-1">
           <Image
-            src={profileUrl}
+            src="/images/Chatlogo.svg"
             alt={sender}
             width={36}
             height={36}
-            className="rounded-full"
+            className="rounded-full align-top max-w-[60px] max-h-[60px]"
+            style={{ width: "auto", height: "auto" }}
+            priority
           />
         </div>
       )}

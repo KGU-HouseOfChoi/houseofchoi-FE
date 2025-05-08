@@ -36,7 +36,5 @@ export async function fetchChatAnswer(message: string): Promise<string> {
         "GPT 응답 중 문제가 발생했습니다.",
       );
     }
-
-    throw error;
   }
 }
