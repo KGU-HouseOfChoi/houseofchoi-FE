@@ -78,7 +78,7 @@ export function useChatbot() {
 
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
-      handleApiError(error, "GPT 응답 중 오류가 발생했습니다.");
+      throw error; // 부모 컴포넌트에서 처리하도록 throw
     }
   };
 
