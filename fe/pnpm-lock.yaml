@@ -29,6 +29,9 @@ dependencies:
   react-dom:
     specifier: ^19.0.0
     version: 19.1.0(react@19.1.0)
+  recorder-js:
+    specifier: ^1.0.7
+    version: 1.0.7
   swiper:
     specifier: ^11.2.6
     version: 11.2.6
@@ -4960,6 +4963,13 @@ packages:
     engines: { node: ">=0.8.19" }
     dev: true
 
+  /inline-worker@1.1.0:
+    resolution:
+      {
+        integrity: sha512-2nlxBGg5Uoop6IRco9wMzlAz62690ylokrUDg3IaCi9bJaq0HykbWlRtRXgvSKiBNmCBGXnOCFBkIFjaSGJocA==,
+      }
+    dev: false
+
   /internal-slot@1.1.0:
     resolution:
       {
@@ -6373,6 +6383,15 @@ packages:
     dependencies:
       picomatch: 2.3.1
     dev: true
+
+  /recorder-js@1.0.7:
+    resolution:
+      {
+        integrity: sha512-jSG4GP1FUV9vGxY9lrvaI2yGq1OwfIvK8MF8qPndODhkwGx+iPBTG7ZhWK8YHt/zT/c88MmFZCntv9G7x1Exxg==,
+      }
+    dependencies:
+      inline-worker: 1.1.0
+    dev: false
 
   /reflect.getprototypeof@1.0.10:
     resolution:
