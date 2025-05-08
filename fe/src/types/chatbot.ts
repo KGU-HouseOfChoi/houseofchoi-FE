@@ -17,15 +17,25 @@ export interface Message {
 }
 
 export interface ChatRecommendRequest {
-  requestType: "activity";
   category: "indoor" | "outdoor";
 }
 
 export interface ChatRecommendResponse {
+  id: number;
   name: string;
-  date: string;
+  fir_day: string;
+  sec_day: string;
+  thr_day: string;
+  fou_day: string;
+  fiv_day: string;
+  start_time: string;
+  end_time: string;
   price: number;
-  place: string;
+  main_category: string;
+  sub_category: string;
+  headcount: string;
+  tags: { name: string }[];
+  image_url: string;
 }
 
 export interface STTResponse {

@@ -3,24 +3,24 @@
 import { useState, useRef, useEffect } from "react";
 import { groupMessages } from "@/lib/chatbot/groupMessages";
 import { Message } from "@/types/chatbot";
-import { fetchChatRecommendation } from "@/apis/chatbot/chatRecommend";
 import { fetchChatAnswer } from "@/apis/chatbot/fetchChatAnswer";
 import { handleApiError } from "@/utils/common/handleApiError";
+import { useActivityRecommendation } from "./useActivityRecommendation";
 
 export function useChatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "greeting",
-      sender: "",
+      sender: "bot",
       profileUrl: "/images/Chatlogo.svg",
       type: "text",
-      content: `어떤 활동을 찾고 계신가요?`,
+      content: "어떤 활동을 찾고 계신가요?",
       timestamp: new Date().toISOString(),
       isUser: false,
     },
     {
       id: "greeting-1",
-      sender: "",
+      sender: "bot",
       profileUrl: "/images/Chatlogo.svg",
       type: "text",
       content: "직접 입력하거나 버튼을 눌러 추천받아 보세요!",
@@ -29,7 +29,7 @@ export function useChatbot() {
     },
     {
       id: "init-button",
-      sender: "",
+      sender: "bot",
       profileUrl: "/images/Chatlogo.svg",
       type: "button",
       content: "",
@@ -43,17 +43,17 @@ export function useChatbot() {
   ]);
 
   const bottomRef = useRef<HTMLDivElement>(null);
+  const { fetchRecommendation } = useActivityRecommendation();
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // ✅ 1️⃣ 메시지 전송 처리
   const handleSend = async (text: string) => {
-    if (!text.trim()) return;
-
     const userMessage: Message = {
       id: Date.now().toString(),
-      sender: "",
+      sender: "user",
       profileUrl: "",
       type: "text",
       content: text,
@@ -62,13 +62,13 @@ export function useChatbot() {
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    //응답처리
+
     try {
       const answer = await fetchChatAnswer(text);
 
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        sender: "",
+        sender: "bot",
         profileUrl: "/images/Chatlogo.svg",
         type: "text",
         content: answer,
@@ -78,14 +78,16 @@ export function useChatbot() {
 
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
-      throw error; // 부모 컴포넌트에서 처리하도록 throw
+      console.error("메시지 전송 중 오류 발생:", error);
+      throw error;
     }
   };
 
+  // ✅ 2️⃣ 버튼 클릭 시 추천 프로그램 로딩
   const handleButtonClick = async (value: string, label: string) => {
     const userMessage: Message = {
       id: Date.now().toString(),
-      sender: "",
+      sender: "user",
       profileUrl: "",
       type: "text",
       content: label,
@@ -96,52 +98,18 @@ export function useChatbot() {
     setMessages((prev) => [...prev, userMessage]);
 
     try {
-      const program = await fetchChatRecommendation({
-        requestType: "activity",
-        category: value as "indoor" | "outdoor",
-      });
+      const recommendationMessages = await fetchRecommendation(value as "indoor" | "outdoor");
 
-      const responseMsgs: Message[] = [
-        {
-          id: (Date.now() + 1).toString(),
-          content: `🏷️ 추천 프로그램: ${program.name}`,
-          type: "text",
-          timestamp: new Date().toISOString(),
-          isUser: false,
-          profileUrl: "/images/Chatlogo.svg",
-          sender: "",
-        },
-        {
-          id: (Date.now() + 2).toString(),
-          content: `날짜: ${program.date}\n가격: ${program.price}원\n장소: ${program.place}`,
-          type: "text",
-          timestamp: new Date().toISOString(),
-          isUser: false,
-          profileUrl: "/images/Chatlogo.svg",
-          sender: "",
-        },
-        {
-          id: (Date.now() + 3).toString(),
-          type: "schedule-confirm",
-          content: "",
-          timestamp: new Date().toISOString(),
-          isUser: false,
-          profileUrl: "/images/Chatlogo.svg",
-          sender: "",
-          buttons: [
-            { label: "예", value: "yes" },
-            { label: "아니요", value: "no" },
-          ],
-        },
-      ];
-
-      setMessages((prev) => [...prev, ...responseMsgs]);
+      if (recommendationMessages.length > 0) {
+        setMessages((prev) => [...prev, ...recommendationMessages]);
+      }
     } catch (error) {
-      handleApiError(error, "활동 추천 중 오류가 발생했습니다.");
+      console.error("추천 프로그램 로딩 중 오류 발생:", error);
+      throw error;
     }
   };
 
-  // ✅ 일정 확인 버튼 처리
+  // ✅ 3️⃣ 일정 확인 버튼 처리
   const handleScheduleConfirm = (value: string) => {
     const content =
       value === "yes"
@@ -150,7 +118,7 @@ export function useChatbot() {
 
     const message: Message = {
       id: Date.now().toString(),
-      sender: "",
+      sender: "bot",
       profileUrl: "/images/Chatlogo.svg",
       type: "text",
       content,
