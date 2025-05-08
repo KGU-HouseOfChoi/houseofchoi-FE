@@ -43,7 +43,8 @@ export default function MainHeader() {
         ) : (
           <>
             <p>
-              <span className="font-semibold">{userName ?? ""}</span> 님에게
+              <span className="font-semibold">{userName ?? "사용자"}</span>{" "}
+              님에게
             </p>
             <p>딱! 맞는 활동 추천해드릴게요!</p>
           </>
