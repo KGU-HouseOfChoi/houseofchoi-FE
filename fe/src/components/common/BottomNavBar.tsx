@@ -35,7 +35,9 @@ export default function BottomNavBar() {
     if (isGuest && isProtected) {
       setShowLoginPopup(true);
     } else {
-      router.push(href);
+      if (pathname !== href) {
+        router.push(href);
+      }
     }
   };
 
