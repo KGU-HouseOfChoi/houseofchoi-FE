@@ -16,7 +16,6 @@ export default function ActivityCard({
 }: ActivityCardProps) {
   return (
     <div className="w-full max-w-[329px] h-[350px] bg-bgColor-default rounded-2xl shadow-[0px_3px_10px_rgba(142,_142,_142,_0.3)] overflow-hidden mx-auto text-center">
-      {/* 활동 이미지 */}
       <div className="w-[284px] h-40 mt-[15px] mx-auto rounded-xl border border-borderColor-default overflow-hidden">
         <Image
           src={imageUrl}
@@ -27,7 +26,6 @@ export default function ActivityCard({
         />
       </div>
 
-      {/* 활동명 & 장소 */}
       <div className="mt-4 space-y-1">
         <h3 className="text-xl font-semibold text-textColor-heading">
           {title}
@@ -35,7 +33,6 @@ export default function ActivityCard({
         <p className="text-base text-textColor-body">{location}</p>
       </div>
 
-      {/* 버튼 영역 */}
       <div className="mt-4 px-[23px] flex justify-between">
         <MainButton text="일정추가" width="w-[130px]" height="h-[70px]" />
         <MainButton text="더보기" width="w-[130px]" height="h-[70px]" />

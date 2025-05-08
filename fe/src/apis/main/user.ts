@@ -2,7 +2,7 @@ import axiosInstance from "@/apis/common/axiosMainInstance";
 import { useAuthStore } from "@/store/useAuthStore";
 
 /**
- @returns 사용자 이름 (string)
+ * @returns 사용자 이름 (string)
  */
 export async function getUserName(): Promise<string> {
   const token = useAuthStore.getState().accessToken;
@@ -18,16 +18,30 @@ export async function getUserName(): Promise<string> {
       },
     });
 
-    const { success, data, message } = res.data;
+    const {
+      success,
+      data,
+      message,
+    }: { success: boolean; data: string; message?: string } = res.data;
 
     if (!success) {
       throw new Error(message || "이름 조회에 실패했습니다.");
     }
 
     return data;
-  } catch (error: any) {
-    if (error.response?.data?.message) {
-      throw new Error(error.response.data.message);
+  } catch (error: unknown) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "response" in error &&
+      typeof (error as { response?: { data?: { message?: string } } }).response
+        ?.data?.message === "string"
+    ) {
+      throw new Error(
+        (
+          error as { response: { data: { message: string } } }
+        ).response.data.message,
+      );
     }
 
     console.error("사용자 이름 조회 실패:", error);
