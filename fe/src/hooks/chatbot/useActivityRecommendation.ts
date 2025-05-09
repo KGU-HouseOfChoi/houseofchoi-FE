@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { fetchChatRecommendation } from "@/apis/chatbot/chatRecommend";
-import { Message, ChatRecommendResponse } from "@/types/chatbot";
+import type { Message, ChatRecommendResponse } from "@/types/chatbot";
 
 export function useActivityRecommendation() {
   const [loading, setLoading] = useState(false);
 
-  /* 요일 → "매주 월·수" */
   const weekly = (p: ChatRecommendResponse) => {
-    const days = [p.fir_day, p.sec_day, p.thr_day, p.fou_day, p.fiv_day].filter(Boolean);
+    const days = [p.fir_day, p.sec_day, p.thr_day, p.fou_day, p.fiv_day].filter(
+      Boolean,
+    );
     return days.length ? `매주 ${days.join("·")}` : "미정";
   };
 
@@ -20,37 +21,37 @@ export function useActivityRecommendation() {
       const program = list[Math.floor(Math.random() * list.length)];
 
       
-      const timeRange = `${program.start_time.slice(0,5)} ~ ${program.end_time.slice(0,5)}`;
+      const baseId = Date.now().toString();
 
       const msgs: Message[] = [
         {
-          id: (Date.now() + 1).toString(),
-          content: `프로그램명: ${program.name}`,
+          id: `${baseId}-title`,                     
+          sender: "bot",
+          profileUrl: "/images/Chatlogo.svg",
           type: "text",
+          content: `프로그램명: ${program.name}`,
           timestamp: new Date().toISOString(),
           isUser: false,
-          profileUrl: "/images/Chatlogo.svg",
-          sender: "",
         },
         {
-          id: (Date.now() + 2).toString(),
+          id: `${baseId}-info`,                      
+          sender: "bot",
+          profileUrl: "/images/Chatlogo.svg",
+          type: "activity",
           content: [
             `일정: ${weekly(program)}`,
-            `시간: ${timeRange}`,
             `가격: ${program.price}원`,
-            `장소: ${program.center.name}`,    
+            `장소: ${program.main_category}`,
           ].join("\n"),
-          type: "text",
+          programId: program.id,                     // 일정 등록용
           timestamp: new Date().toISOString(),
           isUser: false,
-          profileUrl: "/images/Chatlogo.svg",
-          sender: "",
         },
       ];
 
       return msgs;
-    } catch (err) {
-      console.error("추천 정보 로딩 실패:", err);
+    } catch (e) {
+      console.error("추천 정보 로딩 실패:", e);
       return [];
     } finally {
       setLoading(false);

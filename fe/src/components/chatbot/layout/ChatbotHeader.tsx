@@ -1,7 +1,7 @@
 "use client";
 
 import type { NextPage } from "next";
-import BackButton from "@/components/common/BackButton";
+import BackButton from "@/components/common/button/BackButton";
 
 const ChatbotHeader: NextPage = () => {
   return (

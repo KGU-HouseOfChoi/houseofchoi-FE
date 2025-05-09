@@ -4,17 +4,21 @@
   import ChatbotGreeting from "@/components/chatbot/layout/ChatbotGreeting";
   import ChatbotBottom from "@/components/chatbot/layout/ChatbotBottom";
   import MessageGroup from "@/components/chatbot/messages/MessageGroup";
+  import SchedulePopup from "@/components/chatbot/popup/SchedulePopup";
   import { useState } from "react";
   import { AxiosError } from "axios";
 
   const ChatbotMessageList = () => {
-    const {
-      groupedMessages,
-      handleSend,
-      handleButtonClick,
-      handleScheduleConfirm,
-      bottomRef,
-    } = useChatbot();
+  const {
+    groupedMessages,
+    handleSend,
+    handleButtonClick,
+    handleScheduleConfirm,
+    bottomRef,
+    popupOpen,
+    closePopup,
+  } = useChatbot();
+
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -58,19 +62,19 @@
       }
     };
 
-    return (
+      return (
+    <>
+      {/* ─────────── 채팅 본체 ─────────── */}
       <div className="flex flex-col h-full">
         <div className="flex-1 overflow-y-auto p-4 min-h-0">
           <ChatbotGreeting username="최서희" />
 
-          
           {errorMessage && (
             <div className="bg-red-100 text-red-600 p-2 mb-2 rounded">
               {errorMessage}
             </div>
           )}
 
-          
           {groupedMessages.map((group, idx) => (
             <MessageGroup
               key={idx}
@@ -91,10 +95,13 @@
           <div ref={bottomRef} />
         </div>
 
-        
         <ChatbotBottom onSend={handleSendWithErrorHandling} />
       </div>
-    );
-  };
 
-  export default ChatbotMessageList;
+      {/* ─────────── 일정 등록 완료 팝업 ─────────── */}
+      <SchedulePopup isOpen={popupOpen} onClose={closePopup} />
+    </>
+  );
+};
+
+export default ChatbotMessageList;

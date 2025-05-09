@@ -25,8 +25,9 @@ export interface TextMessage extends BaseMessage {
 }
 
 export interface ActivityMessage extends BaseMessage {
-  type: "activity";      // 예: 추천 프로그램 요약 카드
+  type: "activity";
   content: string;
+  programId: number;  
 }
 
 export interface ButtonMessage extends BaseMessage {

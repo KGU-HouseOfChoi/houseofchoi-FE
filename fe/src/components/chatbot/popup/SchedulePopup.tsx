@@ -1,14 +1,41 @@
-const SchedulePopup = () => {
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl px-6 py-4 text-center shadow-lg w-[300px]">
-        <p className="text-lg font-semibold mb-2">✅ 일정이 등록되었습니다!</p>
-        <p className="text-sm text-gray-600">
-          마이페이지에서 확인할 수 있어요.
-        </p>
-      </div>
-    </div>
-  );
-};
+// components/chatbot/ScheduleAddedPopup.tsx
+"use client";
 
-export default SchedulePopup;
+import BottomPopup from "@/components/common/popup/BottomPopup";
+import PopupButtons from "@/components/common/button/PopupButtons";
+import CalendarIcon from "@/asset/icons/calendar-tick.svg";
+
+interface ScheduleAddedPopupProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title?: string;                          
+  subtitle?: string;
+}
+
+export default function ScheduleAddedPopup({
+  isOpen,
+  onClose,
+  title = "일정을 캘린더에 추가했습니다.", 
+  subtitle = "나의 일정에서 확인해보세요!",
+}: ScheduleAddedPopupProps) {
+  return (
+    <BottomPopup isOpen={isOpen} onClose={onClose}>
+      <div className="flex flex-col items-center gap-4 py-8 text-center">
+        {/* 아이콘 */}
+        <CalendarIcon className="w-10 h-10 text-brand-normal" />
+
+        {/* 메시지 */}
+        <p className="text-xl font-semibold whitespace-pre-line">{title}</p>
+        <p className="text-sm text-gray-500">{subtitle}</p>
+
+        {/* 확인 + 취소 버튼 */}
+        <PopupButtons
+          onConfirm={onClose}
+          confirmLabel="확인"
+          onCancel={onClose}
+          cancelLabel="취소"
+        />
+      </div>
+    </BottomPopup>
+  );
+}
