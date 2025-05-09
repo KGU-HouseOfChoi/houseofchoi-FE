@@ -5,10 +5,9 @@ import { Message, ChatRecommendResponse } from "@/types/chatbot";
 export function useActivityRecommendation() {
   const [loading, setLoading] = useState(false);
 
+  /* 요일 → "매주 월·수" */
   const weekly = (p: ChatRecommendResponse) => {
-    const days = [p.fir_day, p.sec_day, p.thr_day, p.fou_day, p.fiv_day].filter(
-      Boolean,
-    );
+    const days = [p.fir_day, p.sec_day, p.thr_day, p.fou_day, p.fiv_day].filter(Boolean);
     return days.length ? `매주 ${days.join("·")}` : "미정";
   };
 
@@ -18,7 +17,10 @@ export function useActivityRecommendation() {
       const list = await fetchChatRecommendation({ category });
       if (!list.length) throw new Error("조건에 맞는 프로그램이 없습니다.");
 
-      const program = list[Math.floor(Math.random() * list.length)]; //프로그램 랜덤 추천
+      const program = list[Math.floor(Math.random() * list.length)];
+
+      
+      const timeRange = `${program.start_time.slice(0,5)} ~ ${program.end_time.slice(0,5)}`;
 
       const msgs: Message[] = [
         {
@@ -32,7 +34,12 @@ export function useActivityRecommendation() {
         },
         {
           id: (Date.now() + 2).toString(),
-          content: `일정: ${weekly(program)}\n가격: ${program.price}원\n장소: ${program.main_category}`,
+          content: [
+            `일정: ${weekly(program)}`,
+            `시간: ${timeRange}`,
+            `가격: ${program.price}원`,
+            `장소: ${program.center.name}`,    
+          ].join("\n"),
           type: "text",
           timestamp: new Date().toISOString(),
           isUser: false,
@@ -40,9 +47,10 @@ export function useActivityRecommendation() {
           sender: "",
         },
       ];
+
       return msgs;
-    } catch (e) {
-      console.error("추천 정보 로딩 실패:", e);
+    } catch (err) {
+      console.error("추천 정보 로딩 실패:", err);
       return [];
     } finally {
       setLoading(false);

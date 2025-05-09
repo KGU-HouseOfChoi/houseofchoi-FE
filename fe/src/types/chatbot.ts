@@ -1,21 +1,55 @@
-export type MessageType = "text" | "activity" | "button" | "schedule-confirm";
+/* ───────────────────────────────
+ * Chatbot 타입 선언 모음
+ * ─────────────────────────────── */
 
+/* ===== 공통 ===== */
 export interface ButtonOption {
   label: string;
   value: string;
 }
 
-export interface Message {
+interface BaseMessage {
   id: string;
   sender: string;
-  profileUrl: string;
-  type: MessageType;
-  content: string;
-  timestamp: string;
+  profileUrl?: string;
+  timestamp: string;   // ISO 문자열
   isUser?: boolean;
-  buttons?: ButtonOption[];
 }
 
+
+
+/* ===== 메시지 타입들 ===== */
+export interface TextMessage extends BaseMessage {
+  type: "text";
+  content: string;
+}
+
+export interface ActivityMessage extends BaseMessage {
+  type: "activity";      // 예: 추천 프로그램 요약 카드
+  content: string;
+}
+
+export interface ButtonMessage extends BaseMessage {
+  type: "button";
+  buttons: ButtonOption[];
+  content?: string;      // 버튼 위 설명이 필요할 때만
+}
+
+export interface ScheduleConfirmMessage extends BaseMessage {
+  type: "schedule-confirm";
+  // 카드 자체로 의미를 표현하므로 content 생략
+}
+
+/* ===== 통합 유니온 ===== */
+export type Message =
+  | TextMessage
+  | ActivityMessage
+  | ButtonMessage
+  | ScheduleConfirmMessage;
+
+export type MessageType = Message["type"];
+
+/* ===== 추천 API 연관 타입 ===== */
 export interface ChatRecommendRequest {
   category: "indoor" | "outdoor";
 }
@@ -52,6 +86,7 @@ export interface ChatRecommendResponse {
   center: Center;
 }
 
+/* ===== STT 응답 타입 ===== */
 export interface STTResponse {
   user_message: string;
   chatbot_response: string;

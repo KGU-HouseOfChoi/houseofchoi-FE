@@ -2,9 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { groupMessages } from "@/lib/chatbot/groupMessages";
-import { Message } from "@/types/chatbot";
+import { Message, ScheduleConfirmMessage, } from "@/types/chatbot"; 
 import { fetchChatAnswer } from "@/apis/chatbot/fetchChatAnswer";
-import { handleApiError } from "@/utils/common/handleApiError";
 import { useActivityRecommendation } from "./useActivityRecommendation";
 
 export function useChatbot() {
@@ -45,12 +44,14 @@ export function useChatbot() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const { fetchRecommendation } = useActivityRecommendation();
 
+  /* ───────────────────────── 스크롤 관리 ───────────────────────── */
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  /* ───────────────────────── 일반 채팅 전송 ───────────────────────── */
   const handleSend = async (text: string) => {
-    const userMessage: Message = {
+    const userMsg: Message = {
       id: Date.now().toString(),
       sender: "user",
       profileUrl: "",
@@ -59,13 +60,12 @@ export function useChatbot() {
       timestamp: new Date().toISOString(),
       isUser: true,
     };
-
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMsg]);
 
     try {
       const answer = await fetchChatAnswer(text);
 
-      const botMessage: Message = {
+      const botMsg: Message = {
         id: (Date.now() + 1).toString(),
         sender: "bot",
         profileUrl: "/images/Chatlogo.svg",
@@ -74,16 +74,16 @@ export function useChatbot() {
         timestamp: new Date().toISOString(),
         isUser: false,
       };
-
-      setMessages((prev) => [...prev, botMessage]);
-    } catch (error) {
-      console.error("메시지 전송 중 오류 발생:", error);
-      throw error;
+      setMessages((prev) => [...prev, botMsg]);
+    } catch (e) {
+      console.error("메시지 전송 오류:", e);
+      throw e;
     }
   };
 
+  /* ───────────────────────── 추천 버튼 클릭 ───────────────────────── */
   const handleButtonClick = async (value: string, label: string) => {
-    const userMessage: Message = {
+    const userMsg: Message = {
       id: Date.now().toString(),
       sender: "user",
       profileUrl: "",
@@ -92,31 +92,35 @@ export function useChatbot() {
       timestamp: new Date().toISOString(),
       isUser: true,
     };
-
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMsg]);
 
     try {
-      const recommendationMessages = await fetchRecommendation(
-        value as "indoor" | "outdoor",
-      );
+      const recMsgs = await fetchRecommendation(value as "indoor" | "outdoor");
 
-      if (recommendationMessages.length > 0) {
-        setMessages((prev) => [...prev, ...recommendationMessages]);
-      }
-    } catch (error) {
-      console.error("추천 프로그램 로딩 중 오류 발생:", error);
-      throw error;
+      /* 일정 확인 카드 메시지 */
+      const scheduleConfirm: ScheduleConfirmMessage = {
+        id: (Date.now() + 1).toString(),
+        sender: "bot",
+        type: "schedule-confirm",
+        timestamp: new Date().toISOString(),
+        isUser: false,
+      };
+
+      setMessages((prev) => [...prev, ...recMsgs, scheduleConfirm]);
+    } catch (e) {
+      console.error("추천 로딩 오류:", e);
+      throw e;
     }
   };
 
-  // ✅ 3️⃣ 일정 확인 버튼 처리
-  const handleScheduleConfirm = (value: string) => {
+  /* ───────────────────────── 일정 확인 응답 ───────────────────────── */
+  const handleScheduleConfirm = (value: "yes" | "no") => {
     const content =
       value === "yes"
         ? "일정이 등록되었습니다!"
         : "다른 궁금한 사항이 있다면 질문해주세요!";
 
-    const message: Message = {
+    const msg: Message = {
       id: Date.now().toString(),
       sender: "bot",
       profileUrl: "/images/Chatlogo.svg",
@@ -125,10 +129,10 @@ export function useChatbot() {
       timestamp: new Date().toISOString(),
       isUser: false,
     };
-
-    setMessages((prev) => [...prev, message]);
+    setMessages((prev) => [...prev, msg]);
   };
 
+  /* ───────────────────────── 그룹핑 후 반환 ───────────────────────── */
   const groupedMessages = groupMessages(messages);
 
   return {
