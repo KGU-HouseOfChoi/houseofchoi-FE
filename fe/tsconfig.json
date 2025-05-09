@@ -27,7 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/auth/steps/Step1_Name.tsx"
+    "src/components/auth/step/Step1_Name.tsx"
   ],
   "exclude": ["node_modules"]
 }

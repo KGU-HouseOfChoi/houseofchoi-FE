@@ -19,12 +19,19 @@ interface StepContainerProps {
 }
 
 export default function StepContainer({ onNext }: StepContainerProps) {
-  const { step, errors, phoneNumber, setStep } = useAuthStore();
+  const { step, errors, phoneNumber, setStep, name, birthday, carrier } =
+    useAuthStore();
   const router = useRouter();
   const [showConsent, setShowConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
+
+  const isFormValid = Object.values(errors).every((err) => !err);
+  const requiredFields = { name, birthday, carrier, phoneNumber };
+  const isAllInputsFilled = Object.values(requiredFields).every((value) =>
+    Boolean(value),
+  );
 
   const handleBottomClick = () => {
     if (step === 4) {
@@ -103,13 +110,14 @@ export default function StepContainer({ onNext }: StepContainerProps) {
 
           <BottomButton
             onClick={handleBottomClick}
-            disabled={step < 4 || loading}
+            disabled={step < 4 || loading || !isFormValid || !isAllInputsFilled}
           >
             {loading ? "처리 중..." : "인증번호 받기"}
           </BottomButton>
 
           {showConsent && (
             <ConsentPopup
+              isOpen={showConsent}
               onCancel={() => setShowConsent(false)}
               onConfirm={handleConsentAgree}
               loading={loading}
