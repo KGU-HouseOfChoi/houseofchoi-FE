@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { postPersonalityAnalyze, QuestionItem } from "@/utils/personalityApi";
+import {
+  postPersonalityAnalyze,
+  QuestionItem,
+} from "@/utils/personality/personalityApi";
 import Question from "./Question";
 import ProgressIndicator from "./ProgressIndicator";
 import SplitButton from "@/components/common/button/SplitButton";
@@ -59,7 +62,7 @@ export default function QuestionNavigator({
         await postPersonalityAnalyze(cleanedAnswers);
       console.log("✅ 분석 결과:", result);
 
-      setIsCompleted(true); // ✅ 질문 다 풀고 제출하면 완료 상태 true로 변경
+      setIsCompleted(true);
       router.push("/member");
     } catch (error) {
       handleApiError(error, "분석 요청에 실패했습니다.", router);

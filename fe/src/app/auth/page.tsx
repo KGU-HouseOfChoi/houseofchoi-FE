@@ -34,7 +34,12 @@ export default function AuthPage() {
       code: verifiedCode,
       onSuccess: (status) => {
         console.log("가입 상태:", status);
-        router.push("member/complete");
+
+        if (status === "EXISTING_USER") {
+          router.replace("/member/personalityAnalysis");
+        } else {
+          router.replace("/member/complete");
+        }
       },
       onError: (msg) => {
         setError(msg);

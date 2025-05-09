@@ -24,7 +24,6 @@ const VoiceInput = ({ handleSend }: VoiceInputProps) => {
         <MicrophoneIcon width={37} height={38} />
       </button>
 
-      {/* ✅ props로 받은 handleSend 전달 */}
       <VoicePopup
         isOpen={isListening}
         onClose={() => setIsListening(false)}

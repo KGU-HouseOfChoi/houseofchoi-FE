@@ -30,7 +30,6 @@ export default function ConsentPopup({
 
   useEffect(() => {
     setScrolledToBottom(false);
-    // ✅ 팝업 다시 열 때 스크롤을 맨 위로 초기화
     if (scrollRef.current) {
       scrollRef.current.scrollTop = 0;
     }
@@ -77,7 +76,7 @@ export default function ConsentPopup({
           <button
             onClick={onCancel}
             className="flex-1 py-3 rounded-xl bg-borderColor-strong text-textColor-white font-semibold transition-colors"
-            disabled={loading}
+            disabled={false}
           >
             취소
           </button>
