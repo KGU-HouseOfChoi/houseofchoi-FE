@@ -19,7 +19,7 @@ export function useLogout() {
           ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
           "Content-Type": "application/json",
         },
-        credentials: "include", 
+        credentials: "include",
       });
 
       reset();
