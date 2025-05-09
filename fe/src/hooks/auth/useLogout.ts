@@ -12,13 +12,14 @@ export function useLogout() {
     try {
       const { accessToken, reset } = useAuthStore.getState();
 
+      // 🔥 API 호출 (accessToken 있으면 Authorization 헤더 포함)
       await fetch("/v1/auth/logout", {
         method: "POST",
         headers: {
           ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
           "Content-Type": "application/json",
         },
-        credentials: "include",
+        credentials: "include", 
       });
 
       reset();
