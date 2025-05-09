@@ -18,7 +18,7 @@ export default function CarrierPopup({
 }: CarrierPopupProps) {
   return (
     <BottomPopup isOpen={isOpen} onClose={onClose}>
-      <div className="relative w-full max-w-[327px] mx-auto pt-6 pb-3">
+      <div className="relative w-full !max-w-none pt-6 pb-3">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-1 rounded hover:bg-bgColor-surface"

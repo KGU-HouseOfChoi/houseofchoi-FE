@@ -60,7 +60,7 @@ export default function BirthdayInput({
   };
 
   return (
-    <div className="w-full max-w-[327px] flex flex-col gap-2">
+    <div className="w-full max-w-[364px] flex flex-col gap-2">
       <label className="text-xl text-textColor-sub">
         주민등록번호를 입력해주세요
       </label>

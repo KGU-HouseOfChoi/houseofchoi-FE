@@ -72,7 +72,7 @@ export default function OnboardingFlow() {
             </div>
 
             <button
-              onClick={() => router.push("/")}
+              onClick={() => router.push("/guest")}
               className="text-lg text-gray-400 underline"
             >
               바로 시작하기

@@ -1,52 +1,83 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/auth/useAuth";
+import { useState } from "react";
+import LoginGuidePopup from "@/components/auth/popup/LoginGuidePopup";
 
 import HomeIcon from "@/asset/icons/home-2.svg";
 import CalendarIcon from "@/asset/icons/calendar-tick.svg";
 import MessagesIcon from "@/asset/icons/messages-2.svg";
 import ProfileIcon from "@/asset/icons/profile-circle.svg";
 
-const navItems = [
-  { label: "처음", href: "/", icon: HomeIcon },
-  { label: "일정", href: "/schedule", icon: CalendarIcon },
-  { label: "대화", href: "/chat", icon: MessagesIcon },
-  { label: "설정", href: "/settings", icon: ProfileIcon },
-];
-
 export default function BottomNavBar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { isGuest, hydrated } = useAuth();
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+
+  if (!hydrated) return null;
+
+  const navItems = [
+    {
+      label: "처음",
+      href: isGuest ? "/guest" : "/member",
+      icon: HomeIcon,
+    },
+    { label: "일정", href: "/member/schedule", icon: CalendarIcon },
+    { label: "대화", href: "/member/chatbot", icon: MessagesIcon },
+    { label: "설정", href: "/member/mypage", icon: ProfileIcon },
+  ];
+
+  const handleNavClick = (href: string) => {
+    const isProtected =
+      !href.startsWith("/guest") && href !== (isGuest ? "/guest" : "/member");
+    if (isGuest && isProtected) {
+      setShowLoginPopup(true);
+    } else {
+      if (pathname !== href) {
+        router.push(href);
+      }
+    }
+  };
 
   return (
-    <nav className="fixed bottom-0 w-full max-w-[414px] h-[124px] bg-white z-50 shadow-[0px_-3px_10px_rgba(142,142,142,0.25)] touch-manipulation">
-      <div className="h-full px-6 flex items-center justify-between max-w-md mx-auto">
-        {navItems.map(({ label, href, icon: Icon }) => {
-          const isActive = pathname === href;
+    <>
+      <nav className="fixed bottom-0 w-full max-w-[414px] h-[124px] bg-white z-50 shadow-[0px_-3px_10px_rgba(142,142,142,0.25)]">
+        <div className="h-full px-6 flex items-center justify-between max-w-md mx-auto">
+          {navItems.map(({ label, href, icon: Icon }) => {
+            const isActive = pathname === href || pathname.startsWith(href);
 
-          return (
-            <Link
-              key={label}
-              href={href}
-              className="flex flex-col items-center gap-1 w-[50px]"
-              aria-current={isActive ? "page" : undefined}
-            >
-              <Icon
-                className={`w-[50px] h-[50px] ${
-                  isActive ? "text-brand-normal" : "text-iconColor-disabled"
-                }`}
-              />
-              <span
-                className={`text-2xl font-pretendard font-semibold ${
-                  isActive ? "text-brand-normal" : "text-iconColor-sub"
-                }`}
+            return (
+              <button
+                type="button"
+                key={label}
+                onClick={() => handleNavClick(href)}
+                className="flex flex-col items-center gap-1 w-[50px]"
+                aria-current={isActive ? "page" : undefined}
               >
-                {label}
-              </span>
-            </Link>
-          );
-        })}
-      </div>
-    </nav>
+                <Icon
+                  className={`w-[50px] h-[50px] ${
+                    isActive ? "text-brand-normal" : "text-iconColor-disabled"
+                  }`}
+                />
+                <span
+                  className={`text-2xl font-pretendard font-semibold ${
+                    isActive ? "text-brand-normal" : "text-iconColor-sub"
+                  }`}
+                >
+                  {label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
+
+      <LoginGuidePopup
+        isOpen={showLoginPopup}
+        onClose={() => setShowLoginPopup(false)}
+      />
+    </>
   );
 }

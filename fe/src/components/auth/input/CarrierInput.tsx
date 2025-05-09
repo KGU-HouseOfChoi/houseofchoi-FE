@@ -16,9 +16,8 @@ export default function CarrierInput({
   isOpen = false,
 }: CarrierInputProps) {
   return (
-    <div className="w-full max-w-[327px] flex flex-col gap-2">
+    <div className="w-full max-w-[364px] flex flex-col gap-2">
       <label className="text-xl text-textColor-sub">통신사</label>
-
       <button
         type="button"
         onClick={onClick}

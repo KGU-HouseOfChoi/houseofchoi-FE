@@ -15,8 +15,8 @@ export default function AuthHeader() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full h-[60px] z-10">
-        <div className="max-w-[414px] w-full mx-auto px-6 flex justify-between items-center h-full">
+      <header className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[414px] h-[60px] z-10 bg-bgColor-default">
+        <div className="w-full px-6 flex justify-between items-center h-full">
           <h1 className="text-xl font-bold text-textColor-heading">회원가입</h1>
           <button
             onClick={() => setIsPopupOpen(true)}

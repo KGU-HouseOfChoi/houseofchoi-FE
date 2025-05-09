@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSignup } from "@/hooks/auth/useSignup";
 import { useAuthStore } from "@/store/useAuthStore";
-import StepContainer from "@/components/auth/steps/StepContainer";
-import Step5_VerificationCode from "@/components/auth/steps/Step5_VerificationCode";
+import StepContainer from "@/components/auth/step/StepContainer";
+import Step5_VerificationCode from "@/components/auth/step/Step5_VerificationCode";
 import Toast from "@/components/common/Toast";
 import AuthHeader from "@/components/auth/AuthHeader";
 
