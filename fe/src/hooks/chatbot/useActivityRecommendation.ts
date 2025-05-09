@@ -13,10 +13,10 @@ export function useActivityRecommendation() {
   const fetchRecommendation = async (category: "indoor" | "outdoor") => {
     setLoading(true);
     try {
-      const list = await fetchChatRecommendation({ category });   // ← 배열
+      const list = await fetchChatRecommendation({ category });   
       if (!list.length) throw new Error("조건에 맞는 프로그램이 없습니다.");
 
-      const program = list[Math.floor(Math.random() * list.length)]; // 랜덤 1건
+      const program = list[Math.floor(Math.random() * list.length)]; //프로그램 랜덤 추천
 
       const msgs: Message[] = [
         {

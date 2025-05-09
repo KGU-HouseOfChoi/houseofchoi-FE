@@ -20,6 +20,19 @@ export interface ChatRecommendRequest {
   category: "indoor" | "outdoor";
 }
 
+export interface Tag {
+  name: string;
+}
+
+export interface Center {
+  id: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+  address: string;
+  tel: string;
+}
+
 export interface ChatRecommendResponse {
   id: number;
   name: string;
@@ -28,14 +41,15 @@ export interface ChatRecommendResponse {
   thr_day: string;
   fou_day: string;
   fiv_day: string;
-  start_time: string;
-  end_time: string;
+  start_time: string;  
+  end_time: string;    
   price: number;
   main_category: string;
-  sub_category: string;
+  sub_category: string;   
   headcount: string;
-  tags: { name: string }[];
+  tags: Tag[];
   image_url: string;
+  center: Center;         
 }
 
 export interface STTResponse {
