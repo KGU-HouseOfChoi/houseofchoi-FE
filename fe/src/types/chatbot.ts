@@ -27,3 +27,8 @@ export interface ChatRecommendResponse {
   price: number;
   place: string;
 }
+
+export interface STTResponse {
+  user_message: string;
+  chatbot_response: string;
+}
