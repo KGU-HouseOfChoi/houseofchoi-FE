@@ -25,7 +25,6 @@ const MessageGroup: FC<MessageGroupProps> = ({
 }) => {
   return (
     <div className="flex flex-col gap-1">
-      {/* 프로필 (bot일 때만) */}
       {!isUser && items[0].type !== "button" && (
         <div className="flex items-center gap-2 mb-1">
           <Image
@@ -38,7 +37,6 @@ const MessageGroup: FC<MessageGroupProps> = ({
         </div>
       )}
 
-      {/* 메시지 묶음 */}
       <div className={`flex flex-col ${isUser ? "items-end" : "items-start"}`}>
         {items.map((msg, idx) => {
           const isFirst = idx === 0;

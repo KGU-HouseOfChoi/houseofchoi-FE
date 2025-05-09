@@ -4,7 +4,6 @@ import { useAuthStore } from "@/store/useAuthStore";
 import type { AxiosResponse } from "axios";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-// ✅ SMS 전송 API
 export async function sendSMS(
   phone: string,
   router?: AppRouterInstance,
@@ -20,7 +19,6 @@ export async function sendSMS(
   }
 }
 
-// ✅ 회원가입 요청 타입
 export interface SignUpRequest {
   name: string;
   phone: string;
@@ -28,7 +26,6 @@ export interface SignUpRequest {
   code: string;
 }
 
-// ✅ API 응답 타입
 export interface SignUpAPIResponse {
   success: boolean;
   timestamp: string;
@@ -45,7 +42,6 @@ export interface SignUpAPIResponse {
   };
 }
 
-// ✅ 회원가입 API
 export async function signUpAPI(
   data: SignUpRequest,
   router?: AppRouterInstance,
@@ -60,7 +56,6 @@ export async function signUpAPI(
       data,
     );
 
-    // ✅ accessToken, refreshToken 상태 저장
     const { accessToken, refreshToken } = res.data.data;
     const { setAccessToken, setRefreshToken } = useAuthStore.getState();
     setAccessToken(accessToken);

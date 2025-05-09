@@ -2,7 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getPersonalityQuestions, QuestionItem } from "@/utils/personalityApi";
+import {
+  getPersonalityQuestions,
+  QuestionItem,
+} from "@/utils/personality/personalityApi";
 import QuestionNavigator from "@/components/personality/analysis/QuestionNavigator";
 import CompletedMessage from "@/components/personality/analysis/CompletionNotice";
 import PersonalityAnalysisHeader from "@/components/personality/PersonalityAnalysisHeader";
@@ -37,7 +40,7 @@ export default function PersonalityAnalysisPage() {
           setCompletedVersion("alreadyCompleted");
         } else {
           console.error("질문 불러오기 에러:", error);
-          setShowError(true); // GET 실패 → Toast 표시
+          setShowError(true);
         }
       }
     }

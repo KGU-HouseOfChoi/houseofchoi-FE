@@ -18,13 +18,11 @@ export default function Toast({ message, onClose, actions }: ToastProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* ✅ 백드롭 */}
       <div
         className="absolute inset-0 bg-black bg-opacity-40 pointer-events-auto"
-        onClick={(e) => e.stopPropagation()} // 백드롭 클릭 시 이벤트 막음
+        onClick={(e) => e.stopPropagation()}
       />
 
-      {/* ✅ 토스트 박스 */}
       <div className="relative px-6 py-3 rounded-xl bg-gray-900 text-white text-sm font-medium shadow-lg animate-fade-in z-50 max-w-xs w-full text-center">
         <p>{message}</p>
 
