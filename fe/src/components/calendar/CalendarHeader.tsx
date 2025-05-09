@@ -8,13 +8,11 @@ import { ko } from "date-fns/locale";
 const CalendarHeader: FC = () => {
   const today = new Date();
 
-  // 오늘부터 5일치 날짜 배열
   const days = useMemo(
     () => Array.from({ length: 5 }, (_, i) => addDays(today, i)),
-    [today],
+    [today]
   );
 
-  // 헤더 연·월 (첫 번째 날짜 기준)
   const monthLabel = format(days[0], "yyyy . M", { locale: ko });
 
   return (
