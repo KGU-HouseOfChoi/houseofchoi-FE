@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthStore } from "@/store/useAuthStore";
-import FormInput from "../inputs/FormInput";
+import FormInput from "../input/FormInput";
 
 export default function Step4_PhoneNumber() {
   const { phoneNumber, setField, setError, clearError, errors } =

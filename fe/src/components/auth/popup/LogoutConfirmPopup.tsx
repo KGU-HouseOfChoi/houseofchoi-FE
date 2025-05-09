@@ -4,6 +4,7 @@ import { LogOut, X } from "lucide-react";
 import BottomPopup from "@/components/common/popup/BottomPopup";
 import PopupButtons from "@/components/common/button/PopupButtons";
 import { useLogout } from "@/hooks/auth/useLogout";
+import { useState } from "react";
 
 interface LogoutConfirmPopupProps {
   isOpen: boolean;
@@ -16,9 +17,18 @@ export default function LogoutConfirmPopup({
   onClose,
   redirectPath = "/guest",
 }: LogoutConfirmPopupProps) {
-  const { logout, toastMessage } = useLogout();
+  const { logout } = useLogout();
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   if (!isOpen) return null;
+
+  const handleLogout = async () => {
+    const { success } = await logout(redirectPath);
+    if (!success) {
+      setToastMessage("로그아웃 중 오류가 발생했습니다. 다시 시도해주세요.");
+    }
+    onClose();
+  };
 
   return (
     <>
@@ -40,16 +50,12 @@ export default function LogoutConfirmPopup({
           </h2>
 
           <p className="text-base text-textColor-sub leading-relaxed whitespace-pre-line">
-            계정에서 안전하게
-            {"\n"}로그아웃할 수 있어요.
+            계정에서 안전하게{"\n"}로그아웃할 수 있어요.
           </p>
 
           <PopupButtons
             onCancel={onClose}
-            onConfirm={async () => {
-              onClose();
-              await logout(redirectPath);
-            }}
+            onConfirm={handleLogout}
             confirmLabel="로그아웃"
             cancelLabel="취소"
           />
@@ -57,7 +63,10 @@ export default function LogoutConfirmPopup({
       </BottomPopup>
 
       {toastMessage && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-danger-50 text-white px-4 py-2 rounded-xl shadow-lg text-sm font-medium">
+        <div
+          className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-danger-50 text-white px-4 py-2 rounded-xl shadow-lg text-sm font-medium"
+          onClick={() => setToastMessage(null)} // ✅ 클릭 시 닫기
+        >
           {toastMessage}
         </div>
       )}

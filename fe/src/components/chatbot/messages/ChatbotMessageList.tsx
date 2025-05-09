@@ -66,7 +66,6 @@ const ChatbotMessageList = () => {
       <div className="flex-1 overflow-y-auto p-4 min-h-0">
         <ChatbotGreeting username="최서희" />
 
-        {/* 에러 메시지 표시 */}
         {errorMessage && (
           <div className="bg-red-100 text-red-600 p-2 mb-2 rounded">
             {errorMessage}

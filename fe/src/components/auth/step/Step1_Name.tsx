@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import debounce from "lodash/debounce";
-import FormInput from "../inputs/FormInput";
+import FormInput from "../input/FormInput";
 
 export default function Step1_Name() {
   const { name, setField, errors, setError, clearError, step, nextStep } =

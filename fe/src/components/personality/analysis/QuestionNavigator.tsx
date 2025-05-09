@@ -3,17 +3,17 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
-  getPersonalityQuestions,
   postPersonalityAnalyze,
-} from "@/utils/personalityAnalysis";
+  QuestionItem,
+} from "@/utils/personality/personalityApi";
 import Question from "./Question";
 import ProgressIndicator from "./ProgressIndicator";
 import SplitButton from "@/components/common/button/SplitButton";
 import { handleApiError } from "@/utils/common/handleApiError";
 
-interface QuestionItem {
-  question: string;
-  choices: string[];
+interface QuestionNavigatorProps {
+  questions: QuestionItem[];
+  setIsCompleted: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface AnalysisResult {
@@ -21,38 +21,19 @@ interface AnalysisResult {
   personality_tags: string[];
 }
 
-interface QuestionNavigatorProps {
-  setIsCompleted: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 export default function QuestionNavigator({
+  questions,
   setIsCompleted,
 }: QuestionNavigatorProps) {
   const router = useRouter();
-  const [questions, setQuestions] = useState<QuestionItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<(string | null)[]>([]);
 
   useEffect(() => {
-    async function fetchQuestions() {
-      try {
-        const data = await getPersonalityQuestions();
-        console.log("✅ getPersonalityQuestions 응답:", data);
-
-        if (!Array.isArray(data)) {
-          setIsCompleted(true);
-          return;
-        }
-
-        setQuestions(data);
-        setAnswers(Array(data.length).fill(null));
-      } catch (error) {
-        handleApiError(error, "질문을 불러오는 데 실패했습니다.", router);
-      }
+    if (questions && questions.length > 0) {
+      setAnswers(Array(questions.length).fill(null));
     }
-
-    fetchQuestions();
-  }, [router, setIsCompleted]);
+  }, [questions]);
 
   const handleSelect = (choice: string) => {
     const updatedAnswers = [...answers];
@@ -68,7 +49,7 @@ export default function QuestionNavigator({
 
     try {
       const cleanedAnswers = answers.map(
-        (ans) => ans?.match(/\(([AB])\)/)?.[1] ?? "",
+        (ans) => ans?.match(/\(([AB])\)/)?.[1] ?? ans ?? "",
       );
 
       console.log("✅ 제출 answers (A/B만):", cleanedAnswers);
@@ -81,6 +62,7 @@ export default function QuestionNavigator({
         await postPersonalityAnalyze(cleanedAnswers);
       console.log("✅ 분석 결과:", result);
 
+      setIsCompleted(true);
       router.push("/member");
     } catch (error) {
       handleApiError(error, "분석 요청에 실패했습니다.", router);
@@ -97,8 +79,12 @@ export default function QuestionNavigator({
   const isFirst = currentIndex === 0;
   const isLast = currentIndex === questions.length - 1;
 
-  if (!questions[currentIndex]) {
-    return null;
+  if (!questions || questions.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-lg text-textColor-heading">
+        질문을 불러오는 중...
+      </div>
+    );
   }
 
   return (

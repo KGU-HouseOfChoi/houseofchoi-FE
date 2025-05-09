@@ -7,6 +7,7 @@ interface BottomPopupProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
+  className?: string;
 }
 
 export default function BottomPopup({
@@ -84,7 +85,7 @@ export default function BottomPopup({
         tabIndex={-1}
         role="dialog"
         aria-modal="true"
-        className="w-full max-w-[375px] rounded-t-[20px] bg-white animate-slide-up p-4 focus:outline-none"
+        className="w-full max-w-[412px] rounded-t-[20px] bg-white animate-slide-up p-4 focus:outline-none"
         onClick={(e) => e.stopPropagation()}
       >
         {children}

@@ -12,7 +12,7 @@ export async function sendSMS(
     await axiosInstance.post("/v1/auth/send-sms", { phoneNum: phone });
 
     if (process.env.NODE_ENV !== "production") {
-      console.log("인증번호 전송 성공");
+      console.log("✅ 인증번호 전송 성공");
     }
   } catch (error) {
     throw handleApiError(error, "SMS 전송 중 오류가 발생했습니다.", router);
@@ -48,7 +48,7 @@ export async function signUpAPI(
 ): Promise<SignUpAPIResponse> {
   try {
     if (process.env.NODE_ENV !== "production") {
-      console.log("회원가입 요청 전송");
+      console.log("✅ 회원가입 요청 전송");
     }
 
     const res: AxiosResponse<SignUpAPIResponse> = await axiosInstance.post(
@@ -56,11 +56,10 @@ export async function signUpAPI(
       data,
     );
 
-    // ✅ accessToken, refreshToken 저장
     const { accessToken, refreshToken } = res.data.data;
-    const store = useAuthStore.getState();
-    store.setAccessToken(accessToken);
-    store.setRefreshToken(refreshToken);
+    const { setAccessToken, setRefreshToken } = useAuthStore.getState();
+    setAccessToken(accessToken);
+    setRefreshToken(refreshToken);
 
     return res.data;
   } catch (error) {

@@ -1,16 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { consentClauses } from "@/data/consents";
 import { X } from "lucide-react";
+import BottomPopup from "@/components/common/popup/BottomPopup";
+import { consentClauses } from "@/data/consents";
 
 interface ConsentPopupProps {
+  isOpen: boolean;
   onCancel: () => void;
   onConfirm: () => void;
   loading?: boolean;
 }
 
 export default function ConsentPopup({
+  isOpen,
   onCancel,
   onConfirm,
   loading = false,
@@ -27,23 +30,14 @@ export default function ConsentPopup({
 
   useEffect(() => {
     setScrolledToBottom(false);
-  }, []);
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
+    }
+  }, [isOpen]);
 
   return (
-    <div
-      className="fixed inset-0 bg-black/50 z-50 flex justify-center items-end"
-      onClick={onCancel}
-      onKeyDown={(e) => {
-        if (e.key === "Escape") {
-          onCancel();
-        }
-      }}
-      tabIndex={-1}
-    >
-      <div
-        className="w-full bg-bgColor-default rounded-t-2xl p-6 space-y-4 max-h-[90vh] relative"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <BottomPopup isOpen={isOpen} onClose={onCancel}>
+      <div className="relative max-w-[412px] bg-bgColor-default rounded-t-2xl p-6 space-y-4 max-h-[90vh]">
         <button
           onClick={onCancel}
           className="absolute top-4 right-4 p-1 rounded hover:bg-bgColor-surface"
@@ -81,8 +75,8 @@ export default function ConsentPopup({
         <div className="flex gap-4 pt-2">
           <button
             onClick={onCancel}
-            className="flex-1 py-3 rounded-xl bg-brand-normal text-white font-semibold transition-colors"
-            disabled={loading}
+            className="flex-1 py-3 rounded-xl bg-borderColor-strong text-textColor-white font-semibold transition-colors"
+            disabled={false}
           >
             취소
           </button>
@@ -112,6 +106,6 @@ export default function ConsentPopup({
           </button>
         </div>
       </div>
-    </div>
+    </BottomPopup>
   );
 }

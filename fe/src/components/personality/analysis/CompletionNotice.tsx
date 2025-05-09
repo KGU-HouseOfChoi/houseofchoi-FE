@@ -13,7 +13,7 @@ interface CompletedMessageProps {
 export default function CompletedMessage({
   version = "completed",
   redirectTo = "/member",
-  delayMs = 8000000,
+  delayMs = 3000,
 }: CompletedMessageProps) {
   const router = useRouter();
 

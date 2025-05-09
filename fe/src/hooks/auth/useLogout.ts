@@ -1,15 +1,18 @@
 "use client";
 
 import { useAuthStore } from "@/store/useAuthStore";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function useLogout() {
-  const [toastMessage, setToastMessage] = useState("");
+  const router = useRouter();
 
-  const logout = async (redirectPath = "/guest") => {
+  const logout = async (
+    redirectPath = "/guest",
+  ): Promise<{ success: boolean; error?: unknown }> => {
     try {
-      const accessToken = useAuthStore.getState().accessToken;
+      const { accessToken, reset } = useAuthStore.getState();
 
+      // 🔥 API 호출 (accessToken 있으면 Authorization 헤더 포함)
       await fetch("/v1/auth/logout", {
         method: "POST",
         headers: {
@@ -19,16 +22,22 @@ export function useLogout() {
         credentials: "include",
       });
 
-      useAuthStore.getState().reset();
-      localStorage.clear();
+      reset();
+      localStorage.removeItem("accessToken");
       sessionStorage.clear();
 
-      window.location.replace(redirectPath);
-    } catch (error) {
-      console.error("로그아웃 실패:", error);
-      setToastMessage("로그아웃 중 오류가 발생했습니다. 다시 시도해주세요.");
+      router.replace(redirectPath);
+
+      return { success: true };
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("로그아웃 실패:", error.message);
+      } else {
+        console.error("로그아웃 실패:", error);
+      }
+      return { success: false, error };
     }
   };
 
-  return { logout, toastMessage };
+  return { logout };
 }
