@@ -61,10 +61,12 @@ export default function PersonalityAnalysisPage() {
         {completedVersion ? (
           <CompletedMessage version={completedVersion} />
         ) : (
-          <QuestionNavigator
-            questions={questions}
-            setIsCompleted={() => setCompletedVersion("completed")}
-          />
+          questions.length > 0 && (
+            <QuestionNavigator
+              questions={questions}
+              setIsCompleted={() => setCompletedVersion("completed")}
+            />
+          )
         )}
       </div>
 

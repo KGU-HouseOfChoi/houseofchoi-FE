@@ -10,8 +10,13 @@ export interface QuestionItem {
  * 성향 질문 목록 가져오기
  */
 export async function getPersonalityQuestions(): Promise<QuestionItem[]> {
-  const res = await axiosAiInstance.get("/personality/questions");
-  return res.data.data;
+  const { data } = await axiosAiInstance.get<{ data: QuestionItem[] }>(
+    "/personality/questions",
+  );
+  if (!Array.isArray(data.data)) {
+    throw new Error("서버 응답 형식이 올바르지 않습니다.");
+  }
+  return data.data;
 }
 
 /**

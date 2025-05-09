@@ -30,6 +30,10 @@ export default function ConsentPopup({
 
   useEffect(() => {
     setScrolledToBottom(false);
+    // ✅ 팝업 다시 열 때 스크롤을 맨 위로 초기화
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
+    }
   }, [isOpen]);
 
   return (
