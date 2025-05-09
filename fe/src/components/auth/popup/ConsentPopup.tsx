@@ -76,7 +76,7 @@ export default function ConsentPopup({
           <button
             onClick={onCancel}
             className="flex-1 py-3 rounded-xl bg-borderColor-strong text-textColor-white font-semibold transition-colors"
-            disabled={loading}
+            disabled={false}
           >
             취소
           </button>
