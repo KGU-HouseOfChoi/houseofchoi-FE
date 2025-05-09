@@ -18,7 +18,7 @@ const ChatbotMessageList = () => {
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // ✅ 1️⃣ 에러 핸들링 로직 통합
+  
   const handleError = (error: unknown, defaultMessage: string) => {
     if (error instanceof AxiosError && error.response) {
       console.error("에러 발생:", error.message);
@@ -32,24 +32,24 @@ const ChatbotMessageList = () => {
     }
   };
 
-  // ✅ 2️⃣ 메시지 전송 처리
+ 
   const handleSendWithErrorHandling = async (text: string) => {
     try {
       await handleSend(text);
-      setErrorMessage(null); // 에러 초기화
+      setErrorMessage(null); 
     } catch (error: unknown) {
       handleError(error, "메시지 전송 중 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
 
-  // ✅ 3️⃣ 버튼 클릭 처리
+  
   const handleButtonClickWithErrorHandling = async (
     value: string,
     label: string
   ) => {
     try {
       await handleButtonClick(value, label);
-      setErrorMessage(null); // 에러 초기화
+      setErrorMessage(null); 
     } catch (error: unknown) {
       handleError(error, "추천 프로그램 조회 중 오류가 발생했습니다. 다시 시도해주세요.");
     }

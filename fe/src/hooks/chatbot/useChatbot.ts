@@ -49,7 +49,7 @@ export function useChatbot() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // ✅ 1️⃣ 메시지 전송 처리
+  
   const handleSend = async (text: string) => {
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -83,7 +83,7 @@ export function useChatbot() {
     }
   };
 
-  // ✅ 2️⃣ 버튼 클릭 시 추천 프로그램 로딩
+  
   const handleButtonClick = async (value: string, label: string) => {
     const userMessage: Message = {
       id: Date.now().toString(),
