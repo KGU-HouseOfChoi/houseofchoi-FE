@@ -6,14 +6,16 @@ export function useActivityRecommendation() {
   const [loading, setLoading] = useState(false);
 
   const weekly = (p: ChatRecommendResponse) => {
-    const days = [p.fir_day, p.sec_day, p.thr_day, p.fou_day, p.fiv_day].filter(Boolean);
+    const days = [p.fir_day, p.sec_day, p.thr_day, p.fou_day, p.fiv_day].filter(
+      Boolean,
+    );
     return days.length ? `매주 ${days.join("·")}` : "미정";
   };
 
   const fetchRecommendation = async (category: "indoor" | "outdoor") => {
     setLoading(true);
     try {
-      const list = await fetchChatRecommendation({ category });   
+      const list = await fetchChatRecommendation({ category });
       if (!list.length) throw new Error("조건에 맞는 프로그램이 없습니다.");
 
       const program = list[Math.floor(Math.random() * list.length)]; //프로그램 랜덤 추천

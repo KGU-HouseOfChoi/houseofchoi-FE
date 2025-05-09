@@ -49,7 +49,6 @@ export function useChatbot() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  
   const handleSend = async (text: string) => {
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -83,7 +82,6 @@ export function useChatbot() {
     }
   };
 
-  
   const handleButtonClick = async (value: string, label: string) => {
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -98,7 +96,9 @@ export function useChatbot() {
     setMessages((prev) => [...prev, userMessage]);
 
     try {
-      const recommendationMessages = await fetchRecommendation(value as "indoor" | "outdoor");
+      const recommendationMessages = await fetchRecommendation(
+        value as "indoor" | "outdoor",
+      );
 
       if (recommendationMessages.length > 0) {
         setMessages((prev) => [...prev, ...recommendationMessages]);

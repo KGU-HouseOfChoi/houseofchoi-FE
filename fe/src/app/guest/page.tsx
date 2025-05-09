@@ -11,7 +11,7 @@ import ActivityCardList from "@/components/home/ActivityCardList";
 import BottomNavBar from "@/components/common/BottomNavBar";
 import LoginGuidePopup from "@/components/auth/popup/LoginGuidePopup";
 
-export default function Home() {
+export default function GuestPage() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const resetAuth = useAuthStore((state) => state.reset);
   const router = useRouter();
@@ -21,7 +21,7 @@ export default function Home() {
     if (!hydrated) return;
 
     if (!isGuest) {
-      router.replace("/member/home");
+      router.replace("/member");
     } else {
       resetAuth();
       localStorage.removeItem("accessToken");

@@ -13,17 +13,17 @@ export async function fetchChatRecommendation(
 
     const res = await axiosAiInstance.get<ChatRecommendResponse[]>(
       "/recommend",
-      { params: { sub_category: kor } },         
+      { params: { sub_category: kor } },
     );
 
-    return res.data;                             
+    return res.data;
   } catch (error: unknown) {
     /* 동일한 AxiosError 처리 */
     if (error instanceof AxiosError && error.response) {
       const detail = error.response.data?.detail;
       const msg = Array.isArray(detail)
         ? detail.map((d: { msg: string }) => d.msg).join("\n")
-        : detail ?? "추천 정보 조회 중 오류";
+        : (detail ?? "추천 정보 조회 중 오류");
       handleApiError(error, `추천 정보 조회 실패: ${msg}`);
     } else {
       handleApiError(
@@ -31,6 +31,6 @@ export async function fetchChatRecommendation(
         "추천 정보 조회 중 오류",
       );
     }
-    return [];                                   
+    return [];
   }
 }

@@ -41,15 +41,15 @@ export interface ChatRecommendResponse {
   thr_day: string;
   fou_day: string;
   fiv_day: string;
-  start_time: string;  
-  end_time: string;    
+  start_time: string;
+  end_time: string;
   price: number;
   main_category: string;
-  sub_category: string;   
+  sub_category: string;
   headcount: string;
   tags: Tag[];
   image_url: string;
-  center: Center;         
+  center: Center;
 }
 
 export interface STTResponse {
