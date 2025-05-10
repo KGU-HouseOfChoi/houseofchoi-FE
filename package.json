@@ -1,0 +1,6 @@
+{
+	"dependencies": {
+		"inline-worker": "^1.1.0",
+		"recorder-js": "^1.0.7"
+	}
+}

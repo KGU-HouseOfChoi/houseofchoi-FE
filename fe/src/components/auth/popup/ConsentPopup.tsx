@@ -1,16 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { consentClauses } from "@/data/consents";
 import { X } from "lucide-react";
+import BottomPopup from "@/components/common/popup/BottomPopup";
+import { consentClauses } from "@/data/consents";
 
 interface ConsentPopupProps {
+  isOpen: boolean;
   onCancel: () => void;
   onConfirm: () => void;
   loading?: boolean;
 }
 
 export default function ConsentPopup({
+  isOpen,
   onCancel,
   onConfirm,
   loading = false,
@@ -27,32 +30,23 @@ export default function ConsentPopup({
 
   useEffect(() => {
     setScrolledToBottom(false);
-  }, []);
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
+    }
+  }, [isOpen]);
 
   return (
-    <div
-      className="fixed inset-0 bg-black/50 z-50 flex justify-center items-end"
-      onClick={onCancel}
-      onKeyDown={(e) => {
-        if (e.key === "Escape") {
-          onCancel();
-        }
-      }}
-      tabIndex={-1}
-    >
-      <div
-        className="w-full max-w-md bg-white rounded-t-2xl p-6 space-y-4 max-h-[90vh] relative"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <BottomPopup isOpen={isOpen} onClose={onCancel}>
+      <div className="relative max-w-[412px] bg-bgColor-default rounded-t-2xl p-6 space-y-4 max-h-[90vh]">
         <button
           onClick={onCancel}
-          className="absolute top-4 right-4 p-1 rounded hover:bg-gray-100"
+          className="absolute top-4 right-4 p-1 rounded hover:bg-bgColor-surface"
           aria-label="닫기"
         >
-          <X className="w-6 h-6 text-gray-400" />
+          <X className="w-6 h-6 text-iconColor-sub" />
         </button>
 
-        <p className="text-black text-2xl font-medium font-['Pretendard'] text-left">
+        <p className="text-2xl font-medium text-textColor-heading text-left">
           서비스 이용을 위해
           <br />꼭 필요한 약관만 추렸어요!
         </p>
@@ -60,18 +54,18 @@ export default function ConsentPopup({
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="h-[240px] overflow-y-scroll rounded-xl border border-gray-200 p-4 space-y-4"
+          className="h-[240px] overflow-y-scroll rounded-xl border border-borderColor-default p-4 space-y-4"
         >
-          <p className="text-zinc-800 text-2xl font-normal font-['Pretendard']">
+          <p className="text-xl font-semibold text-textColor-heading">
             KG모빌리언스 약관
           </p>
 
           {consentClauses.map((item, idx) => (
             <div key={idx}>
-              <p className="text-neutral-500 text-xl font-normal font-['ABeeZee']">
+              <p className="text-base font-medium text-textColor-sub">
                 {item.title}
               </p>
-              <p className="text-neutral-500 text-xl font-normal font-['ABeeZee'] mt-1">
+              <p className="text-base text-textColor-sub mt-1">
                 {item.content}
               </p>
             </div>
@@ -81,24 +75,37 @@ export default function ConsentPopup({
         <div className="flex gap-4 pt-2">
           <button
             onClick={onCancel}
-            className="flex-1 py-3 rounded-xl bg-gray-200 text-black font-semibold"
-            disabled={loading}
+            className="flex-1 py-3 rounded-xl bg-borderColor-strong text-textColor-white font-semibold transition-colors"
+            disabled={false}
           >
             취소
           </button>
           <button
-            onClick={onConfirm}
-            disabled={!scrolledToBottom || loading}
-            className={`flex-1 py-3 rounded-xl font-semibold transition ${
-              !scrolledToBottom || loading
-                ? "bg-gray-300 text-white cursor-not-allowed"
-                : "bg-brand-normal text-white"
+            onClick={() => {
+              if (!scrolledToBottom && scrollRef.current) {
+                scrollRef.current.scrollTo({
+                  top: scrollRef.current.scrollHeight,
+                  behavior: "smooth",
+                });
+              } else {
+                onConfirm();
+              }
+            }}
+            disabled={loading}
+            className={`flex-1 py-3 rounded-xl font-semibold transition-colors ${
+              (!scrolledToBottom && loading) || loading
+                ? "bg-borderColor-strong text-textColor-white cursor-not-allowed"
+                : "bg-brand-normal text-textColor-white hover:bg-brand-hover active:bg-brand-active"
             }`}
           >
-            {loading ? "전송 중..." : "동의하고 진행"}
+            {loading
+              ? "전송 중..."
+              : !scrolledToBottom
+                ? "맨 아래로 이동"
+                : "동의하고 진행"}
           </button>
         </div>
       </div>
-    </div>
+    </BottomPopup>
   );
 }

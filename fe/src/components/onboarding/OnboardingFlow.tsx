@@ -3,8 +3,8 @@ import { useRouter } from "next/navigation";
 
 import OnboardingSlide from "./OnboardingStep";
 import OnboardingHeader from "./OnboardingHeader";
-import Button from "@/components/common/Button/Button";
-import SplitButton from "@/components/common/Button/SplitButton";
+import Button from "@/components/common/button/Button";
+import SplitButton from "@/components/common/button/SplitButton";
 
 const slides = [
   {
@@ -40,7 +40,7 @@ export default function OnboardingFlow() {
 
   const handleNext = () => {
     if (isLast) {
-      router.push("/");
+      router.push("/guest");
     } else {
       setCurrent((prev) => prev + 1);
     }
@@ -72,7 +72,7 @@ export default function OnboardingFlow() {
             </div>
 
             <button
-              onClick={() => router.push("/")}
+              onClick={() => router.push("/guest")}
               className="text-lg text-gray-400 underline"
             >
               바로 시작하기

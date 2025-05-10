@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ChatBubble from "./ChatBubble";
+import ChatBubble from "./messages/ChatBubble";
 import { Message } from "@/types/chatbot";
 import ButtonGroup from "@/components/chatbot/ButtonGroup";
 import type { FC } from "react";
@@ -25,7 +25,6 @@ const MessageGroup: FC<MessageGroupProps> = ({
 }) => {
   return (
     <div className="flex flex-col gap-1">
-      {/* 프로필 (bot일 때만) */}
       {!isUser && items[0].type !== "button" && (
         <div className="flex items-center gap-2 mb-1">
           <Image
@@ -38,7 +37,6 @@ const MessageGroup: FC<MessageGroupProps> = ({
         </div>
       )}
 
-      {/* 말풍선 그룹 */}
       <div
         className={`flex flex-col ${isUser ? "items-end" : "items-start"} gap-2`}
       >

@@ -1,0 +1,178 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import axios, { AxiosError } from "axios";
+import Toast from "@/components/common/Toast";
+import { sendSMS } from "@/apis/auth/auth";
+import { useAuthStore } from "@/store/useAuthStore";
+import BottomButton from "@/components/common/button/BottomButton";
+
+interface Step5VerificationProps {
+  code: string;
+  setCode: (val: string) => void;
+  error: string;
+  setError: (msg: string) => void;
+  onSuccess: (verifiedCode: string) => void;
+  loading: boolean;
+}
+
+export default function Step5_VerificationCode({
+  code,
+  setCode,
+  error,
+  setError,
+  onSuccess,
+  loading,
+}: Step5VerificationProps) {
+  const router = useRouter();
+  const [secondsLeft, setSecondsLeft] = useState(180);
+  const [canResend, setCanResend] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const { phoneNumber } = useAuthStore();
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startTimer = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setSecondsLeft((sec) =>
+        sec <= 1 ? (clearInterval(intervalRef.current!), 0) : sec - 1,
+      );
+    }, 1000);
+  };
+
+  useEffect(() => {
+    startTimer();
+    return () => clearInterval(intervalRef.current!);
+  }, []);
+
+  useEffect(() => {
+    if (secondsLeft === 0) {
+      setCanResend(true);
+      setCode("");
+      setError("인증번호가 만료되었습니다. 다시 요청해주세요.");
+    }
+  }, [secondsLeft, setCode, setError]);
+
+  const handleVerify = (val: string) => {
+    const digits = val.replace(/\D/g, "").slice(0, 6);
+    setCode(digits);
+
+    if (error && digits.length < 6) {
+      setError("");
+    }
+  };
+
+  const handleResend = async () => {
+    try {
+      await sendSMS(phoneNumber, router);
+      setShowToast(true);
+      setCode("");
+      setError("");
+      setSecondsLeft(180);
+      setCanResend(false);
+      startTimer();
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const err = error as AxiosError<{ message: string }>;
+        setError(
+          err.response?.data?.message || "인증번호 전송에 실패했습니다.",
+        );
+      } else {
+        setError("인증번호 전송에 실패했습니다.");
+        console.error("SMS 전송 중 예상치 못한 오류:", error);
+      }
+    }
+  };
+
+  const handleClickSubmit = () => {
+    const currentInput = inputRef.current?.value || "";
+
+    if (currentInput.length !== 6) {
+      setError("6자리 인증번호를 입력해주세요");
+      return;
+    }
+
+    onSuccess(currentInput);
+  };
+
+  const isSubmitDisabled =
+    (inputRef.current?.value || "").length !== 6 || loading;
+
+  return (
+    <>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <label
+            htmlFor="verificationCode"
+            className="text-xl text-textColor-sub"
+          >
+            인증번호
+          </label>
+
+          <div className="relative">
+            <input
+              id="verificationCode"
+              ref={inputRef}
+              type="tel"
+              inputMode="numeric"
+              value={code}
+              onChange={(e) => handleVerify(e.target.value)}
+              placeholder="6자리 입력"
+              maxLength={6}
+              className={`w-full px-4 py-3 pr-20 rounded-xl border-2 text-base outline-none transition-colors
+                ${
+                  error
+                    ? "border-danger-50"
+                    : code
+                      ? "border-brand-normal"
+                      : "border-borderColor-default"
+                }`}
+              autoFocus
+            />
+            <span
+              className={`absolute top-1/2 right-4 -translate-y-1/2 text-sm font-medium ${
+                secondsLeft < 30
+                  ? "text-danger-50 animate-pulse"
+                  : "text-iconColor-default"
+              }`}
+            >
+              {Math.floor(secondsLeft / 60)}:
+              {String(secondsLeft % 60).padStart(2, "0")}
+            </span>
+          </div>
+
+          {error && (
+            <p className="text-danger-50 text-sm font-medium">{error}</p>
+          )}
+        </div>
+
+        <button
+          disabled={!canResend}
+          onClick={handleResend}
+          className={`px-3 py-2 border rounded-lg text-sm font-semibold transition-colors
+            ${
+              canResend
+                ? "text-brand-normal border-brand-normal hover:bg-brand-normal hover:text-white"
+                : "text-iconColor-disabled border-borderColor-default cursor-not-allowed"
+            }`}
+        >
+          인증번호 다시 받기
+        </button>
+
+        {showToast && (
+          <Toast
+            message="인증번호를 다시 전송했어요"
+            onClose={() => setShowToast(false)}
+          />
+        )}
+      </div>
+
+      <BottomButton onClick={handleClickSubmit} disabled={isSubmitDisabled}>
+        {loading ? "처리 중..." : "인증 완료"}
+      </BottomButton>
+    </>
+  );
+}

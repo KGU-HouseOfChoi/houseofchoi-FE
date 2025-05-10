@@ -36,7 +36,7 @@ export function handleApiError(
         reset();
 
         if (router && typeof router.push === "function") {
-          router.push("/onbording");
+          router.push("/guest");
         }
       }
 

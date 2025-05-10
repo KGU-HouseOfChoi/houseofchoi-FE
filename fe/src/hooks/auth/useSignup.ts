@@ -21,6 +21,7 @@ export function useSignup() {
     phoneNumber,
     setIsLoggedIn,
     setUserInfo,
+    setAccessToken, // ✅ 추가
     resetSignupState,
   } = useAuthStore();
 
@@ -39,11 +40,17 @@ export function useSignup() {
 
       console.log("회원가입 API 응답:", res);
 
-      const { isNewUser, userId, name: serverName } = res.data;
+      const { isNewUser, userId, name: serverName, accessToken } = res.data;
 
       setUserInfo(serverName, userId);
       resetSignupState();
       setIsLoggedIn(true);
+
+      if (accessToken) {
+        setAccessToken(accessToken);
+      } else {
+        console.warn("⚠️ accessToken이 응답에 없습니다.");
+      }
 
       const status = isNewUser ? "NEW_USER" : "EXISTING_USER";
       onSuccess(status);

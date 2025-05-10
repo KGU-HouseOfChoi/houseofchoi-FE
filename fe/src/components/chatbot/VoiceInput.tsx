@@ -2,14 +2,17 @@
 
 import { useState } from "react";
 import MicrophoneIcon from "@/asset/icons/microphone-2.svg";
+import VoicePopup from "@/components/chatbot/popup/VoicePopup";
 
-const VoiceInput = () => {
-  const [, setIsListening] = useState(false);
+interface VoiceInputProps {
+  handleSend: (text: string) => void;
+}
+
+const VoiceInput = ({ handleSend }: VoiceInputProps) => {
+  const [isListening, setIsListening] = useState(false);
 
   const handleVoiceClick = () => {
-    setIsListening((prev) => !prev);
-    // TODO: 실제 음성 인식 API 연동 필요
-    // 음성 인식 시작/중지 처리 및 결과 텍스트를 처리하는 로직 구현 필요
+    setIsListening(true);
   };
 
   return (
@@ -20,6 +23,12 @@ const VoiceInput = () => {
       >
         <MicrophoneIcon width={37} height={38} />
       </button>
+
+      <VoicePopup
+        isOpen={isListening}
+        onClose={() => setIsListening(false)}
+        handleSend={handleSend}
+      />
     </div>
   );
 };
