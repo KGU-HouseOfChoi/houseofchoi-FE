@@ -71,14 +71,20 @@ const ChatbotMessageList = () => {
     }
   };
 
-  /* 🔹 버튼 클릭 핸들링 */
+  /* 🔹 버튼 클릭 핸들링 (타입 체크 추가됨) */
   const handleButtonClickWithErrorHandling = async (
     value: string,
     label: string,
   ) => {
     try {
-      await handleButtonClick(value, label);
-      setErrorMessage(null);
+      // 🔹 indoor 혹은 outdoor만 허용
+      if (value === "indoor" || value === "outdoor") {
+        await handleButtonClick(value as "indoor" | "outdoor", label);
+        setErrorMessage(null);
+      } else {
+        console.error(`유효하지 않은 값: ${value}`);
+        setErrorMessage("유효하지 않은 활동 선택입니다.");
+      }
     } catch (error: unknown) {
       handleError(
         error,
