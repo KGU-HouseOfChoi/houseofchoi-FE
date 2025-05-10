@@ -45,6 +45,8 @@ export function useChatbot() {
 
   /* ─────────── 일반 채팅 전송 ─────────── */
   const handleSend = async (text: string) => {
+    if (!text.trim()) return;
+
     setMessages((prev) => [
       ...prev,
       {
@@ -66,7 +68,10 @@ export function useChatbot() {
   };
 
   /* ─────────── 추천 버튼 클릭 ─────────── */
-  const handleButtonClick = async (value: string, label: string) => {
+  const handleButtonClick = async (
+    value: "indoor" | "outdoor",
+    label: string,
+  ) => {
     setMessages((prev) => [
       ...prev,
       {
@@ -81,7 +86,13 @@ export function useChatbot() {
 
     try {
       // 추천 메시지
-      const recMsgs = await fetchRecommendation(value as "indoor" | "outdoor");
+      const recMsgs = await fetchRecommendation(value);
+      if (recMsgs.length === 0) {
+        pushBotText(
+          "조건에 맞는 프로그램이 없습니다. 다른 조건을 시도해 보세요!",
+        );
+        return;
+      }
 
       // 마지막 activity 메시지의 programId 저장
       const last = recMsgs.at(-1);
