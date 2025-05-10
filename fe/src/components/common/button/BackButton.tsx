@@ -25,9 +25,17 @@ export default function BackButton({
     e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
   ) => {
     if (onClick) {
-      onClick(e); // 🔥 preventDefault() 없이 실행
-    } else if (!href) {
-      router.back();
+      onClick(e); // 🔹 외부에서 전달된 onClick 먼저 실행
+    }
+
+    // 🔄 preventDefault가 호출되지 않았으면 뒤로가기 또는 페이지 이동
+    if (!e.defaultPrevented) {
+      if (!href) {
+        // ✅ history가 존재하면 router.back()
+        if (window.history.length > 1) {
+          router.back();
+        }
+      }
     }
   };
 

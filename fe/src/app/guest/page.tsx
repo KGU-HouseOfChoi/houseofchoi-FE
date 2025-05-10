@@ -1,9 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/useAuthStore";
-import { useAuth } from "@/hooks/auth/useAuth";
+import { useState } from "react";
 
 import MainHeader from "@/components/home/MainHeader";
 import SearchBar from "@/components/home/SearchBar";
