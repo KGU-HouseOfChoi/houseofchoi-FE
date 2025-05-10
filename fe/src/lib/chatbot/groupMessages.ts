@@ -29,7 +29,7 @@ export function groupMessages(messages: Message[]) {
     } else {
       groups.push({
         sender: msg.sender,
-        profileUrl: msg.profileUrl,
+        profileUrl: msg.profileUrl || "",
         timestamp: msg.timestamp,
         isUser: msg.isUser,
         items: [msg],

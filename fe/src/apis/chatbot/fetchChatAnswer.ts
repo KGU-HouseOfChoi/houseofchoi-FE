@@ -4,7 +4,7 @@ import { AxiosError } from "axios";
 
 export async function fetchChatAnswer(message: string): Promise<string> {
   try {
-    const res = await axiosAiInstance.post("/chat/chat", {
+    const res = await axiosAiInstance.post("/chat", {
       message,
     });
 
