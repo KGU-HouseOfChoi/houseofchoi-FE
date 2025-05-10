@@ -12,6 +12,9 @@ export function useActivityRecommendation() {
     return days.length ? `매주 ${days.join("·")}` : "미정";
   };
 
+  
+  const formatTime = (time: string) => time.slice(0, 5);
+
   const fetchRecommendation = async (category: "indoor" | "outdoor") => {
     setLoading(true);
     try {
@@ -40,8 +43,9 @@ export function useActivityRecommendation() {
           type: "activity",
           content: [
             `일정: ${weekly(program)}`,
-            `가격: ${program.price}원`,
-            `장소: ${program.main_category}`,
+            `시간: ${formatTime(program.start_time)} ~ ${formatTime(program.end_time)}`, 
+            `가격: ${program.price.toLocaleString()}원`,
+            `장소: ${program.center.name}`,
           ].join("\n"),
           programId: program.id,                     // 일정 등록용
           timestamp: new Date().toISOString(),

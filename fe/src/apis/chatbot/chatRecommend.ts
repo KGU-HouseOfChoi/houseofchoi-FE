@@ -3,12 +3,12 @@ import { ChatRecommendRequest, ChatRecommendResponse } from "@/types/chatbot";
 import { handleApiError } from "@/utils/common/handleApiError";
 import { AxiosError } from "axios";
 
-/** 실내/실외 프로그램 “배열” 반환 */
+
 export async function fetchChatRecommendation(
   req: ChatRecommendRequest,
 ): Promise<ChatRecommendResponse[]> {
   try {
-    /* 영문 → 한글 매핑 */
+    
     const kor = req.category === "indoor" ? "실내" : "실외";
 
     const res = await axiosAiInstance.get<ChatRecommendResponse[]>(
@@ -18,7 +18,7 @@ export async function fetchChatRecommendation(
 
     return res.data;
   } catch (error: unknown) {
-    /* 동일한 AxiosError 처리 */
+    
     if (error instanceof AxiosError && error.response) {
       const detail = error.response.data?.detail;
       const msg = Array.isArray(detail)

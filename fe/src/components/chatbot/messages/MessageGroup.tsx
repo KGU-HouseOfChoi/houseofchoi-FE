@@ -32,15 +32,14 @@ const MessageGroup: FC<MessageGroupProps> = ({
   return (
     <div className="flex flex-col gap-1">
       {showAvatar && (
-        <div className="flex items-center gap-2 mb-1">
+        <div className=" flex items-start -mb-[2px]">
           <Image
             src={items[0].profileUrl || profileUrl}
             alt={sender}
             width={36}
             height={36}
-            className="rounded-full align-top max-w-[60px] max-h-[60px]"
-            style={{ width: "auto", height: "auto" }}
-            priority
+            className="rounded-full object-cover mb-0 "
+
           />
         </div>
       )}
@@ -52,24 +51,24 @@ const MessageGroup: FC<MessageGroupProps> = ({
           const prevMsg = items[idx - 1];
           const nextMsg = items[idx + 1];
 
-          /* ───── 카톡식 시각 표시 (텍스트/confirm 전용) ───── */
+          
           const nextSameOwner = nextMsg && msg.isUser === nextMsg.isUser;
           const nextSameHM    = nextMsg && hm(msg.timestamp) === hm(nextMsg.timestamp);
 
           const shouldShowTime =
-            msg.type !== "button" && // 버튼엔 절대 표시 안 함
+            msg.type !== "button" && 
             (
-              !nextMsg ||                       // 그룹 마지막
-              !nextSameOwner ||                // 발신자 달라짐
-              !nextSameHM ||                   // 시:분 달라짐
-              nextMsg.type === "button"        // 다음이 버튼이면 지금이 마지막 텍스트
+              !nextMsg ||                       
+              !nextSameOwner ||               
+              !nextSameHM ||                   
+              nextMsg.type === "button"        
             );
 
           /* ───── 위쪽 마진 ───── */
-          const shouldAddTopMargin =
-            !isFirst &&
-            (msg.isUser !== prevMsg?.isUser ||
-              ["button", "schedule-confirm"].includes(prevMsg?.type ?? ""));
+                const shouldAddTopMargin =
+          !isFirst &&
+          (msg.isUser !== prevMsg?.isUser ||
+            (prevMsg?.type === "button"&& msg.type !== "text"));
 
           return (
             <div

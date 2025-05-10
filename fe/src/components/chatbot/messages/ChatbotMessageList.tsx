@@ -16,7 +16,8 @@
     handleScheduleConfirm,
     bottomRef,
     popupOpen,
-    closePopup,
+    handlePopupCancel,
+    goToCalendar,
   } = useChatbot();
 
 
@@ -98,8 +99,11 @@
         <ChatbotBottom onSend={handleSendWithErrorHandling} />
       </div>
 
-      {/* ─────────── 일정 등록 완료 팝업 ─────────── */}
-      <SchedulePopup isOpen={popupOpen} onClose={closePopup} />
+      <SchedulePopup
+      isOpen={popupOpen}
+      onConfirm={goToCalendar}  
+      onCancel={handlePopupCancel}
+/>
     </>
   );
 };

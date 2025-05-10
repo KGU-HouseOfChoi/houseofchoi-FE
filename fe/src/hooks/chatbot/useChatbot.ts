@@ -5,20 +5,22 @@ import { groupMessages } from "@/lib/chatbot/groupMessages";
 import type { Message, ScheduleConfirmMessage } from "@/types/chatbot";
 import { fetchChatAnswer } from "@/apis/chatbot/fetchChatAnswer";
 import { useActivityRecommendation } from "./useActivityRecommendation";
-import { useSchedule } from "@/hooks/chatbot/useSchedule"; // 일정·팝업 전담
+import { useSchedule } from "@/hooks/chatbot/useSchedule"; 
 
 export function useChatbot() {
-  /* ─────────── 초기 메시지 ─────────── */
+  
   const [messages, setMessages] = useState<Message[]>(INITIAL_GREETING);
 
-  /* ─────────── 의존 훅 ─────────── */
+  
   const { fetchRecommendation } = useActivityRecommendation();
   const {
     saveProgramId,
     confirm: confirmSchedule,
     loading: scheduleLoading,
-    popupOpen,          // ✅ 팝업 열림 상태
-    closePopup,         // ✅ 팝업 닫기 (+ /calendar 이동)
+    popupOpen,          
+    closePopup,    
+    cancelAndAsk,
+    goToCalendar,          
   } = useSchedule();
 
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -67,7 +69,7 @@ export function useChatbot() {
 
   /* ─────────── 추천 버튼 클릭 ─────────── */
   const handleButtonClick = async (value: string, label: string) => {
-    // 1) 사용자 선택 메시지
+    
     setMessages(prev => [
       ...prev,
       {
@@ -81,14 +83,14 @@ export function useChatbot() {
     ]);
 
     try {
-      // 2) 추천 메시지
+      // 추천 메시지
       const recMsgs = await fetchRecommendation(value as "indoor" | "outdoor");
 
-      // 3) 마지막 activity 메시지의 programId 저장
+      // 마지막 activity 메시지의 programId 저장
       const last = recMsgs.at(-1);
       if (last?.type === "activity") saveProgramId(last.programId);
 
-      // 4) 일정 확인 카드
+      //  일정 확인 카드
       const confirmCard: ScheduleConfirmMessage = {
         id: `${Date.now()}-confirm`,
         sender: "bot",
@@ -109,6 +111,12 @@ export function useChatbot() {
   setMessages(prev => [...prev, ...replyMsgs]);     
 };
 
+  /* ─────────── 팝업 ‘대화하기’ 클릭 ─────────── */
+  const handlePopupCancel = () => {
+    const reply = cancelAndAsk();                 // 안내 메시지 생성
+    setMessages(prev => [...prev, ...reply]);     // 대화창에 push
+  };
+
   /* ─────────── 그룹핑 후 반환 ─────────── */
   const groupedMessages = groupMessages(messages);
 
@@ -118,10 +126,12 @@ export function useChatbot() {
     handleSend,
     handleButtonClick,
     handleScheduleConfirm,
+    handlePopupCancel,
+    goToCalendar,
     bottomRef,
-    scheduleLoading,   // "예" 버튼 disabled
-    popupOpen,         // 팝업 열기 상태
-    closePopup,        // 팝업 닫기 핸들러
+    scheduleLoading,   
+    popupOpen,         
+    closePopup,       
   };
 }
 
