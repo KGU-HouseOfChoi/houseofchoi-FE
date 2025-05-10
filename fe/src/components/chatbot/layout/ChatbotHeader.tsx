@@ -1,9 +1,9 @@
 "use client";
 
 import type { NextPage } from "next";
-import BackButton from "@/components/common/BackButton";
+import BackButton from "@/components/common/button/BackButton";
 
-const ChatbotNav: NextPage = () => {
+const ChatbotHeader: NextPage = () => {
   return (
     <div className="w-full relative bg-white h-14 md:h-16 flex items-center px-2 md:px-4 text-gray font-pretendard">
       <BackButton href="/member/home" className="mr-1" />
@@ -15,4 +15,4 @@ const ChatbotNav: NextPage = () => {
   );
 };
 
-export default ChatbotNav;
+export default ChatbotHeader;

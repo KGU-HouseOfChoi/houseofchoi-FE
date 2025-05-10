@@ -8,18 +8,23 @@ interface BackButtonProps {
   href?: string;
   className?: string;
   iconSize?: number;
+  onClick?: () => void;
 }
 
 export default function BackButton({
   href,
   className,
   iconSize = 40,
+  onClick,
 }: BackButtonProps) {
   const router = useRouter();
 
   const handleClick = () => {
-    if (href) return;
-    router.back();
+    if (onClick) {
+      onClick();
+    } else if (!href) {
+      router.back();
+    }
   };
 
   const icon = (
