@@ -21,7 +21,7 @@ export default function Home() {
     if (!hydrated) return;
 
     if (!isGuest) {
-      router.replace("/member/home");
+      router.replace("/member");
     } else {
       resetAuth();
       localStorage.removeItem("accessToken");
