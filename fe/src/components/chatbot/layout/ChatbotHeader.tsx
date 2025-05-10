@@ -9,7 +9,7 @@ const ChatbotHeader: NextPage = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleBackClick = (e: React.MouseEvent) => {
-    e.preventDefault(); 
+    e.preventDefault();
     setIsPopupOpen(true);
   };
 

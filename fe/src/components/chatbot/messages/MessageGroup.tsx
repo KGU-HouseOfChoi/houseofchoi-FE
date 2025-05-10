@@ -14,7 +14,7 @@ interface MessageGroupProps {
   onButtonClick?: (value: string, label: string) => void;
 }
 
-const hm = (iso: string) => formatTime(iso); // "오후 6:37"
+const hm = (iso: string) => formatTime(iso);
 
 const MessageGroup: FC<MessageGroupProps> = ({
   sender,
@@ -39,7 +39,6 @@ const MessageGroup: FC<MessageGroupProps> = ({
             width={36}
             height={36}
             className="rounded-full object-cover mb-0 "
-
           />
         </div>
       )}
@@ -47,28 +46,25 @@ const MessageGroup: FC<MessageGroupProps> = ({
       <div className={`flex flex-col ${isUser ? "items-end" : "items-start"}`}>
         {items.map((msg, idx) => {
           const isFirst = idx === 0;
-          const isLast  = idx === items.length - 1;
           const prevMsg = items[idx - 1];
           const nextMsg = items[idx + 1];
 
-          
           const nextSameOwner = nextMsg && msg.isUser === nextMsg.isUser;
-          const nextSameHM    = nextMsg && hm(msg.timestamp) === hm(nextMsg.timestamp);
+          const nextSameHM =
+            nextMsg && hm(msg.timestamp) === hm(nextMsg.timestamp);
 
           const shouldShowTime =
-            msg.type !== "button" && 
-            (
-              !nextMsg ||                       
-              !nextSameOwner ||               
-              !nextSameHM ||                   
-              nextMsg.type === "button"        
-            );
+            msg.type !== "button" &&
+            (!nextMsg ||
+              !nextSameOwner ||
+              !nextSameHM ||
+              nextMsg.type === "button");
 
           /* ───── 위쪽 마진 ───── */
-                const shouldAddTopMargin =
-          !isFirst &&
-          (msg.isUser !== prevMsg?.isUser ||
-            (prevMsg?.type === "button"&& msg.type !== "text"));
+          const shouldAddTopMargin =
+            !isFirst &&
+            (msg.isUser !== prevMsg?.isUser ||
+              (prevMsg?.type === "button" && msg.type !== "text"));
 
           return (
             <div

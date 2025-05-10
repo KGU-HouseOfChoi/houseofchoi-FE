@@ -3,12 +3,10 @@ import { ChatRecommendRequest, ChatRecommendResponse } from "@/types/chatbot";
 import { handleApiError } from "@/utils/common/handleApiError";
 import { AxiosError } from "axios";
 
-
 export async function fetchChatRecommendation(
   req: ChatRecommendRequest,
 ): Promise<ChatRecommendResponse[]> {
   try {
-    
     const kor = req.category === "indoor" ? "실내" : "실외";
 
     const res = await axiosAiInstance.get<ChatRecommendResponse[]>(
@@ -18,7 +16,6 @@ export async function fetchChatRecommendation(
 
     return res.data;
   } catch (error: unknown) {
-    
     if (error instanceof AxiosError && error.response) {
       const detail = error.response.data?.detail;
       const msg = Array.isArray(detail)

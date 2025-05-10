@@ -5,22 +5,20 @@ import { groupMessages } from "@/lib/chatbot/groupMessages";
 import type { Message, ScheduleConfirmMessage } from "@/types/chatbot";
 import { fetchChatAnswer } from "@/apis/chatbot/fetchChatAnswer";
 import { useActivityRecommendation } from "./useActivityRecommendation";
-import { useSchedule } from "@/hooks/chatbot/useSchedule"; 
+import { useSchedule } from "@/hooks/chatbot/useSchedule";
 
 export function useChatbot() {
-  
   const [messages, setMessages] = useState<Message[]>(INITIAL_GREETING);
 
-  
   const { fetchRecommendation } = useActivityRecommendation();
   const {
     saveProgramId,
     confirm: confirmSchedule,
     loading: scheduleLoading,
-    popupOpen,          
-    closePopup,    
+    popupOpen,
+    closePopup,
     cancelAndAsk,
-    goToCalendar,          
+    goToCalendar,
   } = useSchedule();
 
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -32,7 +30,7 @@ export function useChatbot() {
 
   /* ─────────── 유틸: 봇 텍스트 push ─────────── */
   const pushBotText = (content: string) =>
-    setMessages(prev => [
+    setMessages((prev) => [
       ...prev,
       {
         id: Date.now().toString(),
@@ -47,7 +45,7 @@ export function useChatbot() {
 
   /* ─────────── 일반 채팅 전송 ─────────── */
   const handleSend = async (text: string) => {
-    setMessages(prev => [
+    setMessages((prev) => [
       ...prev,
       {
         id: Date.now().toString(),
@@ -69,8 +67,7 @@ export function useChatbot() {
 
   /* ─────────── 추천 버튼 클릭 ─────────── */
   const handleButtonClick = async (value: string, label: string) => {
-    
-    setMessages(prev => [
+    setMessages((prev) => [
       ...prev,
       {
         id: Date.now().toString(),
@@ -99,7 +96,7 @@ export function useChatbot() {
         isUser: false,
       };
 
-      setMessages(prev => [...prev, ...recMsgs, confirmCard]);
+      setMessages((prev) => [...prev, ...recMsgs, confirmCard]);
     } catch {
       pushBotText("추천 정보를 가져오지 못했어요. 다시 시도해 주세요.");
     }
@@ -107,14 +104,14 @@ export function useChatbot() {
 
   /* ─────────── 예/아니요 클릭 ─────────── */
   const handleScheduleConfirm = async (value: "yes" | "no") => {
-  const replyMsgs = await confirmSchedule(value);   
-  setMessages(prev => [...prev, ...replyMsgs]);     
-};
+    const replyMsgs = await confirmSchedule(value);
+    setMessages((prev) => [...prev, ...replyMsgs]);
+  };
 
   /* ─────────── 팝업 ‘대화하기’ 클릭 ─────────── */
   const handlePopupCancel = () => {
-    const reply = cancelAndAsk();                 // 안내 메시지 생성
-    setMessages(prev => [...prev, ...reply]);     // 대화창에 push
+    const reply = cancelAndAsk(); // 안내 메시지 생성
+    setMessages((prev) => [...prev, ...reply]); // 대화창에 push
   };
 
   /* ─────────── 그룹핑 후 반환 ─────────── */
@@ -129,9 +126,9 @@ export function useChatbot() {
     handlePopupCancel,
     goToCalendar,
     bottomRef,
-    scheduleLoading,   
-    popupOpen,         
-    closePopup,       
+    scheduleLoading,
+    popupOpen,
+    closePopup,
   };
 }
 

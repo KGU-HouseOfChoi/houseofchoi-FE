@@ -14,7 +14,6 @@ import LoginGuidePopup from "@/components/auth/popup/LoginGuidePopup";
 export default function GuestPage() {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
-
   return (
     <>
       <MainHeader />

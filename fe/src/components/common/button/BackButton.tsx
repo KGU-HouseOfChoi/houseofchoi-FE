@@ -8,7 +8,9 @@ interface BackButtonProps {
   href?: string;
   className?: string;
   iconSize?: number;
-  onClick?: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => void;
+  onClick?: (
+    e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
+  ) => void;
 }
 
 export default function BackButton({
@@ -19,7 +21,9 @@ export default function BackButton({
 }: BackButtonProps) {
   const router = useRouter();
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
+  const handleClick = (
+    e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
+  ) => {
     if (onClick) {
       onClick(e); // 🔥 preventDefault() 없이 실행
     } else if (!href) {

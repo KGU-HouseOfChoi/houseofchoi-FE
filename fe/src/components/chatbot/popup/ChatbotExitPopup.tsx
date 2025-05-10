@@ -18,7 +18,6 @@ const ChatbotExitPopup: NextPage<ChatbotExitPopupProps> = ({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
       <div className="w-[95vw] max-w-[320px] relative rounded-2xl bg-bgColor-default flex flex-col items-center justify-start py-5 px-6 gap-4 text-center text-[20px] text-textColor-body font-pretendard animate-slide-up">
-        
         {/* 🔹 제목 영역 */}
         <div className="w-full flex flex-col items-center justify-start">
           <div className="relative leading-[30px] font-medium text-textColor-heading">
@@ -26,18 +25,14 @@ const ChatbotExitPopup: NextPage<ChatbotExitPopupProps> = ({
           </div>
         </div>
 
-        
         <div className="w-full flex flex-row gap-4 text-left text-xl">
-          
-          
-            <button
+          <button
             onClick={onConfirm}
             className="flex-1 rounded-xl bg-bgColor border border-borderColor-default h-12 flex items-center justify-center text-textColor-body hover:bg-bgColor-surface active:garyscale-50"
-            >
+          >
             <span className="font-semibold leading-[24px]">예</span>
-            </button>
+          </button>
 
-          
           <button
             onClick={onClose}
             className="flex-1 rounded-xl bg-brand-normal h-12 flex items-center justify-center text-textColor-white hover:bg-brand-hover active:bg-brand-active"

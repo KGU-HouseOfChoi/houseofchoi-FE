@@ -12,11 +12,9 @@ interface BaseMessage {
   id: string;
   sender: string;
   profileUrl?: string;
-  timestamp: string;   // ISO 문자열
+  timestamp: string; // ISO 문자열
   isUser?: boolean;
 }
-
-
 
 /* ===== 메시지 타입들 ===== */
 export interface TextMessage extends BaseMessage {
@@ -27,13 +25,13 @@ export interface TextMessage extends BaseMessage {
 export interface ActivityMessage extends BaseMessage {
   type: "activity";
   content: string;
-  programId: number;  
+  programId: number;
 }
 
 export interface ButtonMessage extends BaseMessage {
   type: "button";
   buttons: ButtonOption[];
-  content?: string;      // 버튼 위 설명이 필요할 때만
+  content?: string; // 버튼 위 설명이 필요할 때만
 }
 
 export interface ScheduleConfirmMessage extends BaseMessage {

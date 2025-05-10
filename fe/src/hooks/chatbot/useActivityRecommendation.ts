@@ -12,7 +12,6 @@ export function useActivityRecommendation() {
     return days.length ? `매주 ${days.join("·")}` : "미정";
   };
 
-  
   const formatTime = (time: string) => time.slice(0, 5);
 
   const fetchRecommendation = async (category: "indoor" | "outdoor") => {
@@ -23,12 +22,11 @@ export function useActivityRecommendation() {
 
       const program = list[Math.floor(Math.random() * list.length)];
 
-      
       const baseId = Date.now().toString();
 
       const msgs: Message[] = [
         {
-          id: `${baseId}-title`,                     
+          id: `${baseId}-title`,
           sender: "bot",
           profileUrl: "/images/Chatlogo.svg",
           type: "text",
@@ -37,17 +35,17 @@ export function useActivityRecommendation() {
           isUser: false,
         },
         {
-          id: `${baseId}-info`,                      
+          id: `${baseId}-info`,
           sender: "bot",
           profileUrl: "/images/Chatlogo.svg",
           type: "activity",
           content: [
             `일정: ${weekly(program)}`,
-            `시간: ${formatTime(program.start_time)} ~ ${formatTime(program.end_time)}`, 
+            `시간: ${formatTime(program.start_time)} ~ ${formatTime(program.end_time)}`,
             `가격: ${program.price.toLocaleString()}원`,
             `장소: ${program.center.name}`,
           ].join("\n"),
-          programId: program.id,                     // 일정 등록용
+          programId: program.id, // 일정 등록용
           timestamp: new Date().toISOString(),
           isUser: false,
         },
