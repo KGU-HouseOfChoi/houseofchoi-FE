@@ -25,8 +25,10 @@ export default function ScheduleAddedPopup({
         <CalendarIcon className="h-12 w-12 text-brand-normal" />
 
         <div>
-          <p className="whitespace-pre-line text-2xl font-semibold">{title}</p>
-          <p className="mt-1 text-xl text-gray-500">{subtitle}</p>
+          <p className="whitespace-pre-line text-2xl font-semibold text-textColor-heading">
+            {title}
+          </p>
+          <p className="mt-1 text-xl text-textColor-sub">{subtitle}</p>
         </div>
 
         <PopupButtons

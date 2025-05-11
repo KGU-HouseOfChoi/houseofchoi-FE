@@ -23,7 +23,6 @@ const MessageGroup: FC<MessageGroupProps> = ({
   items,
   onButtonClick,
 }) => {
-  /* ───── 아바타 표시 여부 ───── */
   const showAvatar =
     !isUser &&
     !["button", "schedule-confirm", "activity"].includes(items[0].type) &&
@@ -60,17 +59,15 @@ const MessageGroup: FC<MessageGroupProps> = ({
               !nextSameHM ||
               nextMsg.type === "button");
 
-          /* ───── 위쪽 마진 ───── */
           const shouldAddTopMargin =
             !isFirst &&
             (msg.isUser !== prevMsg?.isUser ||
               (prevMsg?.type === "button" && msg.type !== "text"));
 
-          // ✅ 수정된 부분: 봇끼리는 좁고, 봇과 유저는 넓게
           const marginTopClass = (() => {
-            if (showAvatar && isFirst) return "mt-1"; // 첫 번째 말풍선만 살짝 좁게
-            if (prevMsg && prevMsg.isUser !== msg.isUser) return "mt-8"; // 봇 → 유저 혹은 유저 → 봇
-            if (prevMsg && prevMsg.isUser === msg.isUser) return "mt-4"; // 같은 사람이면 좁게
+            if (showAvatar && isFirst) return "mt-1";
+            if (prevMsg && prevMsg.isUser !== msg.isUser) return "mt-8";
+            if (prevMsg && prevMsg.isUser === msg.isUser) return "mt-4";
             return shouldAddTopMargin ? "mt-4" : "mt-6";
           })();
 
@@ -79,7 +76,6 @@ const MessageGroup: FC<MessageGroupProps> = ({
               key={msg.id}
               className={`flex flex-col ${msg.isUser ? "items-end" : "items-start"} ${marginTopClass}`}
             >
-              {/* ───────── schedule-confirm 카드 ───────── */}
               {msg.type === "schedule-confirm" ? (
                 <div
                   className={`flex items-end gap-3 mb-4 ${
@@ -96,14 +92,12 @@ const MessageGroup: FC<MessageGroupProps> = ({
                     </span>
                   )}
                 </div>
-              ) : /* ───────── 버튼 그룹 (시간 숨김) ───────── */
-              msg.type === "button" && msg.buttons ? (
+              ) : msg.type === "button" && msg.buttons ? (
                 <ButtonGroup
                   buttons={msg.buttons}
                   onClick={(value, label) => onButtonClick?.(value, label)}
                 />
               ) : (
-                /* ───────── 일반 텍스트 ───────── */
                 <div
                   className={`flex items-end gap-2 ${
                     msg.isUser ? "flex-row-reverse" : "flex-row"

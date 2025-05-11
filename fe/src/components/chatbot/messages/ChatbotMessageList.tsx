@@ -21,12 +21,10 @@ const ChatbotMessageList = () => {
     goToCalendar,
   } = useChatbot();
 
-  /* 🔹 State 정의 */
   const [username, setUsername] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  /* 🔹 사용자 이름 가져오기 */
   useEffect(() => {
     const fetchUserName = async () => {
       try {
@@ -44,7 +42,6 @@ const ChatbotMessageList = () => {
     fetchUserName();
   }, []);
 
-  /* 🔹 에러 핸들링 */
   const handleError = (error: unknown, defaultMessage: string) => {
     if (error instanceof AxiosError && error.response) {
       console.error("에러 발생:", error.message);
@@ -58,7 +55,6 @@ const ChatbotMessageList = () => {
     }
   };
 
-  /* 🔹 메시지 전송 핸들링 */
   const handleSendWithErrorHandling = async (text: string) => {
     try {
       await handleSend(text);
@@ -71,13 +67,11 @@ const ChatbotMessageList = () => {
     }
   };
 
-  /* 🔹 버튼 클릭 핸들링 (타입 체크 추가됨) */
   const handleButtonClickWithErrorHandling = async (
     value: string,
     label: string,
   ) => {
     try {
-      // 🔹 indoor 혹은 outdoor만 허용
       if (value === "indoor" || value === "outdoor") {
         await handleButtonClick(value as "indoor" | "outdoor", label);
         setErrorMessage(null);
@@ -98,22 +92,19 @@ const ChatbotMessageList = () => {
       {/* ─────────── 채팅 본체 ─────────── */}
       <div className="flex flex-col h-full">
         <div className="flex-1 overflow-y-auto p-4 min-h-0">
-          {/* 🔥 로딩 상태 */}
           {loading && (
             <div className="text-center text-gray-500">로딩 중입니다...</div>
           )}
 
-          {/* 🔥 사용자 이름 표시 */}
           {!loading && username && <ChatbotGreeting username={username} />}
 
-          {/* 🔥 에러 메시지 표시 */}
           {errorMessage && (
             <div className="bg-red-100 text-red-600 p-2 mb-2 rounded">
               {errorMessage}
             </div>
           )}
 
-          {/* 🔥 메시지 그룹 렌더링 */}
+          {/*  메시지 그룹 렌더링 */}
           {groupedMessages.map((group, idx) => (
             <MessageGroup
               key={idx}
