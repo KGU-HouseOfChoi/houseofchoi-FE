@@ -7,7 +7,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import StepContainer from "@/components/auth/step/StepContainer";
 import Step5_VerificationCode from "@/components/auth/step/Step5_VerificationCode";
 import Toast from "@/components/common/Toast";
-import AuthHeader from "@/components/auth/AuthHeader";
+import AuthHeader from "@/components/auth/common/AuthHeader";
 
 export default function AuthPage() {
   const router = useRouter();
@@ -36,7 +36,7 @@ export default function AuthPage() {
         console.log("가입 상태:", status);
 
         if (status === "EXISTING_USER") {
-          router.replace("/member/personalityAnalysis");
+          router.replace("/member");
         } else {
           router.replace("/member/complete");
         }
