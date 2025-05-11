@@ -8,7 +8,7 @@ import {
 } from "@/utils/personality/personalityApi";
 import QuestionNavigator from "@/components/personality/analysis/QuestionNavigator";
 import CompletedMessage from "@/components/personality/analysis/CompletionNotice";
-import PersonalityAnalysisHeader from "@/components/personality/PersonalityAnalysisHeader";
+import PersonalityAnalysisHeader from "@/components/personality/common/PersonalityAnalysisHeader";
 import PersonalityAnalysisIntroPopup from "@/components/personality/popup/PersonalityAnalysisIntroPopup";
 import Toast from "@/components/common/Toast";
 import axios from "axios";
