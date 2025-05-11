@@ -4,6 +4,7 @@ import UserCircleAddIcon from "@/asset/icons/user-cirlce-add.svg";
 interface FamilyCardProps {
   name: string;
   birth: string;
+  userCode: string;
 }
 
 const FamilyCard: FC<FamilyCardProps> = ({ name, birth }) => {
@@ -12,15 +13,13 @@ const FamilyCard: FC<FamilyCardProps> = ({ name, birth }) => {
       <h2 className="text-lg font-semibold text-textColor-heading">내 가족</h2>
 
       <div className="flex items-start gap-4">
-        {/* ✅ shrink 제거 & flex-shrink 방지 */}
         <div className="flex items-center justify-center">
-        <UserCircleAddIcon width={64} height={64} className="text-iconColor-sub" />
+          <UserCircleAddIcon width={64} height={64} className="text-iconColor-sub" />
         </div>
 
-        {/* 텍스트 블록 */}
         <div className="flex flex-col text-m text-textColor-body font-pretendard">
-          <p>성명: {name}</p>
-          <p>생년월일: {birth}</p>
+          <p>성명: {name}</p>                 
+          <p>생년월일: {birth}</p>                
         </div>
       </div>
     </div>
