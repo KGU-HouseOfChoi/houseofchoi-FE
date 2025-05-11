@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import ActivityCard from "./ActivityCard";
 import CalendarPopup from "@/components/calendar/CalendarPopup";
 import { fetchProgramList, Program } from "@/apis/main/program";
+import { registerSchedule } from "@/apis/schedule/schedule";
 
 export default function ActivityCardList() {
   const [programs, setPrograms] = useState<Program[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // 팝업 관련 상태
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
 
@@ -32,9 +32,21 @@ export default function ActivityCardList() {
     loadData();
   }, []);
 
-  const handleCalendarAdd = (programId: number) => {
-    console.log(`일정 추가: ${programId}`);
-    setPopupOpen(false);
+  const handleCalendarAdd = async (programId: number) => {
+    try {
+      const success = await registerSchedule(programId);
+      if (!success) {
+        alert("일정 등록에 실패했습니다.");
+        setPopupOpen(false);
+      }
+    } catch (error: any) {
+      if (error?.response?.status === 409) {
+        alert("이미 등록된 일정입니다.");
+      } else {
+        alert("일정 등록 중 오류가 발생했습니다.");
+      }
+      setPopupOpen(false);
+    }
   };
 
   return (

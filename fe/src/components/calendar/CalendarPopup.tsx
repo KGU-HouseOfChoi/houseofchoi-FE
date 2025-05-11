@@ -53,7 +53,7 @@ export default function ScheduleAddPopup({
       ) : (
         <div className="flex flex-col items-center text-center gap-6 pb-6">
           <div className="w-12 h-12 bg-brand rounded-full" />
-          <p className="text-xl font-semibold">일정이 추가되었습니다!</p>
+          <p className="text-xl font-semibold text-textColor-heading">일정이 추가되었습니다!</p>
           <p className="text-sm text-textColor-sub">
             다른 활동도 일정에 추가해보세요!
           </p>

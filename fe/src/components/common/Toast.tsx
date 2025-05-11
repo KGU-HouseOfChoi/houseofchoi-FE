@@ -65,7 +65,7 @@ export default function Toast({ message, onClose, actions }: ToastProps) {
                 key={idx}
                 onClick={action.onClick}
                 className="px-3 py-1 rounded bg-white text-gray-900 text-xs font-semibold hover:bg-gray-200 active:bg-gray-300"
-              >
+              > 
                 {action.label}
               </button>
             ))}
