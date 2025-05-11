@@ -5,6 +5,7 @@ import { useVoiceRecorder } from "@/hooks/chatbot/useVoiceRecorder";
 import BottomPopup from "@/components/common/popup/BottomPopup";
 import PopupButtons from "@/components/common/button/PopupButtons";
 import DefaultboldvoiceCricle from "@/asset/icons/voice-cricle.svg";
+import { X } from "lucide-react";
 
 interface VoicePopupProps {
   isOpen: boolean;
@@ -133,7 +134,17 @@ export default function VoicePopup({
 
   return (
     <BottomPopup isOpen={isOpen} onClose={onClose}>
-      <div className="text-center flex flex-col items-center justify-center gap-y-5">
+      <div className="relative text-center flex flex-col items-center justify-center gap-y-5">
+        {/* 🔹 X 버튼 */}
+        <button
+          onClick={onClose}
+          className="absolute top-0 right-3 p-1 rounded hover:bg-bgColor-surface"
+          aria-label="닫기"
+          type="button"
+        >
+          <X className="w-6 h-6 text-iconColor-default" />
+        </button>
+
         <p className="text-2xl mt-8 font-semibold">
           {isSending ? animatedText : "궁금한 내용을 말씀해주세요"}
         </p>

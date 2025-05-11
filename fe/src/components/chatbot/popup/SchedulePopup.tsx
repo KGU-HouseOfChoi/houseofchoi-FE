@@ -3,6 +3,7 @@
 import BottomPopup from "@/components/common/popup/BottomPopup";
 import PopupButtons from "@/components/common/button/PopupButtons";
 import CalendarIcon from "@/asset/icons/calendar-tick.svg";
+import { X } from "lucide-react";
 
 interface ScheduleAddedPopupProps {
   isOpen: boolean;
@@ -21,8 +22,17 @@ export default function ScheduleAddedPopup({
 }: ScheduleAddedPopupProps) {
   return (
     <BottomPopup isOpen={isOpen} onClose={onCancel}>
-      <div className="flex h-[330px] flex-col items-center justify-between py-6 text-center">
-        <CalendarIcon className="h-12 w-12 text-brand-normal" />
+      <div className="relative flex h-[330px] flex-col items-center justify-between py-6 text-center font-pretendard">
+        <button
+          onClick={onCancel}
+          className="absolute top-4 right-4 p-1 rounded hover:bg-bgColor-surface"
+          aria-label="닫기"
+          type="button"
+        >
+          <X className="w-6 h-6 text-iconColor-default" />
+        </button>
+
+        <CalendarIcon className="w-12 h-12 text-brand-normal" />
 
         <div>
           <p className="whitespace-pre-line text-2xl font-semibold text-textColor-heading">
