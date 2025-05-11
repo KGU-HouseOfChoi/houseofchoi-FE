@@ -1,7 +1,6 @@
 import axiosMainInstance from "@/apis/common/axiosMainInstance";
 import type { AxiosError } from "axios";
 
-
 export const deleteAccountApi = async (): Promise<boolean> => {
   try {
     const response = await axiosMainInstance.delete("/v1/user/delete");

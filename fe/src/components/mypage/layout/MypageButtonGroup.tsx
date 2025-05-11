@@ -28,8 +28,6 @@ const MypageButtonGroup = () => {
 
   const handleAccountDeletion = async () => {
     try {
-      
-      
       alert("회원탈퇴가 완료되었습니다.");
     } catch (error) {
       console.error("회원탈퇴 실패:", error);
@@ -48,13 +46,11 @@ const MypageButtonGroup = () => {
         <SmallButton onClick={handleAccountDeleteClick}>회원탈퇴</SmallButton>
       </div>
 
-      
       <LogoutConfirmPopup
         isOpen={isLogoutPopupOpen}
         onClose={handleCloseLogoutPopup}
       />
 
-      
       <AccountDeleteConfirmPopup
         isOpen={isAccountDeletePopupOpen}
         onClose={handleCloseAccountDeletePopup}
