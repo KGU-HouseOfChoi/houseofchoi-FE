@@ -2,25 +2,38 @@
 
 import FamilyAddButton from "@/components/mypage/button/FamilyAddButton";
 import SmallButton from "@/components/mypage/button/SmallButton";
-import { useLogout } from "@/hooks/auth/useLogout";
+import LogoutConfirmPopup from "@/components/auth/popup/LogoutConfirmPopup";
+import AccountDeleteConfirmPopup from "@/components/mypage/popup/DeleteConfirmPopup";
+import { useState } from "react";
 
 const MypageButtonGroup = () => {
-  const { logout } = useLogout();
+  const [isLogoutPopupOpen, setLogoutPopupOpen] = useState(false);
+  const [isAccountDeletePopupOpen, setAccountDeletePopupOpen] = useState(false);
 
-  const handleLogout = async () => {
-    const { success } = await logout();
-    if (success) {
-      alert("로그아웃 되었습니다.");
-    } else {
-      alert("로그아웃에 실패했습니다. 다시 시도해주세요.");
-    }
+  const handleLogoutClick = () => {
+    setLogoutPopupOpen(true);
+  };
+
+  const handleAccountDeleteClick = () => {
+    setAccountDeletePopupOpen(true);
+  };
+
+  const handleCloseLogoutPopup = () => {
+    setLogoutPopupOpen(false);
+  };
+
+  const handleCloseAccountDeletePopup = () => {
+    setAccountDeletePopupOpen(false);
   };
 
   const handleAccountDeletion = async () => {
-    const confirmDelete = window.confirm("정말로 회원탈퇴 하시겠습니까?");
-    if (confirmDelete) {
-      // 회원탈퇴 로직 처리
+    try {
+      
+      
       alert("회원탈퇴가 완료되었습니다.");
+    } catch (error) {
+      console.error("회원탈퇴 실패:", error);
+      alert("회원탈퇴에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -31,9 +44,22 @@ const MypageButtonGroup = () => {
       </div>
 
       <div className="flex gap-4 mt-16">
-        <SmallButton onClick={handleLogout}>로그아웃</SmallButton>
-        <SmallButton onClick={handleAccountDeletion}>회원탈퇴</SmallButton>
+        <SmallButton onClick={handleLogoutClick}>로그아웃</SmallButton>
+        <SmallButton onClick={handleAccountDeleteClick}>회원탈퇴</SmallButton>
       </div>
+
+      
+      <LogoutConfirmPopup
+        isOpen={isLogoutPopupOpen}
+        onClose={handleCloseLogoutPopup}
+      />
+
+      
+      <AccountDeleteConfirmPopup
+        isOpen={isAccountDeletePopupOpen}
+        onClose={handleCloseAccountDeletePopup}
+        onConfirm={handleAccountDeletion}
+      />
     </div>
   );
 };
