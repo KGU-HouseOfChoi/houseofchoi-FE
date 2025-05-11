@@ -1,6 +1,6 @@
 "use client";
 
-import ChatbotNav from "@/components/chatbot/layout/ChatbotNav";
+import ChatbotNav from "@/components/chatbot/layout/ChatbotHeader";
 import ChatbotMessageList from "@/components/chatbot/messages/ChatbotMessageList";
 
 export default function ChatbotPage() {
