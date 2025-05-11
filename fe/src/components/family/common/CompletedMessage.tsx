@@ -4,31 +4,20 @@ import { useEffect } from "react";
 import { CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-interface PersonalityCompletedMessageProps {
-  version?: "completed" | "alreadyCompleted";
+interface FamilyCompletedMessageProps {
   redirectTo?: string;
   delayMs?: number;
 }
 
-export default function CompletedMessage({
-  version = "completed",
+export default function FamilyCompletedMessage({
   redirectTo = "/member",
   delayMs = 3000,
-}: PersonalityCompletedMessageProps) {
+}: FamilyCompletedMessageProps) {
   const router = useRouter();
 
-  const messages = {
-    completed: {
-      message: "성향 분석이 완료되었습니다!",
-      description: "잠시 후 메인 페이지로 이동합니다.",
-    },
-    alreadyCompleted: {
-      message: "이미 성향 분석을 완료한 \n 사용자입니다.",
-      description: "잠시 후 메인 페이지로 이동합니다.",
-    },
-  };
-
-  const { message, description } = messages[version];
+  const message = "가족 추가가 완료되었습니다!";
+  const description =
+    "이제 가족과 함께 일정을 공유할 수 있어요.\n잠시 후 메인 페이지로 이동합니다.";
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -46,7 +35,7 @@ export default function CompletedMessage({
           {message}
         </h2>
 
-        <p className="text-base text-textColor-sub leading-relaxed">
+        <p className="text-base text-textColor-sub whitespace-pre-line leading-relaxed">
           {description}
         </p>
       </div>
