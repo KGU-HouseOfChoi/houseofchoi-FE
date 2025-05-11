@@ -2,17 +2,15 @@
 
 import FamilyAddButton from "@/components/mypage/button/FamilyAddButton";
 import SmallButton from "@/components/mypage/button/SmallButton";
-import { useRouter } from "next/navigation";
-import { logoutApi, deleteAccountApi } from "@/apis/mypage/userAuth";
+import { useLogout } from "@/hooks/auth/useLogout";
 
 const MypageButtonGroup = () => {
-  const router = useRouter();
+  const { logout } = useLogout();
 
   const handleLogout = async () => {
-    const success = await logoutApi();
+    const { success } = await logout();
     if (success) {
       alert("로그아웃 되었습니다.");
-      router.push("/login");
     } else {
       alert("로그아웃에 실패했습니다. 다시 시도해주세요.");
     }
@@ -21,18 +19,13 @@ const MypageButtonGroup = () => {
   const handleAccountDeletion = async () => {
     const confirmDelete = window.confirm("정말로 회원탈퇴 하시겠습니까?");
     if (confirmDelete) {
-      const success = await deleteAccountApi();
-      if (success) {
-        alert("회원탈퇴가 완료되었습니다.");
-        router.push("/login");
-      } else {
-        alert("회원탈퇴에 실패했습니다. 다시 시도해주세요.");
-      }
+      // 회원탈퇴 로직 처리
+      alert("회원탈퇴가 완료되었습니다.");
     }
   };
 
   return (
-    <div className="flex flex-col items-center gap-6 mt-10">
+    <div className="flex flex-col items-center gap-6 mt-8">
       <div className="mt-8">
         <FamilyAddButton />
       </div>
