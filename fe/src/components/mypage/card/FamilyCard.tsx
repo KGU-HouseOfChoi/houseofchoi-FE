@@ -14,12 +14,16 @@ const FamilyCard: FC<FamilyCardProps> = ({ name, birth }) => {
 
       <div className="flex items-start gap-4">
         <div className="flex items-center justify-center">
-          <UserCircleAddIcon width={64} height={64} className="text-iconColor-sub" />
+          <UserCircleAddIcon
+            width={64}
+            height={64}
+            className="text-iconColor-sub"
+          />
         </div>
 
         <div className="flex flex-col text-m text-textColor-body font-pretendard">
-          <p>성명: {name}</p>                 
-          <p>생년월일: {birth}</p>                
+          <p>성명: {name}</p>
+          <p>생년월일: {birth}</p>
         </div>
       </div>
     </div>

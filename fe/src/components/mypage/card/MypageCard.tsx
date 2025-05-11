@@ -12,9 +12,7 @@ const MypageCard: React.FC<MypageCardProps> = ({ name, userCode }) => {
       <div className="mt-2 text-2xl font-normal text-textColor-heading">
         {name}
       </div>
-      <div className="text-sm text-gray-500">
-        고유번호: {userCode}
-      </div>
+      <div className="text-sm text-gray-500">고유번호: {userCode}</div>
     </div>
   );
 };

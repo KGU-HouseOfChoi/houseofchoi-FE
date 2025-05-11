@@ -5,7 +5,7 @@ import BottomNavBar from "@/components/common/BottomNavBar";
 import MypageCard from "@/components/mypage/card/MypageCard";
 import FamilyList from "@/components/mypage/layout/FamilyList";
 import MypageButtonGroup from "@/components/mypage/layout/MypageButtonGroup";
-import { fetchFamilyList, FamilyMember } from "@/apis/mypage/familyList"
+import { fetchFamilyList, FamilyMember } from "@/apis/mypage/familyList";
 
 export default function MyPage() {
   const [userInfo, setUserInfo] = useState<FamilyMember>({

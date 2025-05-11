@@ -1,11 +1,12 @@
 import axiosMainInstance from "@/apis/common/axiosMainInstance";
+import type { AxiosError } from "axios";
 
 export interface FamilyMember {
   name: string;
   userCode: string;
   birth: string;
-  relatedUserName: string;      // ✅ undefined 제거
-  relatedUserBirth: string;     // ✅ undefined 제거
+  relatedUserName: string;
+  relatedUserBirth: string;
 }
 
 export async function fetchFamilyList(): Promise<FamilyMember> {
@@ -34,8 +35,20 @@ export async function fetchFamilyList(): Promise<FamilyMember> {
       relatedUserName: "",
       relatedUserBirth: "",
     };
-  } catch (error: any) {
-    console.error("가족 정보를 가져오는데 실패했습니다:", error.message);
+  } catch (error) {
+    const axiosError = error as AxiosError;
+
+    // 에러 메시지 출력
+    if (axiosError.response) {
+      console.error(
+        "가족 정보를 가져오는데 실패했습니다:",
+        axiosError.response.data,
+      );
+    } else {
+      console.error("가족 정보를 가져오는데 실패했습니다:", axiosError.message);
+    }
+
+    // ✅ 빈 값으로 반환하여 undefined 방지
     return {
       name: "",
       userCode: "",
