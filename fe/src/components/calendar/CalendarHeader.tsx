@@ -15,7 +15,6 @@ const CalendarHeader: FC<CalendarHeaderProps> = ({
   const today = useMemo(() => new Date(), []);
   const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
 
-  // 오늘 포함 5일간 목록
   const days = useMemo(
     () => Array.from({ length: 5 }, (_, i) => addDays(today, i)),
     [today],

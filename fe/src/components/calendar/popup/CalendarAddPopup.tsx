@@ -26,7 +26,7 @@ export default function CalendarPopup({
 
   const goCalendar = () => {
     onClose();
-    router.push("/member/calendar"); // 페이지 전환
+    router.push("/member/calendar");
   };
 
   return (

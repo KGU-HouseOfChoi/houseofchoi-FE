@@ -4,7 +4,6 @@ import { getScheduleByDay, deleteSchedule } from "@/apis/schedule/schedule";
 import { formatTime } from "@/utils/schedule/calendar";
 import { ScheduleItem, ScheduleResponse } from "@/types/schedule";
 
-/** 선택한 요일의 일정 + 로컬 삭제를 제공하는 훅 */
 export function useSchedules(day: string) {
   const [data, setData] = useState<ScheduleItem[]>([]);
   const [loading, setLoading] = useState(true);

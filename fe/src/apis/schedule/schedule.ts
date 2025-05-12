@@ -6,7 +6,6 @@ import {
   ScheduleResponse,
 } from "@/types/schedule";
 
-/* ── 일정 등록 ── */
 export const registerSchedule = async (programId: number): Promise<boolean> => {
   const { data } = await axiosInstance.post<RegisterScheduleRes>(
     "/v1/schedule/register",
@@ -16,7 +15,6 @@ export const registerSchedule = async (programId: number): Promise<boolean> => {
   return data.data;
 };
 
-/* ── 중복 여부 확인 ── */
 export const checkScheduleExists = async (
   programId: number,
 ): Promise<boolean> => {
@@ -34,7 +32,6 @@ export const checkScheduleExists = async (
   }
 };
 
-/* ── 요일별 일정 조회 ── */
 export const getScheduleByDay = async (
   day: string,
 ): Promise<ScheduleResponse[]> => {
@@ -49,7 +46,6 @@ export const getScheduleByDay = async (
   }
 };
 
-/* ── 일정 삭제 ── */
 export const deleteSchedule = async (scheduleId: number): Promise<void> => {
   await axiosInstance.delete(`/v1/schedule/${scheduleId}`);
 };
