@@ -7,7 +7,7 @@ import CalendarIcon from "@/asset/icons/calendar-tick.svg";
 
 export type PopupStep = "confirm" | "success" | "duplicate";
 
-interface CalendarPopupProps {
+interface CalendarAddPopupProps {
   title: string;
   isOpen: boolean;
   step: PopupStep;
@@ -21,7 +21,7 @@ export default function CalendarPopup({
   step,
   onClose,
   onConfirm,
-}: CalendarPopupProps) {
+}: CalendarAddPopupProps) {
   const router = useRouter();
 
   const goCalendar = () => {

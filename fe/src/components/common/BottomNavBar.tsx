@@ -66,6 +66,7 @@ export default function BottomNavBar() {
           {navItems.map(({ label, href, icon: Icon, isActive }) => (
             <button
               key={label}
+              type="button"
               onClick={() => handleNavClick(href)}
               className="flex flex-col items-center gap-1 w-[50px]"
               aria-current={isActive ? "page" : undefined}

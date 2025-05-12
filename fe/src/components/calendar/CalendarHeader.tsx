@@ -14,7 +14,6 @@ const CalendarHeader: FC<CalendarHeaderProps> = ({
 }) => {
   const today = useMemo(() => new Date(), []);
   const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
-
   const days = useMemo(
     () => Array.from({ length: 5 }, (_, i) => addDays(today, i)),
     [today],
@@ -39,6 +38,7 @@ const CalendarHeader: FC<CalendarHeaderProps> = ({
                 key={d.toISOString()}
                 type="button"
                 onClick={() => onSelectDay(dayStr)}
+                aria-label={`${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일 ${dayStr}요일`}
                 className={`flex h-[100px] w-[60px] flex-col items-center rounded-[15px] ${
                   active
                     ? "border-2 border-brand-normal bg-brand-normal/20"

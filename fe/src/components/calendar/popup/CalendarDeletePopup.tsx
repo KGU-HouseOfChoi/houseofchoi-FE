@@ -3,7 +3,7 @@
 import BottomPopup from "@/components/common/popup/BottomPopup";
 import PopupButtons from "@/components/common/button/PopupButtons";
 import CalendarIcon from "@/asset/icons/calendar-tick.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Step = "confirm" | "success";
 
@@ -22,6 +22,10 @@ export default function CalendarDeletePopup({
 }: Props) {
   const [step, setStep] = useState<Step>("confirm");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) setStep("confirm");
+  }, [isOpen]);
 
   const handleDelete = async () => {
     if (loading) return;

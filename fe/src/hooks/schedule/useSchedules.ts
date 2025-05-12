@@ -1,15 +1,18 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { fetchProgramList, Program } from "@/apis/main/program";
 import { getScheduleByDay, deleteSchedule } from "@/apis/schedule/schedule";
 import { formatTime } from "@/utils/schedule/calendar";
-import { ScheduleItem, ScheduleResponse } from "@/types/schedule";
+import { ScheduleItem } from "@/types/schedule";
 
 export function useSchedules(day: string) {
   const [data, setData] = useState<ScheduleItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const seqRef = useRef(0); // ✅ 최신 요청 식별용 시퀀스 번호
+
   const load = useCallback(async (d: string) => {
+    const seq = ++seqRef.current;
     setLoading(true);
     setError(null);
     try {
@@ -18,10 +21,12 @@ export function useSchedules(day: string) {
         getScheduleByDay(d),
       ]);
 
+      if (seq !== seqRef.current) return; // ✅ 오래된 요청 무시
+
       const map = new Map<number, Program>();
       programs.forEach((p) => map.set(p.id, p));
 
-      const items = (schedules as ScheduleResponse[]).map<ScheduleItem>((s) => {
+      const items = schedules.map<ScheduleItem>((s) => {
         const p = map.get(s.programId);
         return {
           id: s.scheduleId,
@@ -36,9 +41,13 @@ export function useSchedules(day: string) {
 
       setData(items);
     } catch {
-      setError("일정을 불러오는 데 실패했습니다.");
+      if (seq === seqRef.current) {
+        setError("일정을 불러오는 데 실패했습니다.");
+      }
     } finally {
-      setLoading(false);
+      if (seq === seqRef.current) {
+        setLoading(false);
+      }
     }
   }, []);
 
@@ -47,8 +56,12 @@ export function useSchedules(day: string) {
   }, [day, load]);
 
   const remove = async (scheduleId: number) => {
-    await deleteSchedule(scheduleId);
-    setData((prev) => prev.filter((s) => s.id !== scheduleId));
+    try {
+      await deleteSchedule(scheduleId);
+      setData((prev) => prev.filter((s) => s.id !== scheduleId));
+    } catch {
+      alert("일정 삭제에 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
   return { data, loading, error, remove };

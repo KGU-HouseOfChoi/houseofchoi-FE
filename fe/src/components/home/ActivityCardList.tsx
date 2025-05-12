@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import ActivityCard from "./ActivityCard";
-import CalendarPopup from "@/components/calendar/popup/CalendarAddPopup";
+import CalendarAddPopup from "@/components/calendar/popup/CalendarAddPopup";
 import LoginGuidePopup from "@/components/auth/popup/LoginGuidePopup";
 import { fetchProgramList, Program } from "@/apis/main/program";
 import { registerSchedule } from "@/apis/schedule/schedule";
@@ -111,7 +111,7 @@ export default function ActivityCardList() {
       )}
 
       {selectedProgram && (
-        <CalendarPopup
+        <CalendarAddPopup
           title={selectedProgram.name}
           isOpen={popupOpen}
           step={popupStep}

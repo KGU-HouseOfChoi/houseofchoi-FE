@@ -9,12 +9,6 @@ import { fetchProgramList, Program } from "@/apis/main/program";
 import { getTodayDayString, formatTime } from "@/utils/schedule/calendar";
 import axios from "axios";
 
-interface ScheduleResponse {
-  scheduleId: number;
-  programId: number;
-  name: string;
-}
-
 export default function CalendarFlow() {
   const [selectedDay, setSelectedDay] = useState(getTodayDayString());
   const [data, setData] = useState<ScheduleItem[]>([]);
@@ -35,20 +29,20 @@ export default function CalendarFlow() {
         const programMap = new Map<number, Program>();
         programs.forEach((p) => programMap.set(p.id, p));
 
-        const items: ScheduleItem[] = (schedules as ScheduleResponse[]).map(
-          (s) => {
-            const p = programMap.get(s.programId);
-            return {
-              id: s.scheduleId,
-              period: "2분기(4~6월)",
-              title: s.name,
-              time: p
-                ? `${formatTime(p.startTime)} ~ ${formatTime(p.endTime)}`
-                : "-",
-              location: p?.centerName ?? "-",
-            };
-          },
-        );
+        const items: ScheduleItem[] = Array.isArray(schedules)
+          ? schedules.map((s) => {
+              const p = programMap.get(s.programId);
+              return {
+                id: s.scheduleId,
+                period: "2분기(4~6월)",
+                title: s.name,
+                time: p
+                  ? `${formatTime(p.startTime)} ~ ${formatTime(p.endTime)}`
+                  : "-",
+                location: p?.centerName ?? "-",
+              };
+            })
+          : [];
 
         setData(items);
       } catch (err) {
