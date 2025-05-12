@@ -16,7 +16,6 @@ export default function MyPage() {
     const loadUserData = async () => {
       try {
         const userData = await fetchFamilyList();
-        console.log("📌 불러온 사용자 정보:", userData);
 
         if (userData.length > 0) {
           setFamilyList(userData);
@@ -38,8 +37,12 @@ export default function MyPage() {
         <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
       )}
 
-      {familyList.map((member, index) => (
-        <MypageCard key={index} name={member.name} userCode={member.userCode} />
+      {familyList.map((member) => (
+        <MypageCard
+          key={member.userCode}
+          name={member.name}
+          userCode={member.userCode}
+        />
       ))}
 
       <FamilyList userInfoList={familyList} />
