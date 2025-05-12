@@ -6,29 +6,43 @@ import MypageCard from "@/components/mypage/card/MypageCard";
 import FamilyList from "@/components/mypage/layout/FamilyList";
 import MypageButtonGroup from "@/components/mypage/layout/MypageButtonGroup";
 import { fetchFamilyList, FamilyMember } from "@/apis/mypage/familyList";
+import Toast from "@/components/common/Toast";
 
 export default function MyPage() {
-  const [userInfo, setUserInfo] = useState<FamilyMember>({
-    name: "",
-    userCode: "",
-    birth: "",
-    relatedUserName: "",
-    relatedUserBirth: "",
-  });
+  const [familyList, setFamilyList] = useState<FamilyMember[]>([]);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const loadUserData = async () => {
-      const userData = await fetchFamilyList();
-      console.log("📌 불러온 사용자 정보:", userData);
-      setUserInfo(userData);
+      try {
+        const userData = await fetchFamilyList();
+        console.log("📌 불러온 사용자 정보:", userData);
+
+        if (userData.length > 0) {
+          setFamilyList(userData);
+        } else {
+          setToastMessage("가족 정보를 불러오지 못했습니다.");
+        }
+      } catch (error) {
+        console.error("네트워크 요청 실패:", error);
+        setToastMessage("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
+      }
     };
+
     loadUserData();
   }, []);
 
   return (
     <div className="flex flex-col items-center min-h-screen pt-10 pb-[124px] justify-start bg-white">
-      <MypageCard name={userInfo.name} userCode={userInfo.userCode} />
-      <FamilyList userInfo={userInfo} />
+      {toastMessage && (
+        <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
+      )}
+
+      {familyList.map((member, index) => (
+        <MypageCard key={index} name={member.name} userCode={member.userCode} />
+      ))}
+
+      <FamilyList userInfoList={familyList} />
       <MypageButtonGroup />
       <div className="flex-grow" />
       <BottomNavBar />

@@ -9,7 +9,7 @@ export interface FamilyMember {
   relatedUserBirth: string;
 }
 
-export async function fetchFamilyList(): Promise<FamilyMember> {
+export async function fetchFamilyList(): Promise<FamilyMember[]> {
   try {
     const response = await axiosMainInstance.get("/v1/user/mypage");
 
@@ -18,22 +18,18 @@ export async function fetchFamilyList(): Promise<FamilyMember> {
     if (response.data.success) {
       const data = response.data.data;
 
-      return {
-        name: data.name,
-        userCode: data.userCode,
-        birth: data.relatedUserBirth ?? "",
-        relatedUserName: data.relatedUserName ?? "",
-        relatedUserBirth: data.relatedUserBirth ?? "",
-      };
+      return [
+        {
+          name: data.name,
+          userCode: data.userCode,
+          birth: data.relatedUserBirth ?? "",
+          relatedUserName: data.relatedUserName ?? "",
+          relatedUserBirth: data.relatedUserBirth ?? "",
+        },
+      ];
     }
 
-    return {
-      name: "",
-      userCode: "",
-      birth: "",
-      relatedUserName: "",
-      relatedUserBirth: "",
-    };
+    return [];
   } catch (error) {
     const axiosError = error as AxiosError;
 
@@ -46,12 +42,6 @@ export async function fetchFamilyList(): Promise<FamilyMember> {
       console.error("가족 정보를 가져오는데 실패했습니다:", axiosError.message);
     }
 
-    return {
-      name: "",
-      userCode: "",
-      birth: "",
-      relatedUserName: "",
-      relatedUserBirth: "",
-    };
+    return [];
   }
 }
