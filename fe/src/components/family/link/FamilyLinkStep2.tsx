@@ -20,7 +20,8 @@ export default function FamilyLinkStep2({ relation }: FamilyLinkStep2Props) {
   const handleNext = async () => {
     if (!code) return;
 
-    const koreanRole = relation === "parent" ? "부모" : "자식";
+     const koreanRole = relation === "parent" ? "부모" : "자녀";
+     const targetRole = relation === "parent" ? "자녀" : "부모";
 
     try {
       const res = await verifyRelation(code, koreanRole);
@@ -52,7 +53,7 @@ export default function FamilyLinkStep2({ relation }: FamilyLinkStep2Props) {
     <div className="relative flex flex-col min-h-screen px-6 pt-4 pb-20 bg-bgColor-default">
       <div className="flex flex-col justify-center flex-1 gap-8">
         <p className="text-xl font-semibold text-textColor-heading">
-          자녀의 고유 번호를 입력해주세요
+          {relation === "parent" ? "자녀" : "부모"}의 고유 번호를 입력해주세요
         </p>
 
         <FamilyInputField
