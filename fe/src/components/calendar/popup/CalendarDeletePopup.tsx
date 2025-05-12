@@ -41,7 +41,7 @@ export default function CalendarDeletePopup({
     <BottomPopup isOpen={isOpen} onClose={onClose}>
       {step === "confirm" ? (
         <div className="flex flex-col items-center text-center gap-6 pb-6">
-          <CalendarIcon className="w-12 h-12 text-textColor-sub" />
+          <CalendarIcon className="w-12 h-12 text-brand-normal" />
 
           <p className="text-xl font-bold text-textColor-heading leading-relaxed">
             {`${title} 일정을`} <br />
