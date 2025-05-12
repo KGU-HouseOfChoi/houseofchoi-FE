@@ -19,20 +19,26 @@ export default function AccountDeleteConfirmPopup({
 }: AccountDeleteConfirmPopupProps) {
   const { deleteAccount } = useDeleteAccount();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   if (!isOpen) return null;
 
   const handleAccountDeletion = async () => {
+    setIsLoading(true);
     try {
       const { success } = await deleteAccount(redirectPath);
       if (!success) {
         setToastMessage("회원탈퇴에 실패했습니다. 다시 시도해주세요.");
+        setIsLoading(false);
+        return;
       }
+      onClose();
     } catch (error) {
       console.error("회원탈퇴 실패:", error);
       setToastMessage("회원탈퇴 중 오류가 발생했습니다. 다시 시도해주세요.");
+      setIsLoading(false);
+      return;
     }
-    onClose();
   };
 
   return (
