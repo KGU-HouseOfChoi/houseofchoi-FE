@@ -10,7 +10,7 @@ export default function SearchBar() {
         placeholder="검색어를 입력하세요"
         className="flex-1 bg-transparent outline-none placeholder:text-textColor-sub"
       />
-      <SearchIcon className="text-brand-normal flex-shrink-0" />
+      <SearchIcon className="w-10 h-10 text-brand-normal flex-shrink-0" />
     </div>
   );
 }
