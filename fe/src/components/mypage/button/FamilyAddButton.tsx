@@ -4,15 +4,12 @@ import { useState } from "react";
 import FamilyLinkPopup from "@/components/family/popup/FamilyLinkPopup";
 
 const FamilyAddButton = () => {
-  
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  
   const handleOpenPopup = () => {
     setIsPopupOpen(true);
   };
 
-  
   const handleClosePopup = () => {
     setIsPopupOpen(false);
   };
@@ -28,7 +25,6 @@ const FamilyAddButton = () => {
         가족 추가하기
       </button>
 
-      
       <FamilyLinkPopup isOpen={isPopupOpen} onClose={handleClosePopup} />
     </>
   );

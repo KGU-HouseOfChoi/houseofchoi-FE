@@ -21,7 +21,7 @@ const FamilyCard: FC<FamilyCardProps> = ({ name, birth }) => {
           />
         </div>
 
-        <div className="flex flex-col text-m text-textColor-body font-pretendard">
+        <div className="flex flex-col text-m text-textColor-heading font-pretendard">
           <p>성명: {name}</p>
           <p>생년월일: {birth}</p>
         </div>

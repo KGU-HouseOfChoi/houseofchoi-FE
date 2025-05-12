@@ -26,27 +26,27 @@ export function useVoiceRecorder() {
       const { blob } = await recorder.stop();
       stream.getTracks().forEach((track) => track.stop());
 
-      console.log("🎧 녹음된 파일:", blob);
+      console.log("녹음된 파일:", blob);
 
       if (isCancelled) {
-        console.log("🛑 STT API 호출이 취소되었습니다.");
+        console.log("STT API 호출이 취소되었습니다.");
         onComplete(new Blob(), "");
         return;
       }
 
       const transcript: STTResponse = await fetchSpeechToText(blob);
-      console.log("📝 STT 응답 결과:", transcript);
+      console.log("STT 응답 결과:", transcript);
 
       const text = transcript?.user_message ?? "";
-      console.log("🗣️ 텍스트 추출 결과:", text);
+      console.log("텍스트 추출 결과:", text);
 
       onComplete(blob, typeof text === "string" ? text : "");
-      console.log("✅ onComplete 호출 완료");
+      console.log("onComplete 호출 완료");
     } catch (err: unknown) {
       if (err instanceof Error) {
-        console.error("❌ 녹음 처리 실패:", err.message);
+        console.error("녹음 처리 실패:", err.message);
       } else {
-        console.error("❌ 녹음 처리 실패: 알 수 없는 오류 발생");
+        console.error("녹음 처리 실패: 알 수 없는 오류 발생");
       }
       onComplete(new Blob(), "");
     }
@@ -74,16 +74,16 @@ export function useVoiceRecorder() {
         isRecordingRef.current = true;
 
         recorder.start();
-        console.log("🎙️ 녹음 시작");
+        console.log("녹음 시작");
 
         setTimeout(() => {
           stopAndProcess(onComplete, isCancelledRef.current);
         }, 6000);
       } catch (err: unknown) {
         if (err instanceof Error) {
-          console.error("❌ 마이크 접근 실패:", err.message);
+          console.error("마이크 접근 실패:", err.message);
         } else {
-          console.error("❌ 마이크 접근 실패: 알 수 없는 오류 발생");
+          console.error("마이크 접근 실패: 알 수 없는 오류 발생");
         }
       }
     },

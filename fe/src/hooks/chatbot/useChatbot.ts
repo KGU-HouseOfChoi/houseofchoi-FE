@@ -23,12 +23,10 @@ export function useChatbot() {
 
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  /* ─────────── 스크롤 유지 ─────────── */
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  /* ─────────── 유틸: 봇 텍스트 push ─────────── */
   const pushBotText = (content: string) =>
     setMessages((prev) => [
       ...prev,
@@ -43,7 +41,6 @@ export function useChatbot() {
       },
     ]);
 
-  /* ─────────── 일반 채팅 전송 ─────────── */
   const handleSend = async (text: string) => {
     if (!text.trim()) return;
 
@@ -67,7 +64,6 @@ export function useChatbot() {
     }
   };
 
-  /* ─────────── 추천 버튼 클릭 ─────────── */
   const handleButtonClick = async (
     value: "indoor" | "outdoor",
     label: string,
@@ -85,7 +81,6 @@ export function useChatbot() {
     ]);
 
     try {
-      // 추천 메시지
       const recMsgs = await fetchRecommendation(value);
       if (recMsgs.length === 0) {
         pushBotText(
@@ -94,11 +89,9 @@ export function useChatbot() {
         return;
       }
 
-      // 마지막 activity 메시지의 programId 저장
       const last = recMsgs.at(-1);
       if (last?.type === "activity") saveProgramId(last.programId);
 
-      //  일정 확인 카드
       const confirmCard: ScheduleConfirmMessage = {
         id: `${Date.now()}-confirm`,
         sender: "bot",
