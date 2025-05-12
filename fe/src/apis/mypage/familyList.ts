@@ -27,7 +27,6 @@ export async function fetchFamilyList(): Promise<FamilyMember> {
       };
     }
 
-    // ✅ 빈 값으로 반환하여 undefined 방지
     return {
       name: "",
       userCode: "",
@@ -38,7 +37,6 @@ export async function fetchFamilyList(): Promise<FamilyMember> {
   } catch (error) {
     const axiosError = error as AxiosError;
 
-    // 에러 메시지 출력
     if (axiosError.response) {
       console.error(
         "가족 정보를 가져오는데 실패했습니다:",
@@ -48,7 +46,6 @@ export async function fetchFamilyList(): Promise<FamilyMember> {
       console.error("가족 정보를 가져오는데 실패했습니다:", axiosError.message);
     }
 
-    // ✅ 빈 값으로 반환하여 undefined 방지
     return {
       name: "",
       userCode: "",
