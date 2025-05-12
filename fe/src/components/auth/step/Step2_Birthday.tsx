@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthStore } from "@/store/useAuthStore";
-import BirthdayInput from "../input/BirthdayInput";
+import BirthdayInput from "../common/input/BirthdayInput";
 
 export default function Step2_Birthday() {
   const { birthday, setField, step, setError, clearError, errors, nextStep } =

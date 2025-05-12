@@ -1,10 +1,10 @@
 import Image from "next/image";
 import ChatBubble from "@/components/chatbot/messages/ChatBubble";
-import { Message } from "@/types/chatbot";
 import ButtonGroup from "@/components/chatbot/ButtonGroup";
-import type { FC } from "react";
-import { formatTime } from "@/lib/chatbot/formatTime";
 import ScheduleConfirm from "@/components/chatbot/ScheduleConfirm";
+import { formatTime } from "@/lib/chatbot/formatTime";
+import type { FC } from "react";
+import type { Message } from "@/types/chatbot";
 
 interface MessageGroupProps {
   sender: string;
@@ -14,7 +14,7 @@ interface MessageGroupProps {
   onButtonClick?: (value: string, label: string) => void;
 }
 
-const getTimeHM = (iso: string) => formatTime(iso);
+const hm = (iso: string) => formatTime(iso);
 
 const MessageGroup: FC<MessageGroupProps> = ({
   sender,
@@ -23,16 +23,21 @@ const MessageGroup: FC<MessageGroupProps> = ({
   items,
   onButtonClick,
 }) => {
+  const showAvatar =
+    !isUser &&
+    !["button", "schedule-confirm", "activity"].includes(items[0].type) &&
+    !!(items[0].profileUrl || profileUrl);
+
   return (
     <div className="flex flex-col gap-1">
-      {!isUser && items[0].type !== "button" && (
-        <div className="flex items-center gap-2 mb-1">
+      {showAvatar && (
+        <div className="flex items-start -mb-[2px]">
           <Image
-            src={profileUrl}
+            src={items[0].profileUrl || profileUrl}
             alt={sender}
             width={36}
             height={36}
-            className="rounded-full"
+            className="rounded-full object-cover mb-0"
           />
         </div>
       )}
@@ -40,53 +45,58 @@ const MessageGroup: FC<MessageGroupProps> = ({
       <div className={`flex flex-col ${isUser ? "items-end" : "items-start"}`}>
         {items.map((msg, idx) => {
           const isFirst = idx === 0;
-          const isLast = idx === items.length - 1;
           const prevMsg = items[idx - 1];
           const nextMsg = items[idx + 1];
 
-          const currTime = getTimeHM(msg.timestamp);
-          const nextTime = nextMsg ? getTimeHM(nextMsg.timestamp) : null;
+          const nextSameOwner = nextMsg && msg.isUser === nextMsg.isUser;
+          const nextSameHM =
+            nextMsg && hm(msg.timestamp) === hm(nextMsg.timestamp);
 
           const shouldShowTime =
-            idx === 1 ||
-            isLast ||
-            msg.isUser !== nextMsg?.isUser ||
-            currTime !== nextTime;
+            msg.type !== "button" &&
+            (!nextMsg ||
+              !nextSameOwner ||
+              !nextSameHM ||
+              nextMsg.type === "button");
 
           const shouldAddTopMargin =
             !isFirst &&
             (msg.isUser !== prevMsg?.isUser ||
-              prevMsg?.type === "button" ||
-              prevMsg?.type === "schedule-confirm");
+              (prevMsg?.type === "button" && msg.type !== "text"));
+
+          const marginTopClass = (() => {
+            if (showAvatar && isFirst) return "mt-1";
+            if (prevMsg && prevMsg.isUser !== msg.isUser) return "mt-8";
+            if (prevMsg && prevMsg.isUser === msg.isUser) return "mt-4";
+            return shouldAddTopMargin ? "mt-4" : "mt-6";
+          })();
 
           return (
             <div
               key={msg.id}
-              className={`flex flex-col ${msg.isUser ? "items-end" : "items-start"} ${
-                shouldAddTopMargin ? "mt-8" : "mt-4"
-              }`}
+              className={`flex flex-col ${msg.isUser ? "items-end" : "items-start"} ${marginTopClass}`}
             >
               {msg.type === "schedule-confirm" ? (
-                <div className="flex flex-col items-end relative w-fit">
+                <div
+                  className={`flex items-end gap-3 mb-4 ${
+                    msg.isUser ? "flex-row-reverse" : "flex-row"
+                  }`}
+                >
                   <ScheduleConfirm
                     onConfirm={() => onButtonClick?.("yes", "예")}
                     onCancel={() => onButtonClick?.("no", "아니요")}
                   />
                   {shouldShowTime && (
-                    <span className="mt-1 text-sm text-gray-400 self-end">
+                    <span className="text-sm text-gray-400 whitespace-nowrap">
                       {formatTime(msg.timestamp)}
                     </span>
                   )}
                 </div>
               ) : msg.type === "button" && msg.buttons ? (
-                <div className="mt-0 mb-2">
-                  <ButtonGroup
-                    buttons={msg.buttons}
-                    onClick={(value, label) => {
-                      onButtonClick?.(value, label);
-                    }}
-                  />
-                </div>
+                <ButtonGroup
+                  buttons={msg.buttons}
+                  onClick={(value, label) => onButtonClick?.(value, label)}
+                />
               ) : (
                 <div
                   className={`flex items-end gap-2 ${

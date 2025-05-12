@@ -3,7 +3,7 @@ import SearchBar from "@/components/home/SearchBar";
 import ActivityCardList from "@/components/home/ActivityCardList";
 import BottomNavBar from "@/components/common/BottomNavBar";
 
-export default function Home() {
+export default function MemberPage() {
   return (
     <>
       <MainHeader />

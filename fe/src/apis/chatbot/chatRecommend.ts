@@ -1,57 +1,33 @@
+import axiosAiInstance from "@/apis/common/axiosAiInstance";
 import { ChatRecommendRequest, ChatRecommendResponse } from "@/types/chatbot";
+import { handleApiError } from "@/utils/common/handleApiError";
+import { AxiosError } from "axios";
 
 export async function fetchChatRecommendation(
   req: ChatRecommendRequest,
-): Promise<ChatRecommendResponse> {
-  const { category } = req;
-
-  // 모의 환경에서만 사용하는 코드
-  if (process.env.NODE_ENV === "development") {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const formatDate = (date: Date) =>
-          date.toLocaleDateString("ko-KR", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          });
-
-        if (category === "indoor") {
-          resolve({
-            name: "요가 교실",
-            date: formatDate(new Date(2023, 2, 20)),
-            price: 0,
-            place: "서울 복지관",
-          });
-        } else {
-          resolve({
-            name: "산책 모임",
-            date: formatDate(new Date(2023, 2, 22)),
-            price: 0,
-            place: "한강 공원",
-          });
-        }
-      }, 500);
-    });
-  }
-
-  // 실제 API 호출 로직
+): Promise<ChatRecommendResponse[]> {
   try {
-    const response = await fetch("/api/recommendations", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(req),
-    });
+    const kor = req.category === "indoor" ? "실내" : "실외";
 
-    if (!response.ok) {
-      throw new Error("API 요청 실패");
+    const res = await axiosAiInstance.get<ChatRecommendResponse[]>(
+      "/recommend",
+      { params: { sub_category: kor } },
+    );
+
+    return res.data;
+  } catch (error: unknown) {
+    if (error instanceof AxiosError && error.response) {
+      const detail = error.response.data?.detail;
+      const msg = Array.isArray(detail)
+        ? detail.map((d: { msg: string }) => d.msg).join("\n")
+        : (detail ?? "추천 정보 조회 중 오류");
+      handleApiError(error, `추천 정보 조회 실패: ${msg}`);
+    } else {
+      handleApiError(
+        error instanceof Error ? error : new Error("알 수 없는 오류"),
+        "추천 정보 조회 중 오류",
+      );
     }
-
-    return await response.json();
-  } catch (error) {
-    console.error("추천 정보 가져오기 실패:", error);
-    throw error;
+    return [];
   }
 }

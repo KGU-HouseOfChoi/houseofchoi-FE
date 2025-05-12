@@ -23,7 +23,7 @@ const ChatBubble = ({ type, text = "" }: ChatBubbleProps) => {
         rounded-2xl 
         min-w-[40px] max-w-[100%] 
         text-[20px] font-pretendard
-        ${isUser ? "bg-brand-normal text-white" : "bg-white text-black"}
+        ${isUser ? "bg-brand-normal text-textColor-white" : "bg-bgColor-default text-black"}
       `}
     >
       {renderTextWithLineBreaks(text)}

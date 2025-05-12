@@ -21,7 +21,7 @@ export function useSignup() {
     phoneNumber,
     setIsLoggedIn,
     setUserInfo,
-    setAccessToken, // ✅ 추가
+    setAccessToken,
     resetSignupState,
   } = useAuthStore();
 
