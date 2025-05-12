@@ -23,7 +23,6 @@ export default function ActivityCard({
           width={284}
           height={160}
           className="object-cover w-full h-full"
-          
         />
       </div>
 

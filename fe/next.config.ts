@@ -9,11 +9,11 @@ const nextConfig = {
   reactStrictMode: true,
 
   images: {
-    domains: ["house-of-choi.s3.ap-northeast-2.amazonaws.com"], 
+    domains: ["house-of-choi.s3.ap-northeast-2.amazonaws.com"],
   },
 
   experimental: {
-    serverActions: true, 
+    serverActions: true,
   },
 
   metadataBase: new URL("https://houseofchoi-fe.vercel.app"),
