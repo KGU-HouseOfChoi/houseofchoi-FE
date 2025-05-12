@@ -41,7 +41,7 @@ interface AuthState {
       | "resetSignupState"
       | "setUserInfo"
       | "setIsAnalyzed"
-      | "logout" // ✅ 추가
+      | "logout"
     >,
   >(
     field: K,
@@ -59,7 +59,7 @@ interface AuthState {
 
   reset: () => void;
   resetSignupState: () => void;
-  logout: () => void; // ✅ 타입에 추가
+  logout: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -142,7 +142,7 @@ export const useAuthStore = create<AuthState>()(
           refreshToken: null,
           userId: null,
         }));
-      }, // ✅ logout 함수 구현 추가
+      },
     }),
     {
       name: "auth-store",

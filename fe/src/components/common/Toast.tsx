@@ -11,7 +11,6 @@ interface ToastProps {
 export default function Toast({ message, onClose, actions }: ToastProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
 
-  // Escape 키 닫기
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -24,7 +23,6 @@ export default function Toast({ message, onClose, actions }: ToastProps) {
     };
   }, [onClose]);
 
-  // 포커스 트랩
   useEffect(() => {
     const focusableElements = dialogRef.current?.querySelectorAll<HTMLElement>(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
@@ -33,7 +31,6 @@ export default function Toast({ message, onClose, actions }: ToastProps) {
     firstElement?.focus();
   }, []);
 
-  // 자동 닫기
   useEffect(() => {
     if (!actions || actions.length === 0) {
       const timer = setTimeout(onClose, 2000);

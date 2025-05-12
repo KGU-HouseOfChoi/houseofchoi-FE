@@ -2,10 +2,13 @@
 
 import { CheckCircle } from "lucide-react";
 import Button from "@/components/common/button/Button";
+import FamilyLinkPopup from "@/components/family/popup/FamilyLinkPopup";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function CompletePage() {
   const router = useRouter();
+  const [showFamilyPopup, setShowFamilyPopup] = useState(true);
 
   return (
     <main className="relative min-h-screen bg-white px-6 pt-[100px] pb-[150px] flex flex-col items-center justify-center gap-6 text-center">
@@ -28,6 +31,11 @@ export default function CompletePage() {
           어르심 시작하기
         </Button>
       </div>
+
+      <FamilyLinkPopup
+        isOpen={showFamilyPopup}
+        onClose={() => setShowFamilyPopup(false)}
+      />
     </main>
   );
 }

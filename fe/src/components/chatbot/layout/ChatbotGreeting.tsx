@@ -7,7 +7,7 @@ interface ChatbotGreetingProps {
 const ChatbotGreeting: FC<ChatbotGreetingProps> = ({ username }) => {
   return (
     <div className="w-full flex flex-col items-center mb-6">
-      <div className="font-medium font-pretendard text-gray text-center leading-tight text-[19px]">
+      <div className="font-medium font-pretendard text-textColor-heading text-center leading-tight text-[19px]">
         <p className="m-0 text-[19px] whitespace-pre-wrap">
           {username}님, 안녕하세요
         </p>
