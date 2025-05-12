@@ -9,6 +9,12 @@ import { fetchProgramList, Program } from "@/apis/main/program";
 import { getTodayDayString, formatTime } from "@/utils/schedule/calendar";
 import axios from "axios";
 
+interface ScheduleResponse {
+  scheduleId: number;
+  programId: number;
+  name: string;
+}
+
 export default function CalendarFlow() {
   const [selectedDay, setSelectedDay] = useState(getTodayDayString());
   const [data, setData] = useState<ScheduleItem[]>([]);
@@ -19,30 +25,34 @@ export default function CalendarFlow() {
     const fetch = async () => {
       setLoading(true);
       setError(null);
+
       try {
         const [programs, schedules] = await Promise.all([
           fetchProgramList(),
           getScheduleByDay(selectedDay),
         ]);
 
-        const map = new Map<number, Program>();
-        programs.forEach((p) => map.set(p.id, p));
+        const programMap = new Map<number, Program>();
+        programs.forEach((p) => programMap.set(p.id, p));
 
-        const items = schedules.map((s: any) => {
-          const p = map.get(s.programId);
-          return {
-            id: s.scheduleId,
-            period: "2분기(4~6월)",
-            title: s.name,
-            time: p
-              ? `${formatTime(p.startTime)} ~ ${formatTime(p.endTime)}`
-              : "-",
-            location: p?.centerName ?? "-",
-          };
-        });
+        const items: ScheduleItem[] = (schedules as ScheduleResponse[]).map(
+          (s) => {
+            const p = programMap.get(s.programId);
+            return {
+              id: s.scheduleId,
+              period: "2분기(4~6월)",
+              title: s.name,
+              time: p
+                ? `${formatTime(p.startTime)} ~ ${formatTime(p.endTime)}`
+                : "-",
+              location: p?.centerName ?? "-",
+            };
+          },
+        );
+
         setData(items);
       } catch (err) {
-        if (!(axios.isAxiosError(err) && err.response?.status === 404)) {
+        if (!axios.isAxiosError(err) || err.response?.status !== 404) {
           setError("일정을 불러오는 데 실패했습니다.");
         }
         setData([]);
@@ -50,7 +60,8 @@ export default function CalendarFlow() {
         setLoading(false);
       }
     };
-    fetch();
+
+    void fetch();
   }, [selectedDay]);
 
   const removeLocal = (id: number) => {

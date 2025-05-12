@@ -1,5 +1,3 @@
-/* ──────────────────────────────  ActivityCardList.tsx  ───────────────────────────── */
-
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
@@ -53,22 +51,22 @@ export default function ActivityCardList() {
       setPopupStep("confirm");
       setPopupOpen(true);
     },
-    [isGuest]
+    [isGuest],
   );
 
   const handleCalendarAdd = useCallback(async (programId: number) => {
     try {
       const success = await registerSchedule(programId);
       setPopupStep(success ? "success" : "duplicate");
-    } catch (e: any) {
-      setPopupStep(e?.response?.status === 409 ? "duplicate" : "duplicate");
+    } catch {
+      setPopupStep("duplicate");
     }
   }, []);
 
   if (!hydrated) {
     return (
       <section className="flex flex-col items-center gap-5 py-10">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-brand-normal" />
+        <div className="h-10 w-10 animate-spin rounded-full border-b-2 border-brand-normal" />
       </section>
     );
   }
@@ -76,45 +74,40 @@ export default function ActivityCardList() {
   return (
     <section className="flex flex-col items-center gap-5">
       {isLoading && (
-        <div className="flex justify-center items-center w-full py-10">
-          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-brand-normal" />
+        <div className="flex w-full items-center justify-center py-10">
+          <div className="h-10 w-10 animate-spin rounded-full border-b-2 border-brand-normal" />
         </div>
       )}
 
       {error && (
-        <div className="text-center py-5 text-textColor-error">
+        <div className="py-5 text-center text-textColor-error">
           <p>{error}</p>
-          <button
-            onClick={loadData}
-            className="mt-2 px-4 py-2 bg-brand-normal text-white rounded-lg"
-          >
+          <button onClick={loadData} className="mt-2 btn-primary">
             다시 시도
           </button>
         </div>
       )}
 
       {!isLoading && !error && programs.length === 0 && (
-        <div className="text-center py-10 text-textColor-sub">
-          표시할 활동이 없습니다.
-        </div>
+        <p className="py-10 text-textColor-sub">표시할 활동이 없습니다.</p>
       )}
 
       {!isLoading &&
-        programs.map((program) => (
+        programs.map((p) => (
           <ActivityCard
-            key={program.id}
-            imageUrl={program.imageUrl || "/images/placeholder.svg"}
-            title={program.name}
-            location={program.centerName}
-            onAddClick={() => handleAddClick(program)}
+            key={p.id}
+            imageUrl={p.imageUrl || "/images/placeholder.svg"}
+            title={p.name}
+            location={p.centerName}
+            onAddClick={() => handleAddClick(p)}
             onMoreClick={() => alert("더보기 기능은 아직 준비 중입니다!")}
           />
         ))}
 
       {!isLoading && programs.length > 0 && (
-        <div className="mt-8 mb-32 text-textColor-disabled text-center text-xl">
+        <p className="mb-32 mt-8 text-center text-xl text-textColor-disabled">
           추천 활동은 여기까지입니다!
-        </div>
+        </p>
       )}
 
       {selectedProgram && (

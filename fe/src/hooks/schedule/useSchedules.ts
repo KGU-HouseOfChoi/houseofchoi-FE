@@ -1,49 +1,29 @@
-"use client";
-
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { fetchProgramList, Program } from "@/apis/main/program";
 import { getScheduleByDay, deleteSchedule } from "@/apis/schedule/schedule";
 import { formatTime } from "@/utils/schedule/calendar";
+import { ScheduleItem, ScheduleResponse } from "@/types/schedule";
 
-export interface ScheduleItem {
-  id: number;
-  period: string;
-  title: string;
-  time: string;
-  location: string;
-}
-
-const dayField: Record<string, keyof Program> = {
-  월: "firDay",
-  화: "secDay",
-  수: "thrDay",
-  목: "fouDay",
-  금: "fivDay",
-  토: "fivDay",
-  일: "firDay",
-};
-
-/** 일정 조회 + 로컬 삭제 로직을 제공하는 커스텀 훅 */
-export function useSchedules(selectedDay: string) {
+/** 선택한 요일의 일정 + 로컬 삭제를 제공하는 훅 */
+export function useSchedules(day: string) {
   const [data, setData] = useState<ScheduleItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  /* 서버에서 일정 가져오기 */
-  const fetchSchedules = useCallback(async (day: string) => {
+  const load = useCallback(async (d: string) => {
     setLoading(true);
     setError(null);
     try {
-      const [programs, scheduleData] = await Promise.all([
+      const [programs, schedules] = await Promise.all([
         fetchProgramList(),
-        getScheduleByDay(day),
+        getScheduleByDay(d),
       ]);
 
-      const programMap = new Map<number, Program>();
-      programs.forEach((p) => programMap.set(p.id, p));
+      const map = new Map<number, Program>();
+      programs.forEach((p) => map.set(p.id, p));
 
-      const items: ScheduleItem[] = scheduleData.map((s: any) => {
-        const p = programMap.get(s.programId);
+      const items = (schedules as ScheduleResponse[]).map<ScheduleItem>((s) => {
+        const p = map.get(s.programId);
         return {
           id: s.scheduleId,
           period: "2분기(4~6월)",
@@ -64,8 +44,8 @@ export function useSchedules(selectedDay: string) {
   }, []);
 
   useEffect(() => {
-    fetchSchedules(selectedDay);
-  }, [selectedDay, fetchSchedules]);
+    void load(day);
+  }, [day, load]);
 
   const remove = async (scheduleId: number) => {
     await deleteSchedule(scheduleId);

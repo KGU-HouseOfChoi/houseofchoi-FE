@@ -34,6 +34,6 @@ export default function BottomPopup({
         {children}
       </div>
     </div>,
-    target
+    target,
   );
 }

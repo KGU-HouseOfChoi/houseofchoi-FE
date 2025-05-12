@@ -8,7 +8,7 @@ import { useState } from "react";
 type Step = "confirm" | "success";
 
 interface Props {
-  title: string; 
+  title: string;
   isOpen: boolean;
   onClose: () => void;
   onDelete: () => Promise<void>;

@@ -3,9 +3,7 @@ export const getTodayDayString = () =>
 
 const pad = (n: number) => n.toString().padStart(2, "0");
 
-export const formatTime = (
-  t?: { hour?: number; minute?: number } | string
-) => {
+export const formatTime = (t?: { hour?: number; minute?: number } | string) => {
   if (!t) return "-";
   if (typeof t === "string") {
     const [hh, mm] = t.split(":");
