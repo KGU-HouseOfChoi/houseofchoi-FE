@@ -1,6 +1,6 @@
 "use client";
 
-import BottomPopup from "@/components/common/popup/BottomPopup"; // ← 방금 주신 컴포넌트
+import BottomPopup from "@/components/common/popup/BottomPopup";
 import PopupButtons from "@/components/common/button/PopupButtons";
 import CalendarIcon from "@/asset/icons/calendar-tick.svg";
 import { useState } from "react";
@@ -11,7 +11,7 @@ interface Props {
   title: string; 
   isOpen: boolean;
   onClose: () => void;
-  onDelete: () => Promise<void>; // 실제 삭제 호출
+  onDelete: () => Promise<void>;
 }
 
 export default function CalendarDeletePopup({
@@ -27,8 +27,8 @@ export default function CalendarDeletePopup({
     if (loading) return;
     setLoading(true);
     try {
-      await onDelete(); // API + 로컬 제거
-      setStep("success"); // 성공 단계로 전환
+      await onDelete();
+      setStep("success");
     } catch {
       alert("삭제에 실패했습니다. 잠시 후 다시 시도해주세요.");
       onClose();

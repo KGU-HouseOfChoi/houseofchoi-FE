@@ -1,7 +1,6 @@
 import axiosInstance from "@/apis/common/axiosMainInstance";
 import axios from "axios";
 
-/** ───────── 일정 등록 ───────── */
 export const registerSchedule = async (programId: number): Promise<boolean> => {
   const res = await axiosInstance.post(
     "/v1/schedule/register",
@@ -11,7 +10,6 @@ export const registerSchedule = async (programId: number): Promise<boolean> => {
   return Boolean(res.data?.data);
 };
 
-/** ───────── 등록 여부 조회 ───────── */
 export const checkScheduleExists = async (
   programId: number
 ): Promise<boolean> => {
@@ -29,7 +27,6 @@ export const checkScheduleExists = async (
   }
 };
 
-/** ───────── 요일별 내 일정 조회 ───────── */
 export const getScheduleByDay = async (day: string) => {
   try {
     const res = await axiosInstance.get(
@@ -42,7 +39,6 @@ export const getScheduleByDay = async (day: string) => {
   }
 };
 
-/** ───────── 일정 삭제 ───────── */
 export const deleteSchedule = async (scheduleId: number): Promise<void> => {
   await axiosInstance.delete(`/v1/schedule/${scheduleId}`);
 };

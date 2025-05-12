@@ -63,12 +63,10 @@ export function useSchedules(selectedDay: string) {
     }
   }, []);
 
-  /* 선택 요일이 바뀔 때마다 패칭 */
   useEffect(() => {
     fetchSchedules(selectedDay);
   }, [selectedDay, fetchSchedules]);
 
-  /* 서버 + 로컬 모두 삭제 */
   const remove = async (scheduleId: number) => {
     await deleteSchedule(scheduleId);
     setData((prev) => prev.filter((s) => s.id !== scheduleId));

@@ -15,7 +15,6 @@ export default function CalendarFlow() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  /* ─── 데이터 패칭 ─── */
   useEffect(() => {
     const fetch = async () => {
       setLoading(true);
@@ -54,12 +53,10 @@ export default function CalendarFlow() {
     fetch();
   }, [selectedDay]);
 
-  /* ─── 로컬 삭제 ─── */
   const removeLocal = (id: number) => {
     setData((prev) => prev.filter((v) => v.id !== id));
   };
 
-  /* ─── UI ─── */
   return (
     <main className="flex flex-col min-h-screen bg-bgColor-default">
       <CalendarHeader selectedDay={selectedDay} onSelectDay={setSelectedDay} />

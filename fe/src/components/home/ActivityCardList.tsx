@@ -30,7 +30,7 @@ export default function ActivityCardList() {
       setError(null);
 
       const data = await fetchProgramList();
-      setPrograms(data.slice(0, 5)); // 최초 5개만 노출
+      setPrograms(data.slice(0, 5));
     } catch {
       setError("활동 목록을 불러오는 데 실패했습니다. 다시 시도해 주세요.");
     } finally {
@@ -61,7 +61,6 @@ export default function ActivityCardList() {
       const success = await registerSchedule(programId);
       setPopupStep(success ? "success" : "duplicate");
     } catch (e: any) {
-      // 서버가 409를 내려주면 duplicate, 그 외엔 그대로 duplicate 처리
       setPopupStep(e?.response?.status === 409 ? "duplicate" : "duplicate");
     }
   }, []);
