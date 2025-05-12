@@ -89,7 +89,6 @@ const ChatbotMessageList = () => {
 
   return (
     <>
-      {/* ─────────── 채팅 본체 ─────────── */}
       <div className="flex flex-col h-full">
         <div className="flex-1 overflow-y-auto p-4 min-h-0">
           {loading && (
@@ -104,7 +103,6 @@ const ChatbotMessageList = () => {
             </div>
           )}
 
-          {/*  메시지 그룹 렌더링 */}
           {groupedMessages.map((group, idx) => (
             <MessageGroup
               key={idx}
