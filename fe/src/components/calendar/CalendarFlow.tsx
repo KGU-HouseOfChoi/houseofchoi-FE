@@ -1,66 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BottomNavBar from "@/components/common/BottomNavBar";
 import CalendarHeader from "@/components/calendar/CalendarHeader";
-import CalendarCard, { ScheduleItem } from "@/components/calendar/CalendarCard";
-import { getScheduleByDay } from "@/apis/schedule/schedule";
-import { fetchProgramList, Program } from "@/apis/main/program";
-import { getTodayDayString, formatTime } from "@/utils/schedule/calendar";
-import axios from "axios";
+import CalendarCard from "@/components/calendar/CalendarCard";
+import { useSchedules } from "@/hooks/schedule/useSchedules";
+import { getTodayDayString } from "@/utils/schedule/calendar";
 
 export default function CalendarFlow() {
   const [selectedDay, setSelectedDay] = useState(getTodayDayString());
-  const [data, setData] = useState<ScheduleItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetch = async () => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const [programs, schedules] = await Promise.all([
-          fetchProgramList(),
-          getScheduleByDay(selectedDay),
-        ]);
-
-        const programMap = new Map<number, Program>();
-        programs.forEach((p) => programMap.set(p.id, p));
-
-        const items: ScheduleItem[] = Array.isArray(schedules)
-          ? schedules.map((s) => {
-              const p = programMap.get(s.programId);
-              return {
-                id: s.scheduleId,
-                period: "2분기(4~6월)",
-                title: s.name,
-                time: p
-                  ? `${formatTime(p.startTime)} ~ ${formatTime(p.endTime)}`
-                  : "-",
-                location: p?.centerName ?? "-",
-              };
-            })
-          : [];
-
-        setData(items);
-      } catch (err) {
-        if (!axios.isAxiosError(err) || err.response?.status !== 404) {
-          setError("일정을 불러오는 데 실패했습니다.");
-        }
-        setData([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    void fetch();
-  }, [selectedDay]);
-
-  const removeLocal = (id: number) => {
-    setData((prev) => prev.filter((v) => v.id !== id));
-  };
+  const { data, loading, error, remove } = useSchedules(selectedDay);
 
   return (
     <main className="flex flex-col min-h-screen bg-bgColor-default">
@@ -77,7 +27,11 @@ export default function CalendarFlow() {
         )}
 
         {data.map((item) => (
-          <CalendarCard key={item.id} item={item} onDeleted={removeLocal} />
+          <CalendarCard
+            key={item.id}
+            item={item}
+            onDeleted={() => remove(item.id)}
+          />
         ))}
 
         {!loading && !error && data.length > 0 && (

@@ -9,7 +9,7 @@ export function useSchedules(day: string) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const seqRef = useRef(0); // ✅ 최신 요청 식별용 시퀀스 번호
+  const seqRef = useRef(0);
 
   const load = useCallback(async (d: string) => {
     const seq = ++seqRef.current;
@@ -21,7 +21,7 @@ export function useSchedules(day: string) {
         getScheduleByDay(d),
       ]);
 
-      if (seq !== seqRef.current) return; // ✅ 오래된 요청 무시
+      if (seq !== seqRef.current) return;
 
       const map = new Map<number, Program>();
       programs.forEach((p) => map.set(p.id, p));
@@ -41,13 +41,9 @@ export function useSchedules(day: string) {
 
       setData(items);
     } catch {
-      if (seq === seqRef.current) {
-        setError("일정을 불러오는 데 실패했습니다.");
-      }
+      if (seq === seqRef.current) setError("일정을 불러오는 데 실패했습니다.");
     } finally {
-      if (seq === seqRef.current) {
-        setLoading(false);
-      }
+      if (seq === seqRef.current) setLoading(false);
     }
   }, []);
 
@@ -55,14 +51,11 @@ export function useSchedules(day: string) {
     void load(day);
   }, [day, load]);
 
+  /** 에러는 호출자에서 catch */
   const remove = async (scheduleId: number) => {
-    try {
-      await deleteSchedule(scheduleId);
-      setData((prev) => prev.filter((s) => s.id !== scheduleId));
-    } catch {
-      alert("일정 삭제에 실패했습니다. 다시 시도해주세요.");
-    }
+    await deleteSchedule(scheduleId);
+    setData((prev) => prev.filter((s) => s.id !== scheduleId));
   };
 
-  return { data, loading, error, remove };
+  return { data, loading, error, remove, reload: load };
 }
