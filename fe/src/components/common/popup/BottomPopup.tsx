@@ -53,7 +53,7 @@ export default function BottomPopup({
 
   const trapFocus = (e: KeyboardEvent) => {
     const focusableEls = popupRef.current?.querySelectorAll<HTMLElement>(
-      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
     );
     if (!focusableEls || focusableEls.length === 0) return;
 
@@ -91,6 +91,6 @@ export default function BottomPopup({
         {children}
       </div>
     </div>,
-    document.body,
+    document.body
   );
 }
