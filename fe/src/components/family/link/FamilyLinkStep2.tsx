@@ -20,8 +20,8 @@ export default function FamilyLinkStep2({ relation }: FamilyLinkStep2Props) {
   const handleNext = async () => {
     if (!code) return;
 
-     const koreanRole = relation === "parent" ? "부모" : "자녀";
-     const targetRole = relation === "parent" ? "자녀" : "부모";
+    const koreanRole = relation === "parent" ? "부모" : "자녀";
+    const targetRole = relation === "parent" ? "자녀" : "부모";
 
     try {
       const res = await verifyRelation(code, koreanRole);
