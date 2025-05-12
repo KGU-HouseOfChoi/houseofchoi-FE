@@ -17,7 +17,7 @@ export default function GuestLayout({
     if (storedToken) {
       router.replace("/member");
     }
-  }, [token]);
+  }, [token, router]);
 
   return <>{children}</>;
 }

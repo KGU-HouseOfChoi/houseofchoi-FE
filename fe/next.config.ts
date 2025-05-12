@@ -1,12 +1,15 @@
-import type { NextConfig } from "next";
+// @ts-ignore
+import withPWA from "next-pwa";
+import type { Configuration } from "webpack";
 import type { WebpackConfigContext } from "next/dist/server/config-shared";
 
-const nextConfig: NextConfig = {
-  images: {
-    domains: ["house-of-choi.s3.ap-northeast-2.amazonaws.com"],
-  },
-  webpack(config, options: WebpackConfigContext) {
-    config.module.rules.push({
+const isDev = process.env.NODE_ENV === "development";
+
+const nextConfig = {
+  reactStrictMode: true,
+
+  webpack(config: Configuration, _options: WebpackConfigContext) {
+    config.module?.rules?.push({
       test: /\.svg$/,
       issuer: /\.[jt]sx?$/,
       use: ["@svgr/webpack"],
@@ -15,4 +18,9 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withPWA(nextConfig, {
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  disable: isDev,
+});
