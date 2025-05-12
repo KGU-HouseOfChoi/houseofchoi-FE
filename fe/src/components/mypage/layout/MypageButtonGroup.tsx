@@ -26,15 +26,6 @@ const MypageButtonGroup = () => {
     setAccountDeletePopupOpen(false);
   };
 
-  const handleAccountDeletion = async () => {
-    try {
-      alert("회원탈퇴가 완료되었습니다.");
-    } catch (error) {
-      console.error("회원탈퇴 실패:", error);
-      alert("회원탈퇴에 실패했습니다. 다시 시도해주세요.");
-    }
-  };
-
   return (
     <div className="flex flex-col items-center gap-6 mt-8">
       <div className="mt-8">
@@ -51,10 +42,10 @@ const MypageButtonGroup = () => {
         onClose={handleCloseLogoutPopup}
       />
 
+      {/* 🔹 onConfirm 삭제, 팝업에서 직접 처리 */}
       <AccountDeleteConfirmPopup
         isOpen={isAccountDeletePopupOpen}
         onClose={handleCloseAccountDeletePopup}
-        onConfirm={handleAccountDeletion}
       />
     </div>
   );

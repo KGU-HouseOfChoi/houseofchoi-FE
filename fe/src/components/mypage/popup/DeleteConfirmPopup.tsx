@@ -3,33 +3,36 @@
 import { Trash, X } from "lucide-react";
 import BottomPopup from "@/components/common/popup/BottomPopup";
 import PopupButtons from "@/components/common/button/PopupButtons";
+import { useDeleteAccount } from "@/hooks/auth/useDeleteAccount";
 import { useState } from "react";
 
 interface AccountDeleteConfirmPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  redirectPath?: string;
 }
 
 export default function AccountDeleteConfirmPopup({
   isOpen,
   onClose,
-  onConfirm,
+  redirectPath = "/guest",
 }: AccountDeleteConfirmPopupProps) {
+  const { deleteAccount } = useDeleteAccount();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
   const handleAccountDeletion = async () => {
     try {
-      await onConfirm();
-      setToastMessage("회원탈퇴가 완료되었습니다.");
+      const { success } = await deleteAccount(redirectPath);
+      if (!success) {
+        setToastMessage("회원탈퇴에 실패했습니다. 다시 시도해주세요.");
+      }
     } catch (error) {
       console.error("회원탈퇴 실패:", error);
       setToastMessage("회원탈퇴 중 오류가 발생했습니다. 다시 시도해주세요.");
-    } finally {
-      onClose();
     }
+    onClose();
   };
 
   return (
@@ -45,7 +48,6 @@ export default function AccountDeleteConfirmPopup({
             <X className="w-6 h-6 text-iconColor-sub" />
           </button>
 
-          {/* 🔥 브랜드 색상으로 아이콘 변경 */}
           <Trash className="w-10 h-10 text-brand-normal" />
 
           <h2 className="text-2xl font-semibold text-textColor-heading">

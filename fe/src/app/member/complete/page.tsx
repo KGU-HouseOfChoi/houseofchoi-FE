@@ -26,7 +26,7 @@ export default function CompletePage() {
       <div className="absolute bottom-[54px] left-0 right-0 px-6 z-10">
         <Button
           fullWidth
-          onClick={() => router.replace("/member/personalityAnalysis")}
+          onClick={() => router.replace("/member/personality/Analysis")}
         >
           어르심 시작하기
         </Button>
