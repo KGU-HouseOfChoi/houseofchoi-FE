@@ -41,11 +41,12 @@ export default function MainHeader() {
       <div className="flex flex-col justify-center text-textColor-heading text-base leading-snug font-pretendard mx-auto h-full">
         {isGuest ? (
           <p>딱! 맞는 활동 추천드릴게요!</p>
+        ) : userName === null ? (
+          <div className="h-[40px] w-[200px]" />
         ) : (
           <>
             <p>
-              <span className="font-semibold">{userName ?? "사용자"}</span>{" "}
-              님에게
+              <span className="font-semibold">{userName}</span> 님에게
             </p>
             <p>딱! 맞는 활동 추천해드릴게요!</p>
           </>
