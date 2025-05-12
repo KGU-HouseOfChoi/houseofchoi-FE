@@ -12,9 +12,10 @@ interface FamilyLinkStep2Props {
 }
 
 export default function FamilyLinkStep2({ relation }: FamilyLinkStep2Props) {
-  const router = useRouter();
   const [code, setCode] = useState("");
-  const [userStatus, setUserStatus] = useState<"NEW_USER" | "EXISTING_USER" | null>(null);
+  const [userStatus, setUserStatus] = useState<
+    "NEW_USER" | "EXISTING_USER" | null
+  >(null);
   const [error, setError] = useState("");
 
   const handleNext = async () => {

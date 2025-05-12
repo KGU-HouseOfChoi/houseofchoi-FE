@@ -14,7 +14,7 @@ export default function CompletePage() {
     history.pushState(null, "", location.href);
 
     const preventBack = () => {
-      history.pushState(null, "", location.href); 
+      history.pushState(null, "", location.href);
     };
 
     window.addEventListener("popstate", preventBack);
