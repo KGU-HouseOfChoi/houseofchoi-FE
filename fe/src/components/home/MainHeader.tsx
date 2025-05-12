@@ -34,6 +34,7 @@ export default function MainHeader() {
           width={104}
           height={60}
           className="object-contain w-full h-full rounded-[50px]"
+          priority
         />
       </div>
 

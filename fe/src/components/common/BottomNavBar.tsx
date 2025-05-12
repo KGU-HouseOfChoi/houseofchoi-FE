@@ -16,28 +16,46 @@ export default function BottomNavBar() {
   const { isGuest, hydrated } = useAuth();
   const [showLoginPopup, setShowLoginPopup] = useState(false);
 
-  if (!hydrated) return null;
+  if (!hydrated || !pathname) return null;
+
+  const isHomePath = (path: string) => {
+    if (isGuest) return path === "/guest";
+    return path === "/member";
+  };
 
   const navItems = [
     {
       label: "처음",
       href: isGuest ? "/guest" : "/member",
       icon: HomeIcon,
+      isActive: isHomePath(pathname),
     },
-    { label: "일정", href: "/member/schedule", icon: CalendarIcon },
-    { label: "대화", href: "/member/chatbot", icon: MessagesIcon },
-    { label: "설정", href: "/member/mypage", icon: ProfileIcon },
+    {
+      label: "일정",
+      href: "/member/calendar",
+      icon: CalendarIcon,
+      isActive: pathname === "/member/calendar",
+    },
+    {
+      label: "대화",
+      href: "/member/chatbot",
+      icon: MessagesIcon,
+      isActive: pathname === "/member/chatbot",
+    },
+    {
+      label: "설정",
+      href: "/member/mypage",
+      icon: ProfileIcon,
+      isActive: pathname === "/member/mypage",
+    },
   ];
 
   const handleNavClick = (href: string) => {
-    const isProtected =
-      !href.startsWith("/guest") && href !== (isGuest ? "/guest" : "/member");
+    const isProtected = href.startsWith("/member");
     if (isGuest && isProtected) {
       setShowLoginPopup(true);
-    } else {
-      if (pathname !== href) {
-        router.push(href);
-      }
+    } else if (pathname !== href) {
+      router.push(href);
     }
   };
 
@@ -45,32 +63,28 @@ export default function BottomNavBar() {
     <>
       <nav className="fixed bottom-0 w-full max-w-[414px] h-[124px] bg-white z-50 shadow-[0px_-3px_10px_rgba(142,142,142,0.25)]">
         <div className="h-full px-6 flex items-center justify-between max-w-md mx-auto">
-          {navItems.map(({ label, href, icon: Icon }) => {
-            const isActive = pathname === href || pathname.startsWith(href);
-
-            return (
-              <button
-                type="button"
-                key={label}
-                onClick={() => handleNavClick(href)}
-                className="flex flex-col items-center gap-1 w-[50px]"
-                aria-current={isActive ? "page" : undefined}
+          {navItems.map(({ label, href, icon: Icon, isActive }) => (
+            <button
+              key={label}
+              type="button"
+              onClick={() => handleNavClick(href)}
+              className="flex flex-col items-center gap-1 w-[50px]"
+              aria-current={isActive ? "page" : undefined}
+            >
+              <Icon
+                className={`${
+                  isActive ? "text-brand-normal" : "text-iconColor-disabled"
+                }`}
+              />
+              <span
+                className={`text-2xl font-pretendard font-semibold ${
+                  isActive ? "text-brand-normal" : "text-iconColor-sub"
+                }`}
               >
-                <Icon
-                  className={`w-[50px] h-[50px] ${
-                    isActive ? "text-brand-normal" : "text-iconColor-disabled"
-                  }`}
-                />
-                <span
-                  className={`text-2xl font-pretendard font-semibold ${
-                    isActive ? "text-brand-normal" : "text-iconColor-sub"
-                  }`}
-                >
-                  {label}
-                </span>
-              </button>
-            );
-          })}
+                {label}
+              </span>
+            </button>
+          ))}
         </div>
       </nav>
 

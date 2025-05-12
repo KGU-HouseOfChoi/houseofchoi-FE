@@ -2,14 +2,14 @@
 
 import { FC } from "react";
 
-interface MainButtonProps {
+interface CardButtonProps {
   text: string;
   width?: string;
   height?: string;
   onClick?: () => void;
 }
 
-const MainButton: FC<MainButtonProps> = ({
+const CardButton: FC<CardButtonProps> = ({
   text,
   width = "w-full",
   height = "h-[70px]",
@@ -25,4 +25,4 @@ const MainButton: FC<MainButtonProps> = ({
   );
 };
 
-export default MainButton;
+export default CardButton;
