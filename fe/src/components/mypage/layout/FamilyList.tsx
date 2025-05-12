@@ -8,25 +8,23 @@ interface FamilyListProps {
 }
 
 const FamilyList = ({ userInfoList }: FamilyListProps) => {
-  if (userInfoList.length === 0) {
+  const filteredList = userInfoList.filter(
+    (userInfo) => userInfo.relatedUserName && userInfo.relatedUserBirth,
+  );
+
+  if (filteredList.length === 0) {
     return null;
   }
 
   return (
     <div className="flex flex-col gap-6 mt-10 items-center">
-      {userInfoList.map((userInfo, index) => {
-        if (!userInfo.relatedUserName || !userInfo.relatedUserBirth) {
-          return null;
-        }
-
-        return (
-          <FamilyCard
-            key={index}
-            relatedUserName={userInfo.relatedUserName}
-            relatedUserBirth={userInfo.relatedUserBirth}
-          />
-        );
-      })}
+      {filteredList.map((userInfo) => (
+        <FamilyCard
+          key={userInfo.userCode}
+          relatedUserName={userInfo.relatedUserName}
+          relatedUserBirth={userInfo.relatedUserBirth}
+        />
+      ))}
     </div>
   );
 };
