@@ -135,7 +135,6 @@ export default function VoicePopup({
   return (
     <BottomPopup isOpen={isOpen} onClose={onClose}>
       <div className="relative text-center flex flex-col items-center justify-center gap-y-5">
-        {/* 🔹 X 버튼 */}
         <button
           onClick={onClose}
           className="absolute top-0 right-3 p-1 rounded hover:bg-bgColor-surface"

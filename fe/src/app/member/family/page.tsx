@@ -12,9 +12,9 @@ export default function FamilyLinkPage() {
 
   const handleBack = () => {
     if (relation) {
-      setRelation(null); // ✅ Step2 → Step1 전환
+      setRelation(null);
     } else {
-      router.push("/member/complete"); // ✅ Step1 → /member/complete 이동
+      router.back();
     }
   };
 

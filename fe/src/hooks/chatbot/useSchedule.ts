@@ -26,9 +26,8 @@ export function useSchedule() {
     try {
       console.log("📤 registerSchedule 요청 programId =", programId);
 
-      const res = await apiRegisterSchedule(programId); // POST /schedule
+      const res = await apiRegisterSchedule(programId);
 
-      /* ✅ 성공 시 응답·ID 로그 */
       console.log("✅ 일정 저장 완료!", { programId, res });
 
       setPopupOpen(true);
