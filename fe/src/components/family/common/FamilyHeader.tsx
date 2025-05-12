@@ -11,7 +11,10 @@ interface FamilyHeaderProps {
 const FamilyHeader: NextPage<FamilyHeaderProps> = ({ onBack }) => {
   const router = useRouter();
 
-  const handleBack = () => {
+  const handleBack = (
+    e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
+  ) => {
+    e.preventDefault();
     if (onBack) {
       onBack();
     } else {
