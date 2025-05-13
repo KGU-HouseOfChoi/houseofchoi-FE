@@ -51,7 +51,6 @@ export function useSchedules(day: string) {
     void load(day);
   }, [day, load]);
 
-  /** 에러는 호출자에서 catch */
   const remove = async (scheduleId: number) => {
     await deleteSchedule(scheduleId);
     setData((prev) => prev.filter((s) => s.id !== scheduleId));
