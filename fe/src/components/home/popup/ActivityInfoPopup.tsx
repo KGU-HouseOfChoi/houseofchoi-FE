@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Map, MapMarker, ZoomControl, Loader } from "react-kakao-maps-sdk";
+import {
+  Map as KakaoMap,
+  MapMarker,
+  ZoomControl,
+  Loader,
+} from "react-kakao-maps-sdk";
 import { X } from "lucide-react";
 import BottomPopup from "@/components/common/popup/BottomPopup";
 import PopupButtons from "@/components/common/button/PopupButtons";
@@ -50,14 +55,14 @@ export default function ActivityInfoPopup({
 
       <div className="w-full h-[200px] rounded-xl overflow-hidden border border-borderColor-default">
         {isMapLoaded ? (
-          <Map
+          <KakaoMap
             center={{ lat, lng }}
             level={3}
             style={{ width: "100%", height: "100%" }}
           >
             <MapMarker position={{ lat, lng }} />
             <ZoomControl position={kakao.maps.ControlPosition.RIGHT} />
-          </Map>
+          </KakaoMap>
         ) : (
           <div className="flex items-center justify-center w-full h-full text-sm text-gray-400">
             지도를 불러오는 중...
