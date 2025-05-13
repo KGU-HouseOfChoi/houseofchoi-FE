@@ -36,7 +36,7 @@ export default function MyPage() {
       {toastMessage && (
         <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
       )}
-
+    
       {familyList.map((member) => (
         <MypageCard
           key={member.userCode}
