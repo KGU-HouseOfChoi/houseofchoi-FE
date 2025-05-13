@@ -25,11 +25,20 @@ export default function ActivityInfoPopup({
 }: ActivityInfoPopupProps) {
   const lat = program.center?.latitude ?? 37.5665;
   const lng = program.center?.longitude ?? 126.978;
+
   const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const [mapError, setMapError] = useState<string | null>(null);
 
   useEffect(() => {
+    const kakaoApiKey = process.env.NEXT_PUBLIC_KAKAO_API_KEY;
+
+    if (!kakaoApiKey) {
+      setMapError("지도를 불러올 수 없습니다!");
+      return;
+    }
+
     const loader = new Loader({
-      appkey: process.env.NEXT_PUBLIC_KAKAO_API_KEY!,
+      appkey: kakaoApiKey,
       libraries: ["services"],
     });
 
@@ -38,8 +47,10 @@ export default function ActivityInfoPopup({
       .then(() => {
         setIsMapLoaded(true);
       })
-      .catch((e) => {
-        console.error("카카오맵 로드 실패:", e);
+      .catch(() => {
+        setMapError(
+          "지도를 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.",
+        );
       });
   }, []);
 
@@ -54,7 +65,11 @@ export default function ActivityInfoPopup({
       </button>
 
       <div className="w-full h-[200px] rounded-xl overflow-hidden border border-borderColor-default">
-        {isMapLoaded ? (
+        {mapError ? (
+          <div className="flex items-center justify-center w-full h-full text-sm text-red-400">
+            {mapError}
+          </div>
+        ) : isMapLoaded ? (
           <KakaoMap
             center={{ lat, lng }}
             level={3}
