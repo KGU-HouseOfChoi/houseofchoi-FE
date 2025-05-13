@@ -1,14 +1,28 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { CheckCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 import Button from "@/components/common/button/Button";
 import FamilyLinkPopup from "@/components/family/popup/FamilyLinkPopup";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 export default function CompletePage() {
   const router = useRouter();
   const [showFamilyPopup, setShowFamilyPopup] = useState(true);
+
+  useEffect(() => {
+    history.pushState(null, "", location.href);
+
+    const preventBack = () => {
+      history.pushState(null, "", location.href);
+    };
+
+    window.addEventListener("popstate", preventBack);
+
+    return () => {
+      window.removeEventListener("popstate", preventBack);
+    };
+  }, []);
 
   return (
     <main className="relative min-h-screen bg-white px-6 pt-[100px] pb-[150px] flex flex-col items-center justify-center gap-6 text-center">
