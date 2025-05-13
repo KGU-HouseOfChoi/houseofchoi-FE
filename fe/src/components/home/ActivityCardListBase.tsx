@@ -1,44 +1,33 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
 import ActivityCard from "./ActivityCard";
 import CalendarAddPopup from "@/components/calendar/popup/CalendarAddPopup";
 import LoginGuidePopup from "@/components/auth/popup/LoginGuidePopup";
-import { fetchProgramList, Program } from "@/apis/main/program";
-import { registerSchedule } from "@/apis/schedule/schedule";
+import { Program } from "@/apis/main/program";
 import { useAuth } from "@/hooks/auth/useAuth";
+import { useState, useCallback } from "react";
 
 type PopupStep = "confirm" | "success" | "duplicate";
 
-export default function ActivityCardList() {
-  const { hydrated, isGuest } = useAuth();
+interface Props {
+  programs: Program[];
+  isLoading: boolean;
+  error: string | null;
+  onReload: () => void;
+}
 
-  const [programs, setPrograms] = useState<Program[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default function ActivityCardListBase({
+  programs,
+  isLoading,
+  error,
+  onReload,
+}: Props) {
+  const { isGuest } = useAuth();
 
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupStep, setPopupStep] = useState<PopupStep>("confirm");
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
-
-  const loadData = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-
-      const data = await fetchProgramList();
-      setPrograms(data.slice(0, 5));
-    } catch {
-      setError("활동 목록을 불러오는 데 실패했습니다. 다시 시도해 주세요.");
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (hydrated) void loadData();
-  }, [hydrated, loadData]);
 
   const handleAddClick = useCallback(
     (program: Program) => {
@@ -55,6 +44,7 @@ export default function ActivityCardList() {
   );
 
   const handleCalendarAdd = useCallback(async (programId: number) => {
+    const { registerSchedule } = await import("@/apis/schedule/schedule");
     try {
       const success = await registerSchedule(programId);
       setPopupStep(success ? "success" : "duplicate");
@@ -63,18 +53,10 @@ export default function ActivityCardList() {
     }
   }, []);
 
-  if (!hydrated) {
-    return (
-      <section className="flex flex-col items-center gap-5 py-10">
-        <div className="h-10 w-10 animate-spin rounded-full border-b-2 border-brand-normal" />
-      </section>
-    );
-  }
-
   return (
     <section className="flex flex-col items-center gap-5">
       {isLoading && (
-        <div className="flex w-full items-center justify-center py-10">
+        <div className="py-10">
           <div className="h-10 w-10 animate-spin rounded-full border-b-2 border-brand-normal" />
         </div>
       )}
@@ -82,7 +64,7 @@ export default function ActivityCardList() {
       {error && (
         <div className="py-5 text-center text-textColor-error">
           <p>{error}</p>
-          <button onClick={loadData} className="mt-2 btn-primary">
+          <button onClick={onReload} className="mt-2 btn-primary">
             다시 시도
           </button>
         </div>
