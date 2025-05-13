@@ -1,6 +1,7 @@
 import "@/app/globals.css";
 import type { Metadata, Viewport } from "next";
 import LayoutWrapper from "@/components/common/LayoutWrapper";
+import Script from "next/script"; // ✅ 추가
 
 export const metadata: Metadata = {
   title: "어르심 - 노인을 위한 활동 추천 플랫폼",
@@ -45,6 +46,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
+      <head>
+        <Script
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_API_KEY}&autoload=false&libraries=services`}
+          strategy="beforeInteractive"
+        />
+      </head>
       <body className="font-sans text-[18px] leading-relaxed bg-white">
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>

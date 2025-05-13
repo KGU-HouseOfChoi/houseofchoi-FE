@@ -3,7 +3,8 @@
 import ActivityCard from "./ActivityCard";
 import CalendarAddPopup from "@/components/calendar/popup/CalendarAddPopup";
 import LoginGuidePopup from "@/components/auth/popup/LoginGuidePopup";
-import { Program } from "@/apis/main/program";
+import ActivityInfoPopup from "@/components/home/popup/ActivityInfoPopup";
+import { Program } from "@/types/program";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useState, useCallback } from "react";
 
@@ -28,6 +29,7 @@ export default function ActivityCardListBase({
   const [popupStep, setPopupStep] = useState<PopupStep>("confirm");
   const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [infoProgram, setInfoProgram] = useState<Program | null>(null);
 
   const handleAddClick = useCallback(
     (program: Program) => {
@@ -82,7 +84,7 @@ export default function ActivityCardListBase({
             title={p.name}
             location={p.centerName}
             onAddClick={() => handleAddClick(p)}
-            onMoreClick={() => alert("더보기 기능은 아직 준비 중입니다!")}
+            onMoreClick={() => setInfoProgram(p)}
           />
         ))}
 
@@ -106,6 +108,17 @@ export default function ActivityCardListBase({
         isOpen={showLoginPopup}
         onClose={() => setShowLoginPopup(false)}
       />
+
+      {infoProgram && (
+        <ActivityInfoPopup
+          program={{
+            ...infoProgram,
+            tags: infoProgram.tags.map((tag) => ({ name: tag })),
+          }}
+          onClose={() => setInfoProgram(null)}
+          onAddClick={() => handleAddClick(infoProgram)}
+        />
+      )}
     </section>
   );
 }

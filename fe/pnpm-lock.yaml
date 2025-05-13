@@ -35,6 +35,9 @@ dependencies:
   react-dom:
     specifier: ^19.0.0
     version: 19.1.0(react@19.1.0)
+  react-kakao-maps-sdk:
+    specifier: ^1.1.27
+    version: 1.1.27(react-dom@19.1.0)(react@19.1.0)
   recorder-js:
     specifier: ^1.0.7
     version: 1.0.7
@@ -6144,6 +6147,13 @@ packages:
       object.values: 1.2.1
     dev: true
 
+  /kakao.maps.d.ts@0.1.40:
+    resolution:
+      {
+        integrity: sha512-nX69MB1ok04epe3OqS+/tEeWBbU31GSQbvDPJmQRRltzzqn6t4jBsO5v1nzalUjCKzwcH2CptOc767NZ7Hbu3g==,
+      }
+    dev: false
+
   /keyv@4.5.4:
     resolution:
       {
@@ -7281,6 +7291,21 @@ packages:
         integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==,
       }
     dev: true
+
+  /react-kakao-maps-sdk@1.1.27(react-dom@19.1.0)(react@19.1.0):
+    resolution:
+      {
+        integrity: sha512-1EwYkYsjTDRFqysKStDasFMrFTXcLx2AyRlqMoWD7ONWhRqpjx9M874hkhEEHrnypP2eSIhhDLe0EiSKp3bd2Q==,
+      }
+    peerDependencies:
+      react: ^16.8 || ^17 || ^18
+      react-dom: ^16.8 || ^17 || ^18
+    dependencies:
+      "@babel/runtime": 7.27.1
+      kakao.maps.d.ts: 0.1.40
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+    dev: false
 
   /react@19.1.0:
     resolution:
