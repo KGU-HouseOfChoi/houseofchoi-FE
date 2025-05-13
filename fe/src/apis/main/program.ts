@@ -42,3 +42,21 @@ export async function fetchRecommendedPrograms(
     throw handleApiError(error, "추천 프로그램 조회 중 오류가 발생했습니다.");
   }
 }
+export async function searchPrograms(
+  keyword: string,
+  page: number,
+): Promise<Program[]> {
+  const res = await axiosMainInstance.get("/v1/program/search", {
+    params: { name: keyword, page, size: 10 },
+  });
+  return res.data.data;
+}
+
+export async function searchProgramsForAutoComplete(
+  keyword: string,
+): Promise<Program[]> {
+  const res = await axiosMainInstance.get("/v1/program/search", {
+    params: { name: keyword },
+  });
+  return res.data.data;
+}
