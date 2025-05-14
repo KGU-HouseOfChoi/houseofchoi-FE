@@ -34,7 +34,7 @@ export default function SearchPage() {
         <button onClick={handleBack}>
           <BackIcon className="w-10 h-10 text-textColor-body" />
         </button>
-        <div className="flex-1 relative">
+        <div className="flex-1 relative text-textColor-body">
           <input
             value={inputValue}
             onChange={(e) => {
@@ -43,6 +43,7 @@ export default function SearchPage() {
             }}
             onKeyDown={(e) => e.key === "Enter" && handleSearch(inputValue)}
             placeholder="검색어를 입력하세요"
+            aria-label="검색어 입력"
             className="w-full border rounded-xl py-2 px-4 pr-10 text-lg"
           />
           {inputValue && (
@@ -52,9 +53,9 @@ export default function SearchPage() {
             >
               <Image
                 src="/images/deleteicon.svg"
-                alt=""
-                width={24}
-                height={24}
+                alt="검색어 지우기"
+                width={18}
+                height={18}
               />
             </button>
           )}

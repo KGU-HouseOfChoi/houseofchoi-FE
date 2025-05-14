@@ -14,6 +14,7 @@ export default function SearchActivityCardList({ keyword }: Props) {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
+  const PAGE_SIZE = 10;
 
   useEffect(() => {
     setPrograms([]);
@@ -25,13 +26,20 @@ export default function SearchActivityCardList({ keyword }: Props) {
     const fetch = async () => {
       if (!hasMore || !keyword) return;
       setLoading(true);
-      const data = await searchPrograms(keyword, page);
-      setPrograms((prev) => [...prev, ...data]);
-      if (data.length < 10) setHasMore(false);
-      setLoading(false);
+      try {
+        const data: Program[] = await searchPrograms(keyword, page);
+        setPrograms((prev) => [...prev, ...data]);
+        if (data.length < PAGE_SIZE) setHasMore(false);
+      } catch (error) {
+        console.error("검색 결과 불러오기 실패", error);
+        setPrograms([]);
+        setHasMore(false);
+      } finally {
+        setLoading(false);
+      }
     };
     fetch();
-  }, [keyword, page]);
+  }, [keyword, page, hasMore]);
 
   return (
     <>
@@ -41,15 +49,9 @@ export default function SearchActivityCardList({ keyword }: Props) {
         error={null}
         onReload={() => setPage((prev) => prev)}
       />
-      {hasMore && (
-        <div className="text-center mt-4">
-          <button
-            onClick={() => setPage((p) => p + 1)}
-            className="px-4 py-2 bg-gray-100 rounded"
-            disabled={loading}
-          >
-            {loading ? "불러오는 중..." : "더보기"}
-          </button>
+      {!loading && programs.length === 0 && keyword && (
+        <div className="text-center py-8 text-textColor-sub">
+          {`'${keyword}'에 대한 검색 결과가 없습니다.`}
         </div>
       )}
     </>
