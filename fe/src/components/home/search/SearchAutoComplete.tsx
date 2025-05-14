@@ -24,10 +24,9 @@ export default function SearchAutoComplete({ keyword, onSelect }: Props) {
       setLoading(true);
       try {
         const programs = await searchProgramsForAutoComplete(debouncedKeyword);
-        const safeList = programs.map((p) => p.name);
+        const safeList = programs.filter((p) => p && p.name).map((p) => p.name);
         setResults(safeList);
-      } catch (error) {
-        console.error("자동완성 API 오류", error);
+      } catch {
         setResults([]);
       } finally {
         setLoading(false);
@@ -66,7 +65,7 @@ export default function SearchAutoComplete({ keyword, onSelect }: Props) {
 
 function isValidSearchKeyword(text: string): boolean {
   const trimmed = text.trim();
-  return trimmed.length >= 1 && trimmed !== "";
+  return trimmed.length >= 1;
 }
 
 function highlightKeyword(text: string, keyword: string) {

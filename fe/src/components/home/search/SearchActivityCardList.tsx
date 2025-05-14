@@ -27,11 +27,10 @@ export default function SearchActivityCardList({ keyword }: Props) {
       if (!hasMore || !keyword) return;
       setLoading(true);
       try {
-        const data: Program[] = await searchPrograms(keyword, page);
+        const data = await searchPrograms(keyword, page);
         setPrograms((prev) => [...prev, ...data]);
         if (data.length < PAGE_SIZE) setHasMore(false);
-      } catch (error) {
-        console.error("검색 결과 불러오기 실패", error);
+      } catch {
         setPrograms([]);
         setHasMore(false);
       } finally {
@@ -46,8 +45,15 @@ export default function SearchActivityCardList({ keyword }: Props) {
       <ActivityCardListBase
         programs={programs}
         isLoading={loading && page === 1}
+        onReload={() => {
+          if (page === 1) {
+            setPrograms([]);
+            setHasMore(true);
+          } else {
+            setPage(1);
+          }
+        }}
         error={null}
-        onReload={() => setPage((prev) => prev)}
       />
       {!loading && programs.length === 0 && keyword && (
         <div className="text-center py-8 text-textColor-sub">
