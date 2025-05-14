@@ -5,8 +5,8 @@ import ActivityCard from "./ActivityCard";
 import CalendarAddPopup from "@/components/calendar/popup/CalendarAddPopup";
 import LoginGuidePopup from "@/components/auth/popup/LoginGuidePopup";
 import ActivityInfoPopup from "@/components/home/popup/ActivityInfoPopup";
+import { Program } from "@/types/program";
 import { useAuth } from "@/hooks/auth/useAuth";
-import type { Program } from "@/types/program";
 
 type PopupStep = "confirm" | "success" | "duplicate";
 
