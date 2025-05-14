@@ -2,7 +2,8 @@
 
 import { useEffect, useState, useCallback } from "react";
 import ActivityCardListBase from "./ActivityCardListBase";
-import { fetchRecommendedPrograms, Program } from "@/apis/main/program";
+import { fetchRecommendedPrograms } from "@/apis/main/program";
+import { Program } from "@/types/program";
 import { useAuth } from "@/hooks/auth/useAuth";
 
 export default function MemberActivityCardList() {

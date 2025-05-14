@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { fetchProgramList, Program } from "@/apis/main/program";
+import { fetchProgramList } from "@/apis/main/program";
+import { Program } from "@/types/program";
 import { getScheduleByDay, deleteSchedule } from "@/apis/schedule/schedule";
 import { formatTime } from "@/utils/schedule/calendar";
 import { ScheduleItem } from "@/types/schedule";
