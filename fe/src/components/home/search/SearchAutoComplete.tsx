@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { searchProgramsForAutoComplete } from "@/apis/main/program";
+import { useDebounce } from "@/hooks/search/useDebounce";
 
 interface Props {
   keyword: string;
@@ -11,19 +12,18 @@ interface Props {
 export default function SearchAutoComplete({ keyword, onSelect }: Props) {
   const [results, setResults] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const debouncedKeyword = useDebounce(keyword.trim(), 400);
 
   useEffect(() => {
-    const delay = setTimeout(async () => {
-      const trimmed = keyword.trim();
+    if (!isValidSearchKeyword(debouncedKeyword)) {
+      setResults([]);
+      return;
+    }
 
-      if (!isValidSearchKeyword(trimmed)) {
-        setResults([]);
-        return;
-      }
-
+    const fetch = async () => {
       setLoading(true);
       try {
-        const programs = await searchProgramsForAutoComplete(trimmed);
+        const programs = await searchProgramsForAutoComplete(debouncedKeyword);
         const safeList = programs.map((p) => p.name);
         setResults(safeList);
       } catch (error) {
@@ -32,16 +32,20 @@ export default function SearchAutoComplete({ keyword, onSelect }: Props) {
       } finally {
         setLoading(false);
       }
-    }, 400);
+    };
 
-    return () => clearTimeout(delay);
-  }, [keyword]);
+    fetch();
+  }, [debouncedKeyword]);
 
   return (
     <ul className="px-4">
-      {loading && <li className="py-2 text-base text-gray-500">검색 중...</li>}
+      {loading && (
+        <li className="py-2 text-base text-textColor-sub">검색 중...</li>
+      )}
       {!loading && results.length === 0 && (
-        <li className="py-2 text-base text-gray-500">검색 결과가 없습니다</li>
+        <li className="py-2 text-base text-textColor-sub">
+          검색 결과가 없습니다
+        </li>
       )}
       {results.map((name, idx) => (
         <li
@@ -61,22 +65,15 @@ export default function SearchAutoComplete({ keyword, onSelect }: Props) {
 }
 
 function isValidSearchKeyword(text: string): boolean {
-  if (!text) return false;
-  const isCompleteKor = text.length === 1 && isCompleteKorean(text[0]);
-  const isLongEnglishOrNumber = /^[a-zA-Z0-9]{3,}$/.test(text);
-  return isCompleteKor || isLongEnglishOrNumber;
-}
-
-function isCompleteKorean(char: string): boolean {
-  const code = char.charCodeAt(0);
-  return code >= 0xac00 && code <= 0xd7a3;
+  const trimmed = text.trim();
+  return trimmed.length >= 1 && trimmed !== "";
 }
 
 function highlightKeyword(text: string, keyword: string) {
   const parts = text.split(new RegExp(`(${keyword})`, "gi"));
   return parts.map((part, idx) =>
     part.toLowerCase() === keyword.toLowerCase() ? (
-      <span key={idx} className="text-brand font-semibold">
+      <span key={idx} className="text-brand-normal font-semibold">
         {part}
       </span>
     ) : (

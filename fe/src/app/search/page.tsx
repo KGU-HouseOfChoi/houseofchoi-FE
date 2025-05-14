@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/auth/useAuth";
-import SearchAutoComplete from "@/components/home/SearchAutoComplete";
-import SearchActivityCardList from "@/components/home/SearchActivityCardList";
+import SearchAutoComplete from "@/components/home/search/SearchAutoComplete";
+import SearchActivityCardList from "@/components/home/search/SearchActivityCardList";
 import BackIcon from "@/asset/icons/arrow_back.svg";
 import Image from "next/image";
 
@@ -29,7 +29,7 @@ export default function SearchPage() {
   };
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="h-full bg-bgColor-default p-4 space-y-4">
       <div className="flex items-center gap-2">
         <button onClick={handleBack}>
           <BackIcon className="w-10 h-10 text-textColor-body" />
@@ -60,13 +60,15 @@ export default function SearchPage() {
             </button>
           )}
         </div>
-        <button
-          onClick={() => handleSearch(inputValue)}
-          className="text-textColor-body text-lg font-bold px-2"
-        >
-          검색
-        </button>
       </div>
+      {!inputValue.trim() && !confirmedKeyword && (
+        <div className="pt-20 text-center text-textColor-sub">
+          <p className="text-xl font-semibold text-brand-normal">
+            관심 있는 활동
+          </p>
+          <p className="mt-1 text-lg">검색해보세요!</p>
+        </div>
+      )}
 
       {!confirmedKeyword && inputValue.trim() && (
         <SearchAutoComplete

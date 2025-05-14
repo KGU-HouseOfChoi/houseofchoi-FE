@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { searchPrograms } from "@/apis/main/program";
-import ActivityCardListBase from "./ActivityCardListBase";
+import ActivityCardListBase from "@/components/home/ActivityCardListBase";
 import { Program } from "@/types/program";
 
 interface Props {
