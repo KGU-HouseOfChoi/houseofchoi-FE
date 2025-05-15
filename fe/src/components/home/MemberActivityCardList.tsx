@@ -3,12 +3,12 @@
 import { useEffect, useState, useCallback } from "react";
 import ActivityCardListBase from "./ActivityCardListBase";
 import { fetchRecommendedPrograms } from "@/apis/main/program";
-import { Program } from "@/types/program";
+import type { UnifiedProgram } from "@/types/program";
 import { useAuth } from "@/hooks/auth/useAuth";
 
 export default function MemberActivityCardList() {
   const { hydrated } = useAuth();
-  const [programs, setPrograms] = useState<Program[]>([]);
+  const [programs, setPrograms] = useState<UnifiedProgram[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
