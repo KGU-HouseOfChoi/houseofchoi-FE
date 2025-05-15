@@ -32,22 +32,39 @@ const MypageButtonGroup = () => {
         <FamilyAddButton />
       </div>
 
-      <div className="flex gap-4 mt-16">
-        <SmallButton onClick={handleLogoutClick}>로그아웃</SmallButton>
-        <SmallButton onClick={handleAccountDeleteClick}>회원탈퇴</SmallButton>
+         
+    <div className="flex-grow" />
+
+        
+    <div className="w-full max-w-md px-4 mb-4">
+      <div className="flex justify-center gap-3">
+        <SmallButton
+          className="w-[120px] text-center"
+          onClick={handleLogoutClick}
+        >
+          로그아웃
+        </SmallButton>
+        <SmallButton
+          className="w-[120px] text-center"
+          onClick={handleAccountDeleteClick}
+        >
+          회원탈퇴
+        </SmallButton>
       </div>
+    </div>
 
       <LogoutConfirmPopup
         isOpen={isLogoutPopupOpen}
         onClose={handleCloseLogoutPopup}
       />
 
-      {/* 🔹 onConfirm 삭제, 팝업에서 직접 처리 */}
+      
       <AccountDeleteConfirmPopup
         isOpen={isAccountDeletePopupOpen}
         onClose={handleCloseAccountDeletePopup}
       />
     </div>
+    
   );
 };
 

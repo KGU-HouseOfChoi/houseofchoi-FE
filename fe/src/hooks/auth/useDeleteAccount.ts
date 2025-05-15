@@ -7,13 +7,18 @@ import type { AxiosError } from "axios";
 
 export function useDeleteAccount() {
   const router = useRouter();
-  const { reset } = useAuthStore.getState();
 
   const deleteAccount = async (
     redirectPath = "/guest",
   ): Promise<{ success: boolean; error?: unknown }> => {
     try {
+      
       const { accessToken, userId } = useAuthStore.getState();
+
+      if (!userId) {
+        console.error("❌ 유저 ID가 존재하지 않습니다.");
+        return { success: false, error: "유저 ID가 없습니다." };
+      }
 
       console.log("📌 회원탈퇴 요청 시작");
       console.log(`🧑‍💼 탈퇴 요청 유저 ID: ${userId}`);
@@ -21,6 +26,7 @@ export function useDeleteAccount() {
         `📌 Authorization: ${accessToken ? `Bearer ${accessToken}` : "없음"}`,
       );
 
+     
       await axiosMainInstance.delete("/v1/user/delete", {
         headers: {
           ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
@@ -31,23 +37,37 @@ export function useDeleteAccount() {
 
       console.log("✅ 회원탈퇴 성공");
 
-      useAuthStore.setState((state) => ({
-        ...state,
-        isLoggedIn: false,
-        accessToken: null,
-        refreshToken: null,
-        userId: null,
-      }));
+      
+      useAuthStore.setState((state) => {
+        
+        if (state.userId === userId) {
+          return {
+            step: 1,
+            name: "",
+            userId: null,
+            birthday: "",
+            phoneNumber: "",
+            carrier: "",
+            verificationCode: "",
+            isNewUser: false,
+            isLoggedIn: false,
+            accessToken: null,
+            refreshToken: null,
+            isAnalyzed: false,
+            errors: {},
+          };
+        }
+        return state; 
+      });
 
-      reset();
-
+      
       localStorage.removeItem("accessToken");
-      sessionStorage.removeItem("userId");
-      sessionStorage.removeItem("userData");
+      sessionStorage.clear();
 
       console.log("🗑️ 로컬/세션 스토리지 삭제 완료");
       console.log("🔄 페이지 리다이렉트:", redirectPath);
 
+      
       router.replace(redirectPath);
 
       console.log("🚀 회원탈퇴 프로세스 완료");
