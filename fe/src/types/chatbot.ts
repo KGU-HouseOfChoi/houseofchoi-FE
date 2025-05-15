@@ -1,4 +1,3 @@
-
 export interface ButtonOption {
   label: string;
   value: string;
@@ -8,10 +7,9 @@ interface BaseMessage {
   id: string;
   sender: string;
   profileUrl?: string;
-  timestamp: string; 
+  timestamp: string;
   isUser?: boolean;
 }
-
 
 export interface TextMessage extends BaseMessage {
   type: "text";
@@ -27,14 +25,12 @@ export interface ActivityMessage extends BaseMessage {
 export interface ButtonMessage extends BaseMessage {
   type: "button";
   buttons: ButtonOption[];
-  content?: string; 
+  content?: string;
 }
 
 export interface ScheduleConfirmMessage extends BaseMessage {
   type: "schedule-confirm";
-  
 }
-
 
 export type Message =
   | TextMessage
@@ -43,7 +39,6 @@ export type Message =
   | ScheduleConfirmMessage;
 
 export type MessageType = Message["type"];
-
 
 export interface ChatRecommendRequest {
   category: "indoor" | "outdoor";
@@ -80,7 +75,6 @@ export interface ChatRecommendResponse {
   image_url: string;
   center: Center;
 }
-
 
 export interface STTResponse {
   user_message: string;

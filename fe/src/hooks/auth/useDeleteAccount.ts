@@ -17,7 +17,9 @@ export function useDeleteAccount() {
 
       console.log("📌 회원탈퇴 요청 시작");
       console.log(`🧑‍💼 탈퇴 요청 유저 ID: ${userId}`);
-      console.log(`📌 Authorization: ${accessToken ? `Bearer ${accessToken}` : "없음"}`);
+      console.log(
+        `📌 Authorization: ${accessToken ? `Bearer ${accessToken}` : "없음"}`,
+      );
 
       await axiosMainInstance.delete("/v1/user/delete", {
         headers: {
@@ -29,7 +31,6 @@ export function useDeleteAccount() {
 
       console.log("✅ 회원탈퇴 성공");
 
-      
       useAuthStore.setState((state) => ({
         ...state,
         isLoggedIn: false,
@@ -38,7 +39,8 @@ export function useDeleteAccount() {
         userId: null,
       }));
 
-      
+      reset();
+
       localStorage.removeItem("accessToken");
       sessionStorage.removeItem("userId");
       sessionStorage.removeItem("userData");
