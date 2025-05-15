@@ -41,10 +41,11 @@ export async function fetchRecommendedPrograms(
   }
 }
 
+const DEFAULT_PAGE_SIZE = 10;
 export async function searchPrograms(
   keyword: string,
   page = 1,
-  size = 10,
+  size = DEFAULT_PAGE_SIZE,
 ): Promise<UnifiedProgram[]> {
   try {
     const res: AxiosResponse<{ success: boolean; data: RawFlatProgram[] }> =
