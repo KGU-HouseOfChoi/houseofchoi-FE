@@ -28,7 +28,7 @@ export default function ActivityCardListBase({
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupStep, setPopupStep] = useState<PopupStep>("confirm");
   const [selectedProgram, setSelectedProgram] = useState<UnifiedProgram | null>(
-    null
+    null,
   );
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [infoProgram, setInfoProgram] = useState<UnifiedProgram | null>(null);
@@ -54,7 +54,7 @@ export default function ActivityCardListBase({
       setPopupStep("confirm");
       setPopupOpen(true);
     },
-    [isGuest]
+    [isGuest],
   );
 
   const handleCalendarAdd = useCallback(async (programId: number) => {
