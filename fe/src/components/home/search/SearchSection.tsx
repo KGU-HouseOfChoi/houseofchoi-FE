@@ -67,7 +67,7 @@ export default function SearchSection() {
       {confirmedKeyword && (
         <div className="mt-6">
           <div className="mb-4">
-            <h2 className="text-xl font-medium">
+            <h2 className="text-xl font-bold">
               {`"${confirmedKeyword}" 검색 결과`}
             </h2>
           </div>
