@@ -92,7 +92,12 @@ export default function ActivityInfoPopup({
         <p className="text-sm text-textColor-sub">{program.center?.name}</p>
         <p>{program.center?.address ?? "주소 정보 없음"}</p>
         <p>전화번호: {program.center?.tel ?? "전화번호 없음"}</p>
-        <p>요금: {program.price.toLocaleString()}원 (3개월)</p>
+        <p>
+          요금:{" "}
+          {program.price !== undefined
+            ? `${program.price.toLocaleString()}원(3개월)`
+            : "가격 정보 없음"}
+        </p>
       </div>
 
       <div className="mt-6">

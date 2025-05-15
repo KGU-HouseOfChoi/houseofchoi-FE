@@ -1,7 +1,7 @@
 import "@/app/globals.css";
 import type { Metadata, Viewport } from "next";
 import LayoutWrapper from "@/components/common/LayoutWrapper";
-import Script from "next/script"; // ✅ 추가
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "어르심 - 노인을 위한 활동 추천 플랫폼",

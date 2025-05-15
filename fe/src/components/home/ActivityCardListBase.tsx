@@ -1,12 +1,12 @@
 "use client";
 
+import { useState, useCallback, useMemo } from "react";
 import ActivityCard from "./ActivityCard";
 import CalendarAddPopup from "@/components/calendar/popup/CalendarAddPopup";
 import LoginGuidePopup from "@/components/auth/popup/LoginGuidePopup";
 import ActivityInfoPopup from "@/components/home/popup/ActivityInfoPopup";
 import { Program } from "@/types/program";
 import { useAuth } from "@/hooks/auth/useAuth";
-import { useState, useCallback } from "react";
 
 type PopupStep = "confirm" | "success" | "duplicate";
 
@@ -31,13 +31,28 @@ export default function ActivityCardListBase({
   const [showLoginPopup, setShowLoginPopup] = useState(false);
   const [infoProgram, setInfoProgram] = useState<Program | null>(null);
 
+  const uniquePrograms = useMemo(() => {
+    const map = new Map<string, Program>();
+    const duplicates: Program[] = [];
+
+    for (const p of programs) {
+      const key = `${p.id}-${p.centerId}`;
+      if (map.has(key)) {
+        duplicates.push(p);
+      } else {
+        map.set(key, p);
+      }
+    }
+
+    return Array.from(map.values());
+  }, [programs]);
+
   const handleAddClick = useCallback(
     (program: Program) => {
       if (isGuest) {
         setShowLoginPopup(true);
         return;
       }
-
       setSelectedProgram(program);
       setPopupStep("confirm");
       setPopupOpen(true);
@@ -63,7 +78,7 @@ export default function ActivityCardListBase({
         </div>
       )}
 
-      {error && (
+      {!isLoading && error && (
         <div className="py-5 text-center text-textColor-error">
           <p>{error}</p>
           <button onClick={onReload} className="mt-2 btn-primary">
@@ -72,14 +87,15 @@ export default function ActivityCardListBase({
         </div>
       )}
 
-      {!isLoading && !error && programs.length === 0 && (
+      {!isLoading && !error && uniquePrograms.length === 0 && (
         <p className="py-10 text-textColor-sub">표시할 활동이 없습니다.</p>
       )}
 
       {!isLoading &&
-        programs.map((p) => (
+        !error &&
+        uniquePrograms.map((p) => (
           <ActivityCard
-            key={p.id}
+            key={`${p.id}-${p.centerId}`}
             imageUrl={p.imageUrl || "/images/placeholder.svg"}
             title={p.name}
             location={p.centerName}
@@ -88,9 +104,9 @@ export default function ActivityCardListBase({
           />
         ))}
 
-      {!isLoading && programs.length > 0 && (
-        <p className="mb-32 mt-8 text-center text-xl text-textColor-disabled">
-          추천 활동은 여기까지입니다!
+      {!isLoading && !error && uniquePrograms.length > 0 && (
+        <p className="mb-40 mt-12 text-center text-lg text-textColor-disabled">
+          어르심
         </p>
       )}
 
