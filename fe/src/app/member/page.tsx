@@ -1,5 +1,5 @@
 import MainHeader from "@/components/home/MainHeader";
-import SearchBar from "@/components/home/SearchBar";
+import SearchBar from "@/components/home/search/SearchBar";
 import MemberActivityCardList from "@/components/home/MemberActivityCardList";
 import BottomNavBar from "@/components/common/BottomNavBar";
 

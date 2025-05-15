@@ -41,7 +41,7 @@ export default function CalendarPopup({
           className="absolute top-4 right-4 p-1 rounded hover:bg-bgColor-surface"
           aria-label="닫기"
         >
-          <X className="w-6 h-6 text-textColor-sub" />
+          <X className="w-5 h-5 text-textColor-sub" />
         </button>
 
         {isConfirm ? (
@@ -73,8 +73,6 @@ export default function CalendarPopup({
             ? "추가 후 일정에서 확인해보세요!"
             : "다른 활동도 일정에 추가해보세요!"}
         </p>
-
-        {/* 버튼 */}
         <PopupButtons
           onConfirm={isConfirm ? onConfirm : goCalendar}
           onCancel={onClose}

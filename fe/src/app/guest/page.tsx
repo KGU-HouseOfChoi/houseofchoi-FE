@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import MainHeader from "@/components/home/MainHeader";
-import SearchBar from "@/components/home/SearchBar";
+import SearchBar from "@/components/home/search/SearchBar";
 import GuestActivityCardList from "@/components/home/GuestActivityCardList";
 import BottomNavBar from "@/components/common/BottomNavBar";
 import LoginGuidePopup from "@/components/auth/popup/LoginGuidePopup";
