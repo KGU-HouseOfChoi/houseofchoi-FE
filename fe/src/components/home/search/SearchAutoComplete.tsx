@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { searchProgramsForAutoComplete } from "@/apis/main/program";
+import { searchPrograms } from "@/apis/main/program";
 import { useDebounce } from "@/hooks/search/useDebounce";
 
 interface Props {
@@ -23,9 +23,9 @@ export default function SearchAutoComplete({ keyword, onSelect }: Props) {
     const fetch = async () => {
       setLoading(true);
       try {
-        const programs = await searchProgramsForAutoComplete(debouncedKeyword);
-        const safeList = programs.filter((p) => p && p.name).map((p) => p.name);
-        setResults(safeList);
+        const programs = await searchPrograms(debouncedKeyword, 1, 5);
+        const names = programs.filter((p) => p && p.name).map((p) => p.name);
+        setResults(names);
       } catch {
         setResults([]);
       } finally {
@@ -64,8 +64,7 @@ export default function SearchAutoComplete({ keyword, onSelect }: Props) {
 }
 
 function isValidSearchKeyword(text: string): boolean {
-  const trimmed = text.trim();
-  return trimmed.length >= 1;
+  return text.trim().length >= 1;
 }
 
 function highlightKeyword(text: string, keyword: string) {

@@ -1,4 +1,11 @@
-export interface CenterInfo {
+export interface RawTimeObj {
+  hour: number;
+  minute: number;
+  second: number;
+  nano?: number;
+}
+
+export interface RawCenter {
   id: number;
   name: string;
   latitude: number;
@@ -7,7 +14,7 @@ export interface CenterInfo {
   tel: string;
 }
 
-export interface Program {
+export interface RawFlatProgram {
   id: number;
   name: string;
   firDay: string;
@@ -15,20 +22,43 @@ export interface Program {
   thrDay: string;
   fouDay: string;
   fivDay: string;
-  startTime: TimeObj;
-  endTime: TimeObj;
+  startTime: RawTimeObj;
+  endTime: RawTimeObj;
   price: number;
   mainCategory: string;
   subCategory: string;
   headcount: string;
   tags: string[];
+  imageUrl?: string;
+  image_url?: string;
   centerId: number;
   centerName: string;
-  imageUrl: string;
-  center?: CenterInfo;
+  address: string;
+  latitude: number;
+  longitude: number;
+  tel: string;
 }
 
-export interface RecommendedProgramResponse {
+export interface RawAiProgram {
+  id: number;
+  name: string;
+  fir_day: string;
+  sec_day: string;
+  thr_day: string;
+  fou_day: string;
+  fiv_day: string;
+  start_time: string;
+  end_time: string;
+  price: number;
+  main_category: string;
+  sub_category: string;
+  headcount: string;
+  tags: { name: string }[];
+  image_url?: string;
+  center: RawCenter;
+}
+
+export interface UnifiedProgram {
   id: number;
   name: string;
   firDay: string;
@@ -36,21 +66,13 @@ export interface RecommendedProgramResponse {
   thrDay: string;
   fouDay: string;
   fivDay: string;
-  startTime: TimeObj;
-  endTime: TimeObj;
+  startTime: string;
+  endTime: string;
   price: number;
   mainCategory: string;
   subCategory: string;
   headcount: string;
-  tags: { name: string }[];
-  center?: CenterInfo;
-  image_url?: string;
-  imageUrl?: string;
-}
-
-export interface TimeObj {
-  hour: number;
-  minute: number;
-  second: number;
-  nano: number;
+  tags: string[];
+  imageUrl: string;
+  center: RawCenter;
 }

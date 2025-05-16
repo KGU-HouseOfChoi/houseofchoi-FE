@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { fetchProgramList } from "@/apis/main/program";
-import { Program } from "@/types/program";
-import { getScheduleByDay, deleteSchedule } from "@/apis/schedule/schedule";
+import { getScheduleByDay, deleteSchedule } from "@/apis/schedule/calendar";
 import { formatTime } from "@/utils/schedule/calendar";
-import { ScheduleItem } from "@/types/schedule";
+import type { UnifiedProgram } from "@/types/program";
+import type { ScheduleItem } from "@/types/schedule";
 
 export function useSchedules(day: string) {
   const [data, setData] = useState<ScheduleItem[]>([]);
@@ -16,15 +16,16 @@ export function useSchedules(day: string) {
     const seq = ++seqRef.current;
     setLoading(true);
     setError(null);
+
     try {
       const [programs, schedules] = await Promise.all([
-        fetchProgramList(),
+        fetchProgramList(), // ✅ already UnifiedProgram[]
         getScheduleByDay(d),
       ]);
 
       if (seq !== seqRef.current) return;
 
-      const map = new Map<number, Program>();
+      const map = new Map<number, UnifiedProgram>();
       programs.forEach((p) => map.set(p.id, p));
 
       const items = schedules.map<ScheduleItem>((s) => {
@@ -36,15 +37,19 @@ export function useSchedules(day: string) {
           time: p
             ? `${formatTime(p.startTime)} ~ ${formatTime(p.endTime)}`
             : "-",
-          location: p?.centerName ?? "-",
+          location: p?.center.name ?? "-",
         };
       });
 
       setData(items);
     } catch {
-      if (seq === seqRef.current) setError("일정을 불러오는 데 실패했습니다.");
+      if (seq === seqRef.current) {
+        setError("일정을 불러오는 데 실패했습니다.");
+      }
     } finally {
-      if (seq === seqRef.current) setLoading(false);
+      if (seq === seqRef.current) {
+        setLoading(false);
+      }
     }
   }, []);
 

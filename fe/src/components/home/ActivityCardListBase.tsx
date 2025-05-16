@@ -5,13 +5,13 @@ import ActivityCard from "./ActivityCard";
 import CalendarAddPopup from "@/components/calendar/popup/CalendarAddPopup";
 import LoginGuidePopup from "@/components/auth/popup/LoginGuidePopup";
 import ActivityInfoPopup from "@/components/home/popup/ActivityInfoPopup";
-import { Program } from "@/types/program";
+import { UnifiedProgram } from "@/types/program";
 import { useAuth } from "@/hooks/auth/useAuth";
 
 type PopupStep = "confirm" | "success" | "duplicate";
 
 interface Props {
-  programs: Program[];
+  programs: UnifiedProgram[];
   isLoading: boolean;
   error: string | null;
   onReload: () => void;
@@ -27,28 +27,25 @@ export default function ActivityCardListBase({
 
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupStep, setPopupStep] = useState<PopupStep>("confirm");
-  const [selectedProgram, setSelectedProgram] = useState<Program | null>(null);
+  const [selectedProgram, setSelectedProgram] = useState<UnifiedProgram | null>(
+    null,
+  );
   const [showLoginPopup, setShowLoginPopup] = useState(false);
-  const [infoProgram, setInfoProgram] = useState<Program | null>(null);
+  const [infoProgram, setInfoProgram] = useState<UnifiedProgram | null>(null);
 
   const uniquePrograms = useMemo(() => {
-    const map = new Map<string, Program>();
-    const duplicates: Program[] = [];
-
+    const map = new Map<string, UnifiedProgram>();
     for (const p of programs) {
-      const key = `${p.id}-${p.centerId}`;
-      if (map.has(key)) {
-        duplicates.push(p);
-      } else {
+      const key = `${p.id}-${p.center.id}`;
+      if (!map.has(key)) {
         map.set(key, p);
       }
     }
-
     return Array.from(map.values());
   }, [programs]);
 
   const handleAddClick = useCallback(
-    (program: Program) => {
+    (program: UnifiedProgram) => {
       if (isGuest) {
         setShowLoginPopup(true);
         return;
@@ -61,7 +58,7 @@ export default function ActivityCardListBase({
   );
 
   const handleCalendarAdd = useCallback(async (programId: number) => {
-    const { registerSchedule } = await import("@/apis/schedule/schedule");
+    const { registerSchedule } = await import("@/apis/schedule/calendar");
     try {
       const success = await registerSchedule(programId);
       setPopupStep(success ? "success" : "duplicate");
@@ -95,20 +92,14 @@ export default function ActivityCardListBase({
         !error &&
         uniquePrograms.map((p) => (
           <ActivityCard
-            key={`${p.id}-${p.centerId}`}
+            key={`${p.id}-${p.center.id}`}
             imageUrl={p.imageUrl || "/images/placeholder.svg"}
             title={p.name}
-            location={p.centerName}
+            location={p.center.name}
             onAddClick={() => handleAddClick(p)}
             onMoreClick={() => setInfoProgram(p)}
           />
         ))}
-
-      {!isLoading && !error && uniquePrograms.length > 0 && (
-        <p className="mb-40 mt-12 text-center text-lg text-textColor-disabled">
-          어르심
-        </p>
-      )}
 
       {selectedProgram && (
         <CalendarAddPopup
@@ -127,10 +118,7 @@ export default function ActivityCardListBase({
 
       {infoProgram && (
         <ActivityInfoPopup
-          program={{
-            ...infoProgram,
-            tags: infoProgram.tags.map((tag) => ({ name: tag })),
-          }}
+          program={infoProgram}
           onClose={() => setInfoProgram(null)}
           onAddClick={() => handleAddClick(infoProgram)}
         />
