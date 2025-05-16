@@ -35,9 +35,7 @@ export default function FamilyCompletedMessage({
           {message}
         </h2>
 
-        <p className="text-base text-textColor-sub whitespace-pre-line leading-relaxed">
-          {description}
-        </p>
+        <p className="text-base text-textColor-sub whitespace-pre-line leading-relaxed">{description}</p>
       </div>
     </main>
   );
