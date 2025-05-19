@@ -12,7 +12,6 @@ export function useDeleteAccount() {
     redirectPath = "/guest",
   ): Promise<{ success: boolean; error?: unknown }> => {
     try {
-      
       const { accessToken, userId } = useAuthStore.getState();
 
       if (!userId) {
@@ -26,7 +25,6 @@ export function useDeleteAccount() {
         `📌 Authorization: ${accessToken ? `Bearer ${accessToken}` : "없음"}`,
       );
 
-     
       await axiosMainInstance.delete("/v1/user/delete", {
         headers: {
           ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
@@ -37,9 +35,7 @@ export function useDeleteAccount() {
 
       console.log("✅ 회원탈퇴 성공");
 
-      
       useAuthStore.setState((state) => {
-        
         if (state.userId === userId) {
           return {
             step: 1,
@@ -57,17 +53,15 @@ export function useDeleteAccount() {
             errors: {},
           };
         }
-        return state; 
+        return state;
       });
 
-      
       localStorage.removeItem("accessToken");
       sessionStorage.clear();
 
       console.log("🗑️ 로컬/세션 스토리지 삭제 완료");
       console.log("🔄 페이지 리다이렉트:", redirectPath);
 
-      
       router.replace(redirectPath);
 
       console.log("🚀 회원탈퇴 프로세스 완료");

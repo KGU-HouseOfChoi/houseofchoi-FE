@@ -11,8 +11,7 @@ export default function MypageButtonGroup() {
 
   return (
     <>
-      
-       <div className="w-full max-w-md px-4 mb-6">
+      <div className="w-full max-w-md px-4 mb-6">
         <div className="flex flex-row justify-center gap-3">
           <SmallButton
             className="w-full sm:w-[120px] text-center"
@@ -29,7 +28,6 @@ export default function MypageButtonGroup() {
         </div>
       </div>
 
-      
       <LogoutConfirmPopup
         isOpen={isLogoutPopupOpen}
         onClose={() => setLogoutPopupOpen(false)}

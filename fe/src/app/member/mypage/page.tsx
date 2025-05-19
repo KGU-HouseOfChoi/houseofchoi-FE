@@ -28,7 +28,6 @@ export default function MyPage() {
 
   return (
     <>
-      
       <div className="flex flex-col items-center min-h-screen pt-10 pb-[124px] bg-white">
         {toastMessage && (
           <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
@@ -40,18 +39,15 @@ export default function MyPage() {
 
         <FamilyList userInfoList={familyList} />
 
-        
         <div className="mt-10 mb-8">
           <FamilyAddButton />
         </div>
 
         <div className="flex-grow" />
 
-        
         <MypageButtonGroup />
       </div>
 
-      
       <BottomNavBar />
     </>
   );
