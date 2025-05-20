@@ -31,13 +31,13 @@ const ChatbotBottom: React.FC<ChatbotBottomProps> = ({ onSend }) => {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
           placeholder="궁금한 내용을 입력해주세요."
-          className="w-full bg-transparent outline-none text-textColor-body placeholder:text-textColor-sub"
+          className="w-full bg-transparent outline-none text-textColor-heading placeholder:text-textColor-sub"
         />
         <button onClick={handleSend}>
           <SendIcon
             width={36}
             height={36}
-            className="text-textColor.disabled"
+            className="text-textColor-disabled"
           />
         </button>
       </div>
