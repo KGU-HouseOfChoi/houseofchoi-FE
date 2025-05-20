@@ -1,4 +1,4 @@
-import axiosAiInstance from "@/apis/common/axiosAiInstance"; // 공통 인스턴스
+import axiosAiInstance from "@/apis/common/axiosAiInstance";
 import { handleApiError } from "@/utils/common/handleApiError";
 import { AxiosError } from "axios";
 
