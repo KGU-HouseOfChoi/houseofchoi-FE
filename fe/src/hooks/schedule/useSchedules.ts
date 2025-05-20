@@ -4,6 +4,7 @@ import { getScheduleByDay, deleteSchedule } from "@/apis/schedule/calendar";
 import { formatTime } from "@/utils/schedule/calendar";
 import type { UnifiedProgram } from "@/types/program";
 import type { ScheduleItem } from "@/types/schedule";
+import axios from "axios";
 
 export function useSchedules(day: string) {
   const [data, setData] = useState<ScheduleItem[]>([]);
@@ -19,7 +20,7 @@ export function useSchedules(day: string) {
 
     try {
       const [programs, schedules] = await Promise.all([
-        fetchProgramList(), // ✅ already UnifiedProgram[]
+        fetchProgramList(),
         getScheduleByDay(d),
       ]);
 
@@ -42,9 +43,13 @@ export function useSchedules(day: string) {
       });
 
       setData(items);
-    } catch {
+    } catch (err) {
       if (seq === seqRef.current) {
-        setError("일정을 불러오는 데 실패했습니다.");
+        if (axios.isAxiosError(err) && err.response?.status === 404) {
+          setData([]);
+        } else {
+          setError("일정을 불러오는 데 실패했습니다.");
+        }
       }
     } finally {
       if (seq === seqRef.current) {

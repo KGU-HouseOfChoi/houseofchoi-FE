@@ -1,16 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BottomNavBar from "@/components/common/BottomNavBar";
 import CalendarHeader from "@/components/calendar/CalendarHeader";
 import CalendarCard from "@/components/calendar/CalendarCard";
 import { useSchedules } from "@/hooks/schedule/useSchedules";
 import { getTodayDayString } from "@/utils/schedule/calendar";
+import { getUserName } from "@/apis/main/user";
+import { useAuth } from "@/hooks/auth/useAuth";
 
 export default function CalendarFlow() {
   const [selectedDay, setSelectedDay] = useState(getTodayDayString());
-
   const { data, loading, error, remove } = useSchedules(selectedDay);
+
+  const { isGuest, hydrated } = useAuth();
+  const [userName, setUserName] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!hydrated || isGuest) return;
+
+    const fetchUserName = async () => {
+      try {
+        const name = await getUserName();
+        setUserName(name);
+      } catch (err) {
+        console.error("이름 조회 실패:", err);
+        setUserName(null);
+      }
+    };
+
+    fetchUserName();
+  }, [isGuest, hydrated]);
 
   return (
     <main className="flex flex-col min-h-screen bg-bgColor-default">
@@ -35,8 +55,12 @@ export default function CalendarFlow() {
         ))}
 
         {!loading && !error && data.length > 0 && (
-          <p className="text-center text-textColor-sub mb-4">
-            오늘의 일정은 여기까지 입니다!
+          <p className="text-center text-textColor-sub mb-6">
+            {isGuest
+              ? "일정은 여기까지 입니다!"
+              : userName
+                ? `${userName} 님의 일정은 여기까지 입니다!`
+                : "일정은 여기까지 입니다!"}
           </p>
         )}
       </div>
