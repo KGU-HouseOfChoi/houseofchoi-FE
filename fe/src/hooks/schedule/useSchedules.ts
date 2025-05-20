@@ -4,7 +4,7 @@ import { getScheduleByDay, deleteSchedule } from "@/apis/schedule/calendar";
 import { formatTime } from "@/utils/schedule/calendar";
 import type { UnifiedProgram } from "@/types/program";
 import type { ScheduleItem } from "@/types/schedule";
-import axios from "axios"; // axios 에러 판별용
+import axios from "axios";
 
 export function useSchedules(day: string) {
   const [data, setData] = useState<ScheduleItem[]>([]);
