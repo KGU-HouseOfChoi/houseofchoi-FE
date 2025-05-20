@@ -13,7 +13,6 @@ export async function fetchProgramList(): Promise<UnifiedProgram[]> {
   try {
     const res: AxiosResponse<{ success: boolean; data: RawFlatProgram[] }> =
       await axiosMainInstance.get("/v1/program/all");
-
     if (!res.data.success) {
       throw new Error("프로그램 목록을 불러오지 못했습니다.");
     }
@@ -25,14 +24,14 @@ export async function fetchProgramList(): Promise<UnifiedProgram[]> {
 }
 
 export async function fetchRecommendedPrograms(
-  subCategory?: string,
+  subCategory?: string
 ): Promise<UnifiedProgram[]> {
   try {
     const res: AxiosResponse<RawAiProgram[]> = await axiosAiInstance.get(
       "/recommend",
       {
         params: subCategory ? { sub_category: subCategory } : {},
-      },
+      }
     );
 
     return res.data.map(normalizeToUnifiedProgram);
@@ -45,7 +44,7 @@ const DEFAULT_PAGE_SIZE = 10;
 export async function searchPrograms(
   keyword: string,
   page = 1,
-  size = DEFAULT_PAGE_SIZE,
+  size = DEFAULT_PAGE_SIZE
 ): Promise<UnifiedProgram[]> {
   try {
     const res: AxiosResponse<{ success: boolean; data: RawFlatProgram[] }> =
