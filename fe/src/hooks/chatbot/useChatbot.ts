@@ -65,7 +65,7 @@ export function useChatbot() {
   };
 
   const handleButtonClick = async (
-    value: "indoor" | "outdoor",
+    value: "실내" | "실외",
     label: string,
   ) => {
     setMessages((prev) => [
@@ -165,8 +165,8 @@ const INITIAL_GREETING: Message[] = [
     timestamp: new Date().toISOString(),
     isUser: false,
     buttons: [
-      { label: "실내 활동", value: "indoor" },
-      { label: "실외 활동", value: "outdoor" },
+      { label: "실내 활동", value: "실내" },
+      { label: "실외 활동", value: "실외" },
     ],
   },
 ];

@@ -72,8 +72,8 @@ const ChatbotMessageList = () => {
     label: string,
   ) => {
     try {
-      if (value === "indoor" || value === "outdoor") {
-        await handleButtonClick(value as "indoor" | "outdoor", label);
+      if (value === "실내" || value === "실외") {
+        await handleButtonClick(value as "실내" | "실외", label);
         setErrorMessage(null);
       } else {
         console.error(`유효하지 않은 값: ${value}`);

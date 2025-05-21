@@ -41,7 +41,7 @@ export type Message =
 export type MessageType = Message["type"];
 
 export interface ChatRecommendRequest {
-  category: "indoor" | "outdoor";
+  sub_category: "실내" | "실외";
 }
 
 export interface Tag {
