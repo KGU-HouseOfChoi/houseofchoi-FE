@@ -13,13 +13,6 @@ export async function fetchChatRecommendation(
       { params: { sub_category: req.sub_category } },
     );
 
-    console.log("🔽 서버에서 받은 전체 프로그램:");
-    res.data.forEach((item, index) => {
-      console.log(
-        `[${index}] 원본 sub_category: "${item.sub_category}" → 정제 후: "${normalizeSubCategory(item.sub_category)}"`,
-      );
-    });
-
     const filtered = res.data.filter(
       (item) => normalizeSubCategory(item.sub_category) === req.sub_category,
     );
