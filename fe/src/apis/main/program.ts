@@ -13,7 +13,6 @@ export async function fetchProgramList(): Promise<UnifiedProgram[]> {
   try {
     const res: AxiosResponse<{ success: boolean; data: RawFlatProgram[] }> =
       await axiosMainInstance.get("/v1/program/all");
-
     if (!res.data.success) {
       throw new Error("프로그램 목록을 불러오지 못했습니다.");
     }

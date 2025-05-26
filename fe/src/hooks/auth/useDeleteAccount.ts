@@ -19,7 +19,6 @@ export function useDeleteAccount() {
         return { success: false, error: "유저 ID가 없습니다." };
       }
 
-      
       console.log(
         `📌 Authorization: ${accessToken ? `Bearer ${accessToken}` : "없음"}`,
       );
@@ -31,8 +30,6 @@ export function useDeleteAccount() {
         },
         withCredentials: true,
       });
-
-      
 
       useAuthStore.setState((state) => {
         if (state.userId === userId) {
@@ -58,11 +55,7 @@ export function useDeleteAccount() {
       localStorage.removeItem("accessToken");
       sessionStorage.clear();
 
-      
-
       router.replace(redirectPath);
-
-      
 
       return { success: true };
     } catch (error: unknown) {

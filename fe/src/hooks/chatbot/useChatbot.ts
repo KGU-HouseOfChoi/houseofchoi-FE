@@ -64,10 +64,7 @@ export function useChatbot() {
     }
   };
 
-  const handleButtonClick = async (
-    value: "실내" | "실외",
-    label: string,
-  ) => {
+  const handleButtonClick = async (value: "실내" | "실외", label: string) => {
     setMessages((prev) => [
       ...prev,
       {

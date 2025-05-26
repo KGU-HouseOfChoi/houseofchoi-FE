@@ -17,9 +17,6 @@ export function useActivityRecommendation() {
   const fetchRecommendation = async (sub_category: "실내" | "실외") => {
     setLoading(true);
     try {
-
-      
-      
       const list = await fetchChatRecommendation({ sub_category });
       if (!list.length) throw new Error("조건에 맞는 프로그램이 없습니다.");
 
@@ -48,7 +45,7 @@ export function useActivityRecommendation() {
             `가격: ${program.price.toLocaleString()}원`,
             `장소: ${program.center.name}`,
           ].join("\n"),
-          programId: program.id, 
+          programId: program.id,
           timestamp: new Date().toISOString(),
           isUser: false,
         },
