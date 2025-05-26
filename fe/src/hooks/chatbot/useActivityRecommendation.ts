@@ -14,10 +14,10 @@ export function useActivityRecommendation() {
 
   const formatTime = (time: string) => time.slice(0, 5);
 
-  const fetchRecommendation = async (category: "indoor" | "outdoor") => {
+  const fetchRecommendation = async (sub_category: "실내" | "실외") => {
     setLoading(true);
     try {
-      const list = await fetchChatRecommendation({ category });
+      const list = await fetchChatRecommendation({ sub_category });
       if (!list.length) throw new Error("조건에 맞는 프로그램이 없습니다.");
 
       const program = list[Math.floor(Math.random() * list.length)];
@@ -45,7 +45,7 @@ export function useActivityRecommendation() {
             `가격: ${program.price.toLocaleString()}원`,
             `장소: ${program.center.name}`,
           ].join("\n"),
-          programId: program.id, // 일정 등록용
+          programId: program.id,
           timestamp: new Date().toISOString(),
           isUser: false,
         },

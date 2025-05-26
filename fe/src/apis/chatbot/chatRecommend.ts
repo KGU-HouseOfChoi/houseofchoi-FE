@@ -2,19 +2,22 @@ import axiosAiInstance from "@/apis/common/axiosAiInstance";
 import { ChatRecommendRequest, ChatRecommendResponse } from "@/types/chatbot";
 import { handleApiError } from "@/utils/common/handleApiError";
 import { AxiosError } from "axios";
+import { normalizeSubCategory } from "@/utils/program/normalizeSubCategory";
 
 export async function fetchChatRecommendation(
   req: ChatRecommendRequest,
 ): Promise<ChatRecommendResponse[]> {
   try {
-    const kor = req.category === "indoor" ? "실내" : "실외";
-
     const res = await axiosAiInstance.get<ChatRecommendResponse[]>(
       "/recommend",
-      { params: { sub_category: kor } },
+      { params: { sub_category: req.sub_category } },
     );
 
-    return res.data;
+    const filtered = res.data.filter(
+      (item) => normalizeSubCategory(item.sub_category) === req.sub_category,
+    );
+
+    return filtered;
   } catch (error: unknown) {
     if (error instanceof AxiosError && error.response) {
       const detail = error.response.data?.detail;
@@ -28,6 +31,7 @@ export async function fetchChatRecommendation(
         "추천 정보 조회 중 오류",
       );
     }
+
     return [];
   }
 }

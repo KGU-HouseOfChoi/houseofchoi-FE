@@ -7,13 +7,21 @@ import type { AxiosError } from "axios";
 
 export function useDeleteAccount() {
   const router = useRouter();
-  const { reset } = useAuthStore.getState();
 
   const deleteAccount = async (
     redirectPath = "/guest",
   ): Promise<{ success: boolean; error?: unknown }> => {
     try {
-      const { accessToken } = useAuthStore.getState();
+      const { accessToken, userId } = useAuthStore.getState();
+
+      if (!userId) {
+        console.error("유저 ID가 존재하지 않습니다.");
+        return { success: false, error: "유저 ID가 없습니다." };
+      }
+
+      console.log(
+        `📌 Authorization: ${accessToken ? `Bearer ${accessToken}` : "없음"}`,
+      );
 
       await axiosMainInstance.delete("/v1/user/delete", {
         headers: {
@@ -23,9 +31,27 @@ export function useDeleteAccount() {
         withCredentials: true,
       });
 
-      console.log("회원탈퇴 성공");
+      useAuthStore.setState((state) => {
+        if (state.userId === userId) {
+          return {
+            step: 1,
+            name: "",
+            userId: null,
+            birthday: "",
+            phoneNumber: "",
+            carrier: "",
+            verificationCode: "",
+            isNewUser: false,
+            isLoggedIn: false,
+            accessToken: null,
+            refreshToken: null,
+            isAnalyzed: false,
+            errors: {},
+          };
+        }
+        return state;
+      });
 
-      reset();
       localStorage.removeItem("accessToken");
       sessionStorage.clear();
 
@@ -34,6 +60,8 @@ export function useDeleteAccount() {
       return { success: true };
     } catch (error: unknown) {
       const axiosError = error as AxiosError;
+
+      console.error("회원탈퇴 실패");
 
       if (axiosError.response) {
         console.error("서버 응답 에러:", axiosError.response.data);
