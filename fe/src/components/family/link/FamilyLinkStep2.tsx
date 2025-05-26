@@ -24,7 +24,7 @@ export default function FamilyLinkStep2({ relation }: FamilyLinkStep2Props) {
 
     try {
       const res = await verifyRelation(code, targetRole);
-      console.log("✅ API 응답:", res.data);
+      
 
       if (res.data.success) {
         const status = res.data.userStatus;

@@ -21,13 +21,13 @@ export async function fetchChatRecommendation(
       );
     });
 
-    console.log("🎯 요청한 sub_category:", req.sub_category);
+    
 
     const filtered = res.data.filter(
       (item) => normalizeSubCategory(item.sub_category) === req.sub_category
     );
 
-    console.log("✅ 필터링된 프로그램 수:", filtered.length);
+    
 
     return filtered;
 
@@ -45,7 +45,7 @@ export async function fetchChatRecommendation(
       );
     }
 
-    // ✅ 에러 발생 시 빈 배열 반환
+    
     return [];
   }
 }

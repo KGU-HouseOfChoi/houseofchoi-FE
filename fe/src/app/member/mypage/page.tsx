@@ -20,7 +20,7 @@ export default function MyPage() {
         if (data.length) setFamilyList(data);
         else setToastMessage("가족 정보를 불러오지 못했습니다.");
       } catch (e) {
-        console.error("네트워크 요청 실패:", e);
+        
         setToastMessage("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
       }
     })();

@@ -18,7 +18,7 @@ export function useActivityRecommendation() {
     setLoading(true);
     try {
 
-      console.log("💬 추천 요청 보냄:", { sub_category: sub_category });
+      
       
       const list = await fetchChatRecommendation({ sub_category });
       if (!list.length) throw new Error("조건에 맞는 프로그램이 없습니다.");
