@@ -29,6 +29,7 @@ export default function Step5_VerificationCode({
   const [secondsLeft, setSecondsLeft] = useState(180);
   const [showToast, setShowToast] = useState(false);
   const { phoneNumber } = useAuthStore();
+  const [active, setActive] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -151,7 +152,10 @@ export default function Step5_VerificationCode({
                 appearance: "none",
                 WebkitOverflowScrolling: "touch",
                 touchAction: "manipulation",
+                caretColor: active ? 'auto' : 'transparent'
               }}
+              onFocus={() => setActive(true)}
+              onBlur={() => setActive(false)}
               autoFocus
             />
             <span

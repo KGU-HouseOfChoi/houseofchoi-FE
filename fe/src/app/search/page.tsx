@@ -13,6 +13,7 @@ export default function SearchPage() {
   const { isGuest } = useAuth();
   const [inputValue, setInputValue] = useState("");
   const [confirmedKeyword, setConfirmedKeyword] = useState("");
+  const [active, setActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -88,7 +89,10 @@ export default function SearchPage() {
               appearance: "none",
               WebkitOverflowScrolling: "touch",
               touchAction: "manipulation",
+              caretColor: active ? 'auto' : 'transparent'
             }}
+            onFocus={() => setActive(true)}
+            onBlur={() => setActive(false)}
           />
           {clearButton}
         </div>
