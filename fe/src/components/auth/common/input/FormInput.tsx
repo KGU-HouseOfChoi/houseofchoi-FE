@@ -89,6 +89,8 @@ export default function FormInput({
         maxLength={maxLength}
         onChange={handleInput}
         onTouchStart={handleTouchStart}
+        onFocus={() => setActive(true)}
+        onBlur={() => setActive(false)}
         autoFocus={autoFocus}
         className={`w-full h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors bg-bgColor-default
           ${
@@ -100,7 +102,15 @@ export default function FormInput({
           }
           focus:border-brand-normal focus:outline-none
           placeholder:text-textColor-disabled
-          touch-manipulation`}
+          touch-manipulation
+          cursor-text
+          select-text`}
+        style={{
+          WebkitTapHighlightColor: "transparent",
+          WebkitTouchCallout: "none",
+          WebkitUserSelect: "text",
+          userSelect: "text",
+        }}
       />
 
       {error && (

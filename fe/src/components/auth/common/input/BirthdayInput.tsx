@@ -68,6 +68,12 @@ export default function BirthdayInput({
     }
   };
 
+  const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
+    if (e.currentTarget) {
+      e.currentTarget.focus();
+    }
+  };
+
   return (
     <div className="w-full flex flex-col gap-2 mx-auto">
       <label className="text-xl text-textColor-body font-semibold">
@@ -100,6 +106,7 @@ export default function BirthdayInput({
               lastInputRef.current?.focus();
             }
           }}
+          onTouchStart={handleTouchStart}
           autoFocus={autoFocus}
           className={`w-[calc(100%-80px)] h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors bg-bgColor-default
             ${
@@ -110,7 +117,16 @@ export default function BirthdayInput({
                   : "border-borderColor-default"
             }
             focus:border-brand-normal focus:outline-none
-            placeholder:text-textColor-disabled`}
+            placeholder:text-textColor-disabled
+            touch-manipulation
+            cursor-text
+            select-text`}
+          style={{
+            WebkitTapHighlightColor: "transparent",
+            WebkitTouchCallout: "none",
+            WebkitUserSelect: "text",
+            userSelect: "text",
+          }}
           placeholder="예: 700123"
         />
 
@@ -126,6 +142,7 @@ export default function BirthdayInput({
           onChange={(e) =>
             handleLastDigitChange(e.target.value.replace(/\D/g, "").slice(0, 1))
           }
+          onTouchStart={handleTouchStart}
           className={`w-[60px] h-[60px] px-4 rounded-xl border-2 text-base text-center outline-none transition-colors bg-bgColor-default
             ${
               error
@@ -135,7 +152,16 @@ export default function BirthdayInput({
                   : "border-borderColor-default"
             }
             focus:border-brand-normal focus:outline-none
-            placeholder:text-textColor-disabled`}
+            placeholder:text-textColor-disabled
+            touch-manipulation
+            cursor-text
+            select-text`}
+          style={{
+            WebkitTapHighlightColor: "transparent",
+            WebkitTouchCallout: "none",
+            WebkitUserSelect: "text",
+            userSelect: "text",
+          }}
           placeholder="1"
         />
       </div>
