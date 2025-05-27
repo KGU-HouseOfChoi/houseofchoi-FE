@@ -2,10 +2,12 @@
 
 import { useAuthStore } from "@/store/useAuthStore";
 import FormInput from "../common/input/FormInput";
+import { useState } from "react";
 
 export default function Step4_PhoneNumber() {
   const { phoneNumber, setField, setError, clearError, errors } =
     useAuthStore();
+  const [active, setActive] = useState(false);
 
   const handleChange = (val: string) => {
     const clean = val.replace(/\D/g, "").slice(0, 11);
@@ -39,7 +41,10 @@ export default function Step4_PhoneNumber() {
         appearance: "none",
         WebkitOverflowScrolling: "touch",
         touchAction: "manipulation",
+        caretColor: active ? 'auto' : 'transparent'
       }}
+      onFocus={() => setActive(true)}
+      onBlur={() => setActive(false)}
     />
   );
 }

@@ -25,6 +25,8 @@ interface Props {
   debounceDelay?: number;
   maxLength?: number;
   style?: React.CSSProperties;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export default function FormInput({
@@ -40,6 +42,8 @@ export default function FormInput({
   autoFocus = false,
   debounceDelay = 0,
   style,
+  onFocus,
+  onBlur
 }: Props) {
   const [active, setActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -93,8 +97,14 @@ export default function FormInput({
         maxLength={maxLength}
         onChange={handleInput}
         onTouchStart={handleTouchStart}
-        onFocus={() => setActive(true)}
-        onBlur={() => setActive(false)}
+        onFocus={() => {
+          setActive(true);
+          onFocus?.();
+        }}
+        onBlur={() => {
+          setActive(false);
+          onBlur?.();
+        }}
         autoFocus={autoFocus}
         className={`w-full h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors bg-bgColor-default
           ${
