@@ -1,34 +1,39 @@
 "use client";
 
 import type { NextPage } from "next";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import BackButton from "@/components/common/button/BackButton";
+import ChatbotExitPopup from "@/components/chatbot/popup/ChatbotExitPopup";
 
-interface ChatbotHeaderProps {
-  onBack?: () => void;
-}
+const ChatbotHeader: NextPage = () => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-const ChatbotHeader: NextPage<ChatbotHeaderProps> = ({ onBack }) => {
-  const router = useRouter();
-
-  const handleBack = (
-    e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
-  ) => {
+  const handleBackClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (onBack) {
-      onBack();
-    } else {
-      router.back();
-    }
+    setIsPopupOpen(true);
+  };
+
+  const handleConfirmExit = () => {
+    window.location.href = "/member";
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
   };
 
   return (
-    <div className="w-full relative bg-white h-14 md:h-16 flex items-center px-2 md:px-4 text-gray font-pretendard">
-      <BackButton onClick={handleBack} className="mr-1" />
+    <div className="w-full relative bg-bgColor-default h-14 md:h-16 flex items-center px-2 md:px-4 text-textColor-heading font-pretendard">
+      <BackButton onClick={handleBackClick} href="/member" className="mr-1" />
 
       <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 font-medium text-[21px] md:text-2xl">
-        챗봇
+        배우다
       </div>
+
+      <ChatbotExitPopup
+        isOpen={isPopupOpen}
+        onConfirm={handleConfirmExit}
+        onClose={handleClosePopup}
+      />
     </div>
   );
 };
