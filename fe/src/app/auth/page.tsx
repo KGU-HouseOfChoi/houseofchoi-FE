@@ -38,6 +38,7 @@ export default function AuthPage() {
         console.log("가입 상태:", status);
 
         if (status === "EXISTING_USER") {
+          localStorage.setItem("signupComplete", "true");
           setIsExistingUser(true);
         } else {
           localStorage.setItem("signupComplete", "true");

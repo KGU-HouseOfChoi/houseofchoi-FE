@@ -4,6 +4,7 @@ import LayoutWrapper from "@/components/common/LayoutWrapper";
 import Script from "next/script";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.learningwith.co.kr"),
   title: "배우다",
   description: "나에게 딱 맞는 활동,\n이제 쉽게 찾아보세요",
   keywords: [

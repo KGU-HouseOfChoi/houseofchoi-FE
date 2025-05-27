@@ -35,10 +35,9 @@ export default function FamilyCompletedMessage({
           {message}
         </h2>
 
-        <p
-          className="text-base text-textColor-sub leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: description }}
-        />
+        <p className="text-base text-textColor-sub leading-relaxed whitespace-pre-line">
+          {description?.replace(/<br\s*\/?>/gi, "\n")}
+        </p>
       </div>
     </main>
   );

@@ -14,12 +14,8 @@ const nextConfig = {
 
   experimental: {
     serverActions: {
-      allowedOrigins: ["houseofchoi-fe.vercel.app"],
+      allowedOrigins: ["www.learningwith.co.kr"],
     },
-  },
-
-  metadata: {
-    metadataBase: new URL("https://houseofchoi-fe.vercel.app"),
   },
 
   webpack(config: Configuration, _options: WebpackConfigContext) {
