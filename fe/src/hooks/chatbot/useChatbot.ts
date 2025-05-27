@@ -6,20 +6,26 @@ import type { Message, ScheduleConfirmMessage } from "@/types/chatbot";
 import { fetchChatAnswer } from "@/apis/chatbot/fetchChatAnswer";
 import { useActivityRecommendation } from "./useActivityRecommendation";
 import { useSchedule } from "@/hooks/chatbot/useSchedule";
+import { useChatbotSchedule } from "@/hooks/chatbot/useChatbotSchedule";
 
 export function useChatbot() {
   const [messages, setMessages] = useState<Message[]>(INITIAL_GREETING);
+  const [isActivityConfirm, setIsActivityConfirm] = useState(false);
 
   const { fetchRecommendation } = useActivityRecommendation();
   const {
     saveProgramId,
-    confirm: confirmSchedule,
+    confirm,
     loading: scheduleLoading,
-    popupOpen,
-    closePopup,
-    cancelAndAsk,
     goToCalendar,
   } = useSchedule();
+  
+  const {
+    popupOpen,
+    openPopup: openChatbotPopup,
+    closePopup,
+    cancelAndAsk,
+  } = useChatbotSchedule();
   
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -27,9 +33,9 @@ export function useChatbot() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // 문장 분리 함수: 두 문장씩 묶어서 배열로 반환
+  
   function splitBySentences(text: string, groupSize = 2): string[] {
-    // 마침표, 물음표, 느낌표, 줄바꿈 뒤에 분리
+   
     const sentences = text.match(/[^.!?\n]+[.!?\n]?/g)?.map(s => s.trim()).filter(Boolean) || [];
     const grouped: string[] = [];
     for (let i = 0; i < sentences.length; i += groupSize) {
@@ -69,15 +75,15 @@ export function useChatbot() {
 
     try {
       if (text === "예") {
-        await confirmSchedule("yes");
+        openChatbotPopup();
         return;
       }
 
       const answer = await fetchChatAnswer(text);
       pushBotText(answer);
 
-      // 일정 등록 확인 메시지가 포함되어 있는지 확인
-      if (answer.includes("일정을 추가")) {
+      
+      if (answer.includes("진행") || answer.includes("프로그램") || answer.includes("추천")) {
         const confirmCard: ScheduleConfirmMessage = {
           id: `${Date.now()}-confirm`,
           sender: "bot",
@@ -125,6 +131,7 @@ export function useChatbot() {
         isUser: false,
       };
 
+      setIsActivityConfirm(true); 
       setMessages((prev) => [...prev, ...recMsgs, confirmCard]);
     } catch {
       pushBotText("추천 정보를 가져오지 못했어요. 다시 시도해 주세요.");
@@ -134,16 +141,51 @@ export function useChatbot() {
   /* ─────────── 예/아니요 클릭 ─────────── */
   const handleScheduleConfirm = async (value: "yes" | "no") => {
     if (value === "yes") {
-      await handleSend("예");
+      if (isActivityConfirm) {
+        // 실내/실외 선택 후의 예/아니오인 경우
+        const result = await confirm("yes");
+        if (result.length === 0) {
+          openChatbotPopup();
+        } else {
+          setMessages(prev => [...prev, ...result]);
+        }
+      } else {
+       
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now().toString(),
+            sender: "user",
+            type: "text",
+            content: "예",
+            timestamp: new Date().toISOString(),
+            isUser: true,
+          },
+        ]);
+        
+        try {
+          const answer = await fetchChatAnswer("예");
+          pushBotText(answer);
+          
+          
+          if (answer.includes("일정") || answer.includes("등록") || answer.includes("추가")) {
+            openChatbotPopup();
+          }
+        } catch {
+          pushBotText("답변을 가져오지 못했어요. 잠시 후 다시 시도해 주세요.");
+        }
+      }
     } else {
+      setIsActivityConfirm(false);
       pushBotText("다른 궁금한 사항이 있다면 질문해주세요!");
     }
   };
 
   /* ─────────── 팝업 '대화하기' 클릭 ─────────── */
   const handlePopupCancel = () => {
-    const reply = cancelAndAsk(); // 안내 메시지 생성
-    setMessages((prev) => [...prev, ...reply]); // 대화창에 push
+    setIsActivityConfirm(false);
+    const reply = cancelAndAsk();
+    setMessages((prev) => [...prev, ...reply]);
   };
 
   /* ─────────── 그룹핑 후 반환 ─────────── */
