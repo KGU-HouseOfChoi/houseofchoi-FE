@@ -147,9 +147,10 @@ export default function Step5_VerificationCode({
                 WebkitTouchCallout: "none",
                 WebkitUserSelect: "text",
                 userSelect: "text",
-                caretColor: "#000000",
                 WebkitAppearance: "none",
                 appearance: "none",
+                WebkitOverflowScrolling: "touch",
+                touchAction: "manipulation",
               }}
               autoFocus
             />

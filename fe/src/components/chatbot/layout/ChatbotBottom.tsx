@@ -46,6 +46,10 @@ const ChatbotBottom: React.FC<ChatbotBottomProps> = ({ onSend }) => {
               WebkitTouchCallout: "none",
               WebkitUserSelect: "text",
               userSelect: "text",
+              WebkitAppearance: "none",
+              appearance: "none",
+              WebkitOverflowScrolling: "touch",
+              touchAction: "manipulation",
             }}
           />
           <button onClick={handleSend}>

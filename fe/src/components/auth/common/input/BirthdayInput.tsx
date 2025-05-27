@@ -128,6 +128,10 @@ export default function BirthdayInput({
             WebkitTouchCallout: "none",
             WebkitUserSelect: "text",
             userSelect: "text",
+            WebkitAppearance: "none",
+            appearance: "none",
+            WebkitOverflowScrolling: "touch",
+            touchAction: "manipulation",
           }}
           placeholder="예: 700123"
         />
@@ -163,6 +167,10 @@ export default function BirthdayInput({
             WebkitTouchCallout: "none",
             WebkitUserSelect: "text",
             userSelect: "text",
+            WebkitAppearance: "none",
+            appearance: "none",
+            WebkitOverflowScrolling: "touch",
+            touchAction: "manipulation",
           }}
           placeholder="1"
         />

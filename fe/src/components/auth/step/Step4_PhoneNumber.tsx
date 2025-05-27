@@ -30,6 +30,16 @@ export default function Step4_PhoneNumber() {
       placeholder="숫자만 입력 (예: 01012345678)"
       autoFocus
       maxLength={11}
+      style={{
+        WebkitTapHighlightColor: "transparent",
+        WebkitTouchCallout: "none",
+        WebkitUserSelect: "text",
+        userSelect: "text",
+        WebkitAppearance: "none",
+        appearance: "none",
+        WebkitOverflowScrolling: "touch",
+        touchAction: "manipulation",
+      }}
     />
   );
 }
