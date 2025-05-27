@@ -13,7 +13,7 @@ export function useChatbotSchedule() {
   };
 
   const makeBotText = (content: string): Message => ({
-    id: Date.now().toString(),
+    id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
     sender: "bot",
     profileUrl: "/images/Chatlogo.svg",
     type: "text",

@@ -7,6 +7,7 @@ import { fetchChatAnswer } from "@/apis/chatbot/fetchChatAnswer";
 import { useActivityRecommendation } from "./useActivityRecommendation";
 import { useSchedule } from "@/hooks/chatbot/useSchedule";
 import { useChatbotSchedule } from "@/hooks/chatbot/useChatbotSchedule";
+import { CONFIRM_KEYWORDS, containsKeywords } from "@/constants/chatbot/messages";
 
 export function useChatbot() {
   const [messages, setMessages] = useState<Message[]>(INITIAL_GREETING);
@@ -76,7 +77,7 @@ export function useChatbot() {
     ]);
 
     try {
-      if (text === "예") {
+      if (text === CONFIRM_KEYWORDS.YES) {
         openChatbotPopup();
         return;
       }
@@ -84,11 +85,7 @@ export function useChatbot() {
       const answer = await fetchChatAnswer(text);
       pushBotText(answer);
 
-      if (
-        answer.includes("진행") ||
-        answer.includes("프로그램") ||
-        answer.includes("추천")
-      ) {
+      if (containsKeywords(answer, CONFIRM_KEYWORDS.SCHEDULE_KEYWORDS)) {
         const confirmCard: ScheduleConfirmMessage = {
           id: `${Date.now()}-confirm`,
           sender: "bot",
@@ -143,45 +140,44 @@ export function useChatbot() {
     }
   };
 
-  /* ─────────── 예/아니요 클릭 ─────────── */
+  /* ─────────── 활동 추천 후 일정 등록 ─────────── */
+  const handleActivityConfirmYes = async () => {
+    const result = await confirm("yes");
+    if (result.length === 0) {
+      openChatbotPopup();
+    } else {
+      setMessages((prev) => [...prev, ...result]);
+    }
+  };
+
+  /* ─────────── 일반 대화에서 예 응답 처리 ─────────── */
+  const handleGeneralConfirmYes = async () => {
+    const userMessage: import("@/types/chatbot").TextMessage = {
+      id: Date.now().toString(),
+      sender: "user",
+      type: "text",
+      content: CONFIRM_KEYWORDS.YES,
+      timestamp: new Date().toISOString(),
+      isUser: true,
+    };
+    setMessages((prev) => [...prev, userMessage]);
+
+    try {
+      const answer = await fetchChatAnswer(CONFIRM_KEYWORDS.YES);
+      pushBotText(answer);
+      
+      if (containsKeywords(answer, CONFIRM_KEYWORDS.CALENDAR_KEYWORDS)) {
+        openChatbotPopup();
+      }
+    } catch {
+      pushBotText("답변을 가져오지 못했어요. 잠시 후 다시 시도해 주세요.");
+    }
+  };
+
+  /* ─────────── 예/아니오 클릭 ─────────── */
   const handleScheduleConfirm = async (value: "yes" | "no") => {
     if (value === "yes") {
-      if (isActivityConfirm) {
-        // 실내/실외 선택 후의 예/아니오인 경우
-        const result = await confirm("yes");
-        if (result.length === 0) {
-          openChatbotPopup();
-        } else {
-          setMessages((prev) => [...prev, ...result]);
-        }
-      } else {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: Date.now().toString(),
-            sender: "user",
-            type: "text",
-            content: "예",
-            timestamp: new Date().toISOString(),
-            isUser: true,
-          },
-        ]);
-
-        try {
-          const answer = await fetchChatAnswer("예");
-          pushBotText(answer);
-
-          if (
-            answer.includes("일정") ||
-            answer.includes("등록") ||
-            answer.includes("추가")
-          ) {
-            openChatbotPopup();
-          }
-        } catch {
-          pushBotText("답변을 가져오지 못했어요. 잠시 후 다시 시도해 주세요.");
-        }
-      }
+      await (isActivityConfirm ? handleActivityConfirmYes() : handleGeneralConfirmYes());
     } else {
       setIsActivityConfirm(false);
       pushBotText("다른 궁금한 사항이 있다면 질문해주세요!");
