@@ -41,10 +41,10 @@ export default function SearchAutoComplete({ keyword, onSelect }: Props) {
   return (
     <ul className="px-4">
       {loading && (
-        <li className="py-2 text-base text-textColor-sub">검색 중...</li>
+        <li className="py-2 text-base text-textColor-sub text-center">검색 중...</li>
       )}
       {!loading && results.length === 0 && (
-        <li className="py-2 text-base text-textColor-sub">
+        <li className="py-2 text-base text-textColor-sub text-center">
           검색 결과가 없습니다
         </li>
       )}
