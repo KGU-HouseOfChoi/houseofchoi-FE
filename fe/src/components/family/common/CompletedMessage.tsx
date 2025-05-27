@@ -35,8 +35,8 @@ export default function FamilyCompletedMessage({
           {message}
         </h2>
 
-        <p className="text-base text-textColor-sub whitespace-pre-line leading-relaxed">
-          {description}
+        <p className="text-base text-textColor-sub leading-relaxed whitespace-pre-line">
+          {description?.replace(/<br\s*\/?>/gi, "\n")}
         </p>
       </div>
     </main>

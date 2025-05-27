@@ -63,6 +63,16 @@ export default function FormInput({
     }
   }, [autoFocus]);
 
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedOnChange(e.target.value);
+  };
+
+  const handleTouchStart = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   return (
     <div className="w-full flex flex-col gap-2">
       <label className="text-xl text-textColor-body font-semibold">
@@ -77,7 +87,8 @@ export default function FormInput({
         inputMode={inputMode}
         pattern={pattern}
         maxLength={maxLength}
-        onChange={(e) => debouncedOnChange(e.target.value)}
+        onChange={handleInput}
+        onTouchStart={handleTouchStart}
         autoFocus={autoFocus}
         className={`w-full h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors bg-bgColor-default
           ${
@@ -88,7 +99,8 @@ export default function FormInput({
                 : "border-borderColor-default"
           }
           focus:border-brand-normal focus:outline-none
-          placeholder:text-textColor-disabled`}
+          placeholder:text-textColor-disabled
+          touch-manipulation`}
       />
 
       {error && (

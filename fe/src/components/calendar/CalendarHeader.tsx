@@ -38,7 +38,7 @@ const CalendarHeader: FC<CalendarHeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-20 w-full bg-white shadow-[0px_3px_10px_rgba(142,142,142,0.25)]">
+    <header className="sticky top-0 z-20 w-full bg-white shadow-header">
       <div className="w-full max-w-[400px] mx-auto pt-4 pb-2 flex items-center px-4">
         <BackButton
           onClick={handleBack}
