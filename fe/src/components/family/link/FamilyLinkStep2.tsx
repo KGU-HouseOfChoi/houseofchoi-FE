@@ -46,7 +46,7 @@ export default function FamilyLinkStep2({ relation }: FamilyLinkStep2Props) {
     return (
       <FamilyCompletedMessage
         redirectTo="/member/personality"
-        delayMs={0}
+        delayMs={3000}
         message="연동이 완료되었어요 🎉"
         description="이제 성향 분석을 시작할게요!"
       />
