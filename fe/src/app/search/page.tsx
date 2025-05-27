@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/auth/useAuth";
 import SearchAutoComplete from "@/components/home/search/SearchAutoComplete";
@@ -45,6 +45,23 @@ export default function SearchPage() {
     setConfirmedKeyword("");
   };
 
+  const clearButton = useMemo(() => {
+    if (!inputValue) return null;
+    return (
+      <button
+        onClick={clearSearch}
+        className="absolute right-3 top-1/2 -translate-y-1/2"
+      >
+        <Image
+          src="/images/deleteicon.svg"
+          alt="검색어 지우기"
+          width={18}
+          height={18}
+        />
+      </button>
+    );
+  }, [inputValue]);
+
   return (
     <div className="h-full bg-bgColor-default p-4 space-y-4">
       <div className="flex items-center gap-2">
@@ -63,21 +80,9 @@ export default function SearchPage() {
             onKeyDown={(e) => e.key === "Enter" && handleSearch(inputValue)}
             placeholder="검색어를 입력하세요"
             aria-label="검색어 입력"
-            className="w-full border rounded-xl py-2 px-4 pr-10 text-lg"
+            className="w-full border focus:border-brand-normal rounded-xl py-2 px-4 pr-10 text-lg"
           />
-          {inputValue && (
-            <button
-              onClick={clearSearch}
-              className="absolute right-3 top-1/2 -translate-y-1/2"
-            >
-              <Image
-                src="/images/deleteicon.svg"
-                alt="검색어 지우기"
-                width={18}
-                height={18}
-              />
-            </button>
-          )}
+          {clearButton}
         </div>
       </div>
       {!inputValue.trim() && !confirmedKeyword && (
