@@ -69,7 +69,9 @@ export default function BirthdayInput({
   };
 
   const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
-    e.currentTarget.focus();
+    if (e.currentTarget) {
+      e.currentTarget.focus();
+    }
   };
 
   return (
