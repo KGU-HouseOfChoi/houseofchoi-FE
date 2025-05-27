@@ -16,7 +16,6 @@ export default function FamilyLinkStep2({ relation }: FamilyLinkStep2Props) {
     "NEW_USER" | "EXISTING_USER" | null
   >(null);
   const [error, setError] = useState("");
-  const [active, setActive] = useState(false);
 
   const handleNext = async () => {
     if (!code) return;
@@ -75,9 +74,7 @@ export default function FamilyLinkStep2({ relation }: FamilyLinkStep2Props) {
           value={code}
           onChange={setCode}
           placeholder="고유번호 입력"
-          active={active}
-          onFocus={() => setActive(true)}
-          onBlur={() => setActive(false)}
+          active={false}
         />
 
         {error && <p className="text-danger-50 text-sm text-center">{error}</p>}
