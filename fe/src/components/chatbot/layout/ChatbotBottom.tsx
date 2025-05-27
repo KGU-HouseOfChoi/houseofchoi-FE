@@ -20,11 +20,7 @@ const ChatbotBottom: React.FC<ChatbotBottomProps> = ({ onSend }) => {
   };
 
   const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (inputRef.current) {
-      inputRef.current.focus();
-      inputRef.current.click();
-    }
+    e.currentTarget.focus();
   };
 
   return (

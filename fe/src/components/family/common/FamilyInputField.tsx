@@ -23,11 +23,7 @@ export default function FamilyInputField({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (inputRef.current) {
-      inputRef.current.focus();
-      inputRef.current.click();
-    }
+    e.currentTarget.focus();
   };
 
   return (
