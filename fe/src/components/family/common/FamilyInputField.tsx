@@ -39,6 +39,10 @@ export default function FamilyInputField({
           WebkitTouchCallout: "none",
           WebkitUserSelect: "text",
           userSelect: "text",
+          WebkitAppearance: "none",
+          appearance: "none",
+          WebkitOverflowScrolling: "touch",
+          touchAction: "manipulation"
         }}
       />
       {value && (

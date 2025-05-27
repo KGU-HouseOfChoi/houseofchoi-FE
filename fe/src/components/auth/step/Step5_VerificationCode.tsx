@@ -143,13 +143,14 @@ export default function Step5_VerificationCode({
                 cursor-text
                 select-text`}
               style={{
-                WebkitTapHighlightColor: "transparent",
-                WebkitTouchCallout: "none",
-                WebkitUserSelect: "text",
-                userSelect: "text",
-                caretColor: "#000000",
-                WebkitAppearance: "none",
-                appearance: "none",
+                WebkitTapHighlightColor: 'transparent',
+                WebkitTouchCallout: 'none',
+                WebkitUserSelect: 'text',
+                userSelect: 'text',
+                WebkitAppearance: 'none',
+                appearance: 'none',
+                WebkitOverflowScrolling: 'touch',
+                touchAction: 'manipulation'
               }}
               autoFocus
             />

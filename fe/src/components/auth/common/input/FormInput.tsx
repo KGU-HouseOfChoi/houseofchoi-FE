@@ -108,10 +108,14 @@ export default function FormInput({
           cursor-text
           select-text`}
         style={{
-          WebkitTapHighlightColor: "transparent",
-          WebkitTouchCallout: "none",
-          WebkitUserSelect: "text",
-          userSelect: "text",
+          WebkitTapHighlightColor: 'transparent',
+          WebkitTouchCallout: 'none',
+          WebkitUserSelect: 'text',
+          userSelect: 'text',
+          WebkitAppearance: 'none',
+          appearance: 'none',
+          WebkitOverflowScrolling: 'touch',
+          touchAction: 'manipulation'
         }}
       />
 
