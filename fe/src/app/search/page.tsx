@@ -30,7 +30,7 @@ export default function SearchPage() {
     router.push(isGuest ? "/guest" : "/member");
   };
 
-  const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
+  const handleTouchStart = () => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
