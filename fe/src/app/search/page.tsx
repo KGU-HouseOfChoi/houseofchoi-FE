@@ -80,10 +80,14 @@ export default function SearchPage() {
             aria-label="검색어 입력"
             className="w-full border focus:border-brand-normal rounded-xl py-2 px-4 pr-10 text-lg touch-manipulation cursor-text select-text"
             style={{
-              WebkitTapHighlightColor: "transparent",
-              WebkitTouchCallout: "none",
-              WebkitUserSelect: "text",
-              userSelect: "text",
+              WebkitTapHighlightColor: 'transparent',
+              WebkitTouchCallout: 'none',
+              WebkitUserSelect: 'text',
+              userSelect: 'text',
+              WebkitAppearance: 'none',
+              appearance: 'none',
+              WebkitOverflowScrolling: 'touch',
+              touchAction: 'manipulation'
             }}
           />
           {clearButton}
