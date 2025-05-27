@@ -31,14 +31,14 @@ export default function Step4_PhoneNumber() {
       autoFocus
       maxLength={11}
       style={{
-        WebkitTapHighlightColor: 'transparent',
-        WebkitTouchCallout: 'none',
-        WebkitUserSelect: 'text',
-        userSelect: 'text',
-        WebkitAppearance: 'none',
-        appearance: 'none',
-        WebkitOverflowScrolling: 'touch',
-        touchAction: 'manipulation'
+        WebkitTapHighlightColor: "transparent",
+        WebkitTouchCallout: "none",
+        WebkitUserSelect: "text",
+        userSelect: "text",
+        WebkitAppearance: "none",
+        appearance: "none",
+        WebkitOverflowScrolling: "touch",
+        touchAction: "manipulation",
       }}
     />
   );

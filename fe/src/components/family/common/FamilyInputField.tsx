@@ -42,7 +42,7 @@ export default function FamilyInputField({
           WebkitAppearance: "none",
           appearance: "none",
           WebkitOverflowScrolling: "touch",
-          touchAction: "manipulation"
+          touchAction: "manipulation",
         }}
       />
       {value && (

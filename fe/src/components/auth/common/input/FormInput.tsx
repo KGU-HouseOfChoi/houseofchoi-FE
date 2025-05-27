@@ -39,7 +39,7 @@ export default function FormInput({
   maxLength,
   autoFocus = false,
   debounceDelay = 0,
-  style
+  style,
 }: Props) {
   const [active, setActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -110,15 +110,15 @@ export default function FormInput({
           cursor-text
           select-text`}
         style={{
-          WebkitTapHighlightColor: 'transparent',
-          WebkitTouchCallout: 'none',
-          WebkitUserSelect: 'text',
-          userSelect: 'text',
-          WebkitAppearance: 'none',
-          appearance: 'none',
-          WebkitOverflowScrolling: 'touch',
-          touchAction: 'manipulation',
-          ...style
+          WebkitTapHighlightColor: "transparent",
+          WebkitTouchCallout: "none",
+          WebkitUserSelect: "text",
+          userSelect: "text",
+          WebkitAppearance: "none",
+          appearance: "none",
+          WebkitOverflowScrolling: "touch",
+          touchAction: "manipulation",
+          ...style,
         }}
       />
 
