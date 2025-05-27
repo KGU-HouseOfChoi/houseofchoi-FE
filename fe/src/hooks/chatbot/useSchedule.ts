@@ -23,14 +23,11 @@ export function useSchedule() {
 
     setLoading(true);
     try {
-      console.log("📤 registerSchedule 요청 programId =", programId);
-
       const res = await apiRegisterSchedule(programId);
 
-      console.log("✅ 일정 저장 완료!", { programId, res });
       return [];
     } catch (e) {
-      console.error("❌ 일정 저장 실패", e);
+      console.error(" 일정 저장 실패", e);
       return [makeBotText((e as Error).message)];
     } finally {
       setLoading(false);

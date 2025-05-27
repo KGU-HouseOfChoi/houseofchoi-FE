@@ -177,7 +177,6 @@ export function useChatbot() {
     }
   };
 
-  /* ─────────── 예/아니오 클릭 ─────────── */
   const handleScheduleConfirm = async (value: "yes" | "no") => {
     if (value === "yes") {
       await (isActivityConfirm
@@ -214,7 +213,6 @@ export function useChatbot() {
   };
 }
 
-/* ─────────── 인트로 메시지 상수 ─────────── */
 const INITIAL_GREETING: Message[] = [
   {
     id: "greet-1",
