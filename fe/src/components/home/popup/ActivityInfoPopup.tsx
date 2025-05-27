@@ -55,7 +55,7 @@ export default function ActivityInfoPopup({
 
   return (
     <BottomPopup isOpen={true} onClose={onClose}>
-      <div className="fixed inset-0 z-50 bg-white z-50 overflow-y-auto px-4 pt-16 pb-6">
+      <div className="fixed inset-0 z-50 bg-white overflow-y-auto px-4 pt-16 pb-6 flex flex-col min-h-screen">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-10 p-1"
@@ -64,7 +64,7 @@ export default function ActivityInfoPopup({
           <X className="w-6 h-6 text-textColor-sub" />
         </button>
 
-        <div className="w-full h-[250px] rounded-xl overflow-hidden border border-borderColor-default mt-2">
+        <div className="w-full h-[220px] sm:h-[360px] rounded-xl overflow-hidden border border-borderColor-default mt-4 flex-shrink-0">
           {mapError ? (
             <div className="flex items-center justify-center w-full h-full text-sm text-red-400">
               {mapError}
@@ -85,11 +85,11 @@ export default function ActivityInfoPopup({
           )}
         </div>
 
-        <div className="mt-6 space-y-2 text-base text-textColor-body font-pretendard">
-          <h2 className="text-xl font-semibold text-textColor-heading">
-            {program.name}
+        <div className="mt-4 space-y-2 text-base text-textColor-body font-pretendard flex-1 overflow-y-auto max-h-[320px]">
+          <h2 className="text-2xl font-semibold text-textColor-heading">
+            {program.center.name}
           </h2>
-          <p className="text-sm text-textColor-sub">{program.center.name}</p>
+          <p className="text-xl text-textColor-sub">{program.name}</p>
           <p>{program.center.address}</p>
           <p>전화번호: {program.center.tel}</p>
           <p>이용 시간: {formatProgramSchedule(program)}</p>
@@ -101,7 +101,7 @@ export default function ActivityInfoPopup({
           </p>
         </div>
 
-        <div className="mt-8">
+        <div className="fixed left-0 right-0 bottom-0 z-50 bg-white px-4 pb-6 pt-4 border-t border-borderColor-default flex flex-col gap-2 w-full max-w-md mx-auto">
           <PopupButtons
             onConfirm={onAddClick}
             onCancel={onClose}
@@ -109,6 +109,7 @@ export default function ActivityInfoPopup({
             cancelLabel="닫기"
           />
         </div>
+        <div className="h-24" />
       </div>
     </BottomPopup>
   );
