@@ -7,12 +7,14 @@ interface FamilyInputFieldProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  active: boolean;
 }
 
 export default function FamilyInputField({
   value,
   onChange,
   placeholder,
+  active,
 }: FamilyInputFieldProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -43,6 +45,7 @@ export default function FamilyInputField({
           appearance: "none",
           WebkitOverflowScrolling: "touch",
           touchAction: "manipulation",
+          caretColor: active ? "auto" : "transparent"
         }}
       />
       {value && (
