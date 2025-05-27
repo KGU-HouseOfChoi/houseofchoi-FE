@@ -2,10 +2,12 @@
 
 import type { NextPage } from "next";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import BackButton from "@/components/common/button/BackButton";
 import ChatbotExitPopup from "@/components/chatbot/popup/ChatbotExitPopup";
 
 const ChatbotHeader: NextPage = () => {
+  const router = useRouter();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleBackClick = (e: React.MouseEvent) => {
@@ -14,7 +16,7 @@ const ChatbotHeader: NextPage = () => {
   };
 
   const handleConfirmExit = () => {
-    window.location.href = "/member";
+    router.push("/member");
   };
 
   const handleClosePopup = () => {
