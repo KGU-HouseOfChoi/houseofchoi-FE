@@ -74,7 +74,10 @@ export default function FormInput({
   };
 
   const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
-    e.currentTarget.focus();
+    if (inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.click();
+    }
   };
 
   return (

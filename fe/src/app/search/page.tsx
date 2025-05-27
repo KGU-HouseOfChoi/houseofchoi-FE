@@ -31,7 +31,10 @@ export default function SearchPage() {
   };
 
   const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
-    e.currentTarget.focus();
+    if (inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.click();
+    }
   };
 
   const clearSearch = () => {
@@ -75,6 +78,7 @@ export default function SearchPage() {
             onTouchStart={handleTouchStart}
             placeholder="검색어를 입력하세요"
             aria-label="검색어 입력"
+            inputMode="search"
             className="w-full border-2 border-brand-normal focus:border-brand-normal focus:outline-none rounded-xl py-2 px-4 pr-10 text-lg touch-manipulation cursor-text select-text"
             style={{
               WebkitTapHighlightColor: "transparent",
