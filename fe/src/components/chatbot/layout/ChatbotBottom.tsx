@@ -42,10 +42,10 @@ const ChatbotBottom: React.FC<ChatbotBottomProps> = ({ onSend }) => {
             placeholder="궁금한 내용을 입력해주세요."
             className="w-full bg-transparent outline-none text-textColor-heading placeholder:text-textColor-sub touch-manipulation cursor-text select-text"
             style={{
-              WebkitTapHighlightColor: 'transparent',
-              WebkitTouchCallout: 'none',
-              WebkitUserSelect: 'text',
-              userSelect: 'text',
+              WebkitTapHighlightColor: "transparent",
+              WebkitTouchCallout: "none",
+              WebkitUserSelect: "text",
+              userSelect: "text",
             }}
           />
           <button onClick={handleSend}>

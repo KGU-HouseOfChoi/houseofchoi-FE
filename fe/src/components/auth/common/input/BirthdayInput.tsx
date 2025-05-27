@@ -124,10 +124,10 @@ export default function BirthdayInput({
             cursor-text
             select-text`}
           style={{
-            WebkitTapHighlightColor: 'transparent',
-            WebkitTouchCallout: 'none',
-            WebkitUserSelect: 'text',
-            userSelect: 'text',
+            WebkitTapHighlightColor: "transparent",
+            WebkitTouchCallout: "none",
+            WebkitUserSelect: "text",
+            userSelect: "text",
           }}
           placeholder="예: 700123"
         />
@@ -159,10 +159,10 @@ export default function BirthdayInput({
             cursor-text
             select-text`}
           style={{
-            WebkitTapHighlightColor: 'transparent',
-            WebkitTouchCallout: 'none',
-            WebkitUserSelect: 'text',
-            userSelect: 'text',
+            WebkitTapHighlightColor: "transparent",
+            WebkitTouchCallout: "none",
+            WebkitUserSelect: "text",
+            userSelect: "text",
           }}
           placeholder="1"
         />

@@ -35,10 +35,10 @@ export default function FamilyInputField({
         placeholder={placeholder}
         className="w-full border-b-2 border-brand-normal py-3 pr-10 text-lg focus:outline-none text-textColor-body touch-manipulation cursor-text select-text"
         style={{
-          WebkitTapHighlightColor: 'transparent',
-          WebkitTouchCallout: 'none',
-          WebkitUserSelect: 'text',
-          userSelect: 'text',
+          WebkitTapHighlightColor: "transparent",
+          WebkitTouchCallout: "none",
+          WebkitUserSelect: "text",
+          userSelect: "text",
         }}
       />
       {value && (
