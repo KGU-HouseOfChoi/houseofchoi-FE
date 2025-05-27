@@ -19,6 +19,14 @@ const ChatbotBottom: React.FC<ChatbotBottomProps> = ({ onSend }) => {
     inputRef.current?.focus();
   };
 
+  const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.click();
+    }
+  };
+
   return (
     <div className="fixed bottom-0 left-0 right-0 w-full flex justify-center items-end z-50 pb-[env(safe-area-inset-bottom)] sm:pb-0">
       <div className="w-full max-w-[414px] bg-bgColor-default h-[100px] flex items-center justify-center py-6 px-4 gap-2 text-textColor-body font-pretendard shadow">
@@ -30,8 +38,15 @@ const ChatbotBottom: React.FC<ChatbotBottomProps> = ({ onSend }) => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            onTouchStart={handleTouchStart}
             placeholder="궁금한 내용을 입력해주세요."
-            className="w-full bg-transparent outline-none text-textColor-heading placeholder:text-textColor-sub"
+            className="w-full bg-transparent outline-none text-textColor-heading placeholder:text-textColor-sub touch-manipulation cursor-text select-text"
+            style={{
+              WebkitTapHighlightColor: "transparent",
+              WebkitTouchCallout: "none",
+              WebkitUserSelect: "text",
+              userSelect: "text",
+            }}
           />
           <button onClick={handleSend}>
             <SendIcon

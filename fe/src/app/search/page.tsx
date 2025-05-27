@@ -29,6 +29,14 @@ export default function SearchPage() {
     router.push(isGuest ? "/guest" : "/member");
   };
 
+  const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    if (e.currentTarget) {
+      e.currentTarget.focus();
+      e.currentTarget.click();
+    }
+  };
+
   const clearSearch = () => {
     setInputValue("");
     setConfirmedKeyword("");
@@ -67,9 +75,16 @@ export default function SearchPage() {
               if (confirmedKeyword) setConfirmedKeyword("");
             }}
             onKeyDown={(e) => e.key === "Enter" && handleSearch(inputValue)}
+            onTouchStart={handleTouchStart}
             placeholder="검색어를 입력하세요"
             aria-label="검색어 입력"
-            className="w-full border focus:border-brand-normal rounded-xl py-2 px-4 pr-10 text-lg"
+            className="w-full border focus:border-brand-normal rounded-xl py-2 px-4 pr-10 text-lg touch-manipulation cursor-text select-text"
+            style={{
+              WebkitTapHighlightColor: "transparent",
+              WebkitTouchCallout: "none",
+              WebkitUserSelect: "text",
+              userSelect: "text",
+            }}
           />
           {clearButton}
         </div>

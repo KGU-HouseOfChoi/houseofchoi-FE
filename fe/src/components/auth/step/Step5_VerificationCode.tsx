@@ -60,8 +60,10 @@ export default function Step5_VerificationCode({
   };
 
   const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
+    e.preventDefault();
     if (e.currentTarget) {
       e.currentTarget.focus();
+      e.currentTarget.click();
     }
   };
 
@@ -145,6 +147,9 @@ export default function Step5_VerificationCode({
                 WebkitTouchCallout: "none",
                 WebkitUserSelect: "text",
                 userSelect: "text",
+                caretColor: "#000000",
+                WebkitAppearance: "none",
+                appearance: "none",
               }}
               autoFocus
             />
