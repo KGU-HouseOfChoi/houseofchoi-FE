@@ -78,7 +78,7 @@ export default function SearchPage() {
             onTouchStart={handleTouchStart}
             placeholder="검색어를 입력하세요"
             aria-label="검색어 입력"
-            className="w-full border focus:border-brand-normal rounded-xl py-2 px-4 pr-10 text-lg touch-manipulation cursor-text select-text"
+            className="w-full border-2 focus:border-brand-normal rounded-xl py-2 px-4 pr-10 text-lg touch-manipulation cursor-text select-text bg-bgColor-default border-borderColor-default"
             style={{
               WebkitTapHighlightColor: 'transparent',
               WebkitTouchCallout: 'none',
