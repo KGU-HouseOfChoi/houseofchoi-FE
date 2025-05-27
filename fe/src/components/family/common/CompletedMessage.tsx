@@ -35,7 +35,7 @@ export default function FamilyCompletedMessage({
           {message}
         </h2>
 
-        <p 
+        <p
           className="text-base text-textColor-sub leading-relaxed"
           dangerouslySetInnerHTML={{ __html: description }}
         />
