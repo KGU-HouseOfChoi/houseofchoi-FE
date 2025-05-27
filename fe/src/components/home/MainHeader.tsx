@@ -26,11 +26,11 @@ export default function MainHeader() {
   }, [isGuest, hydrated]);
 
   return (
-    <header className="fixed top-0 w-full h-[100px] max-w-[414px] bg-bgColor-default shadow-[0px_3px_10px_rgba(142,_142,_142,_0.25)] px-4 py-4 flex gap-3 items-start z-50">
+    <header className="fixed top-0 w-full h-[100px] max-w-[414px] bg-bgColor-default shadow-header px-4 py-4 flex gap-3 items-start z-50">
       <div className="w-24 min-w-[104px] h-[60px] flex-shrink-0 mt-1">
         <Image
           src="/images/logo.svg"
-          alt="어르심 로고"
+          alt="배우다 로고"
           width={104}
           height={60}
           className="object-contain w-full h-full rounded-[50px]"

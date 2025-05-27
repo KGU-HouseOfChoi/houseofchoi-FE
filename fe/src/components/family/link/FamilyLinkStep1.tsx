@@ -15,8 +15,10 @@ export default function FamilyLinkStep1({
 
   return (
     <div className="relative flex flex-col min-h-screen px-6 pt-4 pb-20 bg-bgColor-default">
-      <div className="flex flex-col items-center justify-center flex-1 gap-8">
-        <p className="text-xl font-semibold text-textColor-heading">당신은?</p>
+      <div className="flex flex-col items-start justify-center flex-1 gap-8">
+        <p className="text-xl font-semibold text-textColor-heading text-left">
+          당신은?
+        </p>
 
         <div className="flex gap-4 w-full max-w-xs">
           <FamilyOptionButton

@@ -10,23 +10,38 @@ const slides = [
   {
     image: "/images/logo.svg",
     isIntro: true,
-    title: "당신을 위한 맞춤 복지 활동 플랫폼",
-    description: " ",
+    title: (
+      <>
+        <span className="block text-2xl font-bold text-brand-normal mb-2">
+          나에게 딱 맞는 활동,
+        </span>
+        <span className="block text-2xl font-bold text-textColor-heading">
+          이제 쉽게 찾아보세요
+        </span>
+      </>
+    ),
+    description: "",
+  },
+  {
+    image: "/images/logo.svg",
+    title: "가족과 함께",
+    description: "가족 연동 기능을 통해\n일정을 나누고 챙길 수 있어요",
   },
   {
     image: "/images/logo.svg",
     title: "성향 분석 기반 추천",
-    description: "몇 가지 선택만으로\n나에게 꼭 맞는 활동을 알려드려요.",
+    description: "간단한 질문에 답하면\n내게 맞는 복지활동을\n추천해드려요",
   },
   {
     image: "/images/logo.svg",
-    title: "가족과 함께 쓰는 어르심",
-    description: "자녀나 보호자와\n계정을 연결해 함께 일정을 확인할 수 있어요.",
+    title: "챗봇과 함께하는 배우다",
+    description:
+      "챗봇과 대화하며 성향에 맞는\n복지활동을 다시 찾아볼 수 있어요",
   },
   {
     image: "/images/logo.svg",
     title: "일정도 손쉽게 관리",
-    description: "마음에 드는 활동을 등록하고\n캘린더에서 한눈에 볼 수 있어요.",
+    description: "원하는 활동을\n일정에 쉽게 등록하고\n한눈에 확인하세요",
   },
 ];
 
@@ -67,7 +82,7 @@ export default function OnboardingFlow() {
           <div className="flex flex-col items-center gap-3">
             <div className="w-[331px]">
               <Button onClick={handleNext} fullWidth>
-                어르심, 어떤 서비스인가요?
+                배우다, 어떤 서비스인가요?
               </Button>
             </div>
 
@@ -82,7 +97,7 @@ export default function OnboardingFlow() {
           <div className="w-[331px]">
             <SplitButton
               left="이전"
-              right={isLast ? "어르심 시작하기" : "다음으로 넘어가기"}
+              right={isLast ? "배우다 시작하기" : "다음으로 넘어가기"}
               onClickLeft={handlePrev}
               onClickRight={handleNext}
             />

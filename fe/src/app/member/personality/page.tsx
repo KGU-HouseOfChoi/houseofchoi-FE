@@ -57,7 +57,7 @@ export default function PersonalityAnalysisPage() {
   };
 
   return (
-    <main className="relative min-h-screen bg-white flex flex-col items-center justify-center px-4 text-center">
+    <main className="relative min-h-screen bg-white flex flex-col items-center justify-center px-4 text-center pb-[200px]">
       {!completedVersion && <PersonalityAnalysisHeader />}
 
       <div className="w-full max-w-[327px] flex flex-col items-center justify-center flex-1">

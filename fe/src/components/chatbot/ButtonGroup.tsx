@@ -15,7 +15,7 @@ const ButtonGroup: FC<ButtonGroupProps> = ({ buttons, onClick }) => {
         <button
           key={btn.value}
           onClick={() => onClick(btn.value, btn.label)}
-          className="w-full relative shadow-[0px_3px_10px_rgba(142,_142,_142,_0.3) rounded-xl bg-brand-normal border-bg-brand-normal border-solid border-[1px] box-border h-[52px] flex flex-row items-center justify-center py-3.5 px-[23px] text-left text-[20px] text-black font-pretendard"
+          className="w-full relative shadow-header rounded-xl bg-brand-normal border-bg-brand-normal border-solid border-[1px] box-border h-[52px] flex flex-row items-center justify-center py-3.5 px-[23px] text-left text-[20px] text-black font-pretendard"
         >
           {btn.label}
         </button>
