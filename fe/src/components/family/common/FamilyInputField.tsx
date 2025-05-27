@@ -7,12 +7,18 @@ interface FamilyInputFieldProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  active: boolean;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export default function FamilyInputField({
   value,
   onChange,
   placeholder,
+  active,
+  onFocus,
+  onBlur,
 }: FamilyInputFieldProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -32,6 +38,8 @@ export default function FamilyInputField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onTouchStart={handleTouchStart}
+        onFocus={onFocus}
+        onBlur={onBlur}
         placeholder={placeholder}
         className="w-full border-b-2 border-brand-normal py-3 pr-10 text-lg focus:outline-none text-textColor-body touch-manipulation cursor-text select-text"
         style={{
@@ -43,6 +51,7 @@ export default function FamilyInputField({
           appearance: "none",
           WebkitOverflowScrolling: "touch",
           touchAction: "manipulation",
+          caretColor: active ? "auto" : "transparent",
         }}
       />
       {value && (
