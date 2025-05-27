@@ -58,7 +58,7 @@ export default function FamilyLinkStep2({ relation }: FamilyLinkStep2Props) {
       <FamilyCompletedMessage
         redirectTo="/member"
         delayMs={3000}
-        message="가족 연동이 완료되었습니다!"
+    https://github.com/KGU-HouseOfChoi/houseofchoi-FE/pulls    message="가족 연동이 완료되었습니다!"
         description="이제 가족과 함께 일정을 공유할 수 있어요.\n잠시 후 메인 페이지로 이동합니다."
       />
     );
