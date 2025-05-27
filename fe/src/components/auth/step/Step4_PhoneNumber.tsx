@@ -41,7 +41,7 @@ export default function Step4_PhoneNumber() {
         appearance: "none",
         WebkitOverflowScrolling: "touch",
         touchAction: "manipulation",
-        caretColor: active ? 'auto' : 'transparent'
+        caretColor: active ? "auto" : "transparent",
       }}
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}

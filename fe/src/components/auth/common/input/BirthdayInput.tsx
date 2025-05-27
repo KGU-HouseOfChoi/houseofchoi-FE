@@ -132,7 +132,7 @@ export default function BirthdayInput({
             appearance: "none",
             WebkitOverflowScrolling: "touch",
             touchAction: "manipulation",
-            caretColor: front ? "auto" : "transparent"
+            caretColor: front ? "auto" : "transparent",
           }}
           placeholder="예: 700123"
         />
@@ -172,7 +172,7 @@ export default function BirthdayInput({
             appearance: "none",
             WebkitOverflowScrolling: "touch",
             touchAction: "manipulation",
-            caretColor: last ? "auto" : "transparent"
+            caretColor: last ? "auto" : "transparent",
           }}
           placeholder="1"
         />

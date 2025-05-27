@@ -15,7 +15,7 @@ export default function FamilyCompletedMessage({
   redirectTo,
   delayMs,
   message,
-  description
+  description,
 }: FamilyCompletedMessageProps) {
   const router = useRouter();
 

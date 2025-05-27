@@ -152,7 +152,7 @@ export default function Step5_VerificationCode({
                 appearance: "none",
                 WebkitOverflowScrolling: "touch",
                 touchAction: "manipulation",
-                caretColor: active ? 'auto' : 'transparent'
+                caretColor: active ? "auto" : "transparent",
               }}
               onFocus={() => setActive(true)}
               onBlur={() => setActive(false)}

@@ -18,7 +18,7 @@ export default function FamilyInputField({
   placeholder,
   active,
   onFocus,
-  onBlur
+  onBlur,
 }: FamilyInputFieldProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -51,7 +51,7 @@ export default function FamilyInputField({
           appearance: "none",
           WebkitOverflowScrolling: "touch",
           touchAction: "manipulation",
-          caretColor: active ? "auto" : "transparent"
+          caretColor: active ? "auto" : "transparent",
         }}
       />
       {value && (

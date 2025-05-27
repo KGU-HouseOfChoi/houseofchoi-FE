@@ -43,7 +43,7 @@ export default function FormInput({
   debounceDelay = 0,
   style,
   onFocus,
-  onBlur
+  onBlur,
 }: Props) {
   const [active, setActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
