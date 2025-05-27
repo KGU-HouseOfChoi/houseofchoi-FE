@@ -16,8 +16,8 @@ export default function GuestActivityCardList() {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await fetchProgramList(); // ✅ already normalized
-      setPrograms(data.slice(0, 5)); // ✅ 비회원은 일부만 노출
+      const data = await fetchProgramList();
+      setPrograms(data.slice(0, 6));
     } catch {
       setError("활동 목록을 불러오는 데 실패했습니다.");
     } finally {
