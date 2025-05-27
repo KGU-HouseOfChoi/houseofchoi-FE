@@ -20,26 +20,27 @@ const ChatbotBottom: React.FC<ChatbotBottomProps> = ({ onSend }) => {
   };
 
   return (
-    <div className="w-full bg-bgColor-default h-[85px] flex items-center justify-center py-4 px-3 gap-2 text-textColor-body font-pretendard">
-      <VoiceInput handleSend={onSend} />
-
-      <div className="w-[294px] h-[54px] rounded-2xl bg-bgColor-default border border-borderColor-default focus-within:border-brand-normal flex items-center justify-between px-3 gap-3 transition">
-        <input
-          ref={inputRef}
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSend()}
-          placeholder="궁금한 내용을 입력해주세요."
-          className="w-full bg-transparent outline-none text-textColor-heading placeholder:text-textColor-sub"
-        />
-        <button onClick={handleSend}>
-          <SendIcon
-            width={36}
-            height={36}
-            className="text-textColor-disabled"
+    <div className="fixed bottom-0 left-0 right-0 w-full flex justify-center items-end z-50 pb-[env(safe-area-inset-bottom)] sm:pb-0">
+      <div className="w-full max-w-[414px] bg-bgColor-default h-[100px] flex items-center justify-center py-6 px-4 gap-2 text-textColor-body font-pretendard shadow">
+        <VoiceInput handleSend={onSend} />
+        <div className="flex-1 max-w-[320px] h-[54px] rounded-2xl bg-bgColor-default border border-borderColor-default focus-within:border-brand-normal flex items-center justify-between px-3 gap-3 transition">
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            placeholder="궁금한 내용을 입력해주세요."
+            className="w-full bg-transparent outline-none text-textColor-heading placeholder:text-textColor-sub"
           />
-        </button>
+          <button onClick={handleSend}>
+            <SendIcon
+              width={36}
+              height={36}
+              className="text-textColor-disabled"
+            />
+          </button>
+        </div>
       </div>
     </div>
   );

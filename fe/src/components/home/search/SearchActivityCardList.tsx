@@ -29,7 +29,7 @@ export default function SearchActivityCardList({ keyword }: Props) {
       if (!hasMore || !keyword) return;
       setLoading(true);
       try {
-        const data = await searchPrograms(keyword, page); // ✅ already normalized
+        const data = await searchPrograms(keyword, page);
         setPrograms((prev) => [...prev, ...data]);
         if (data.length < PAGE_SIZE) setHasMore(false);
         setError(null);
@@ -59,6 +59,7 @@ export default function SearchActivityCardList({ keyword }: Props) {
           }
         }}
         error={error}
+        type="search"
       />
       {!loading && error && (
         <div className="text-center py-8 text-textColor-error">{error}</div>
