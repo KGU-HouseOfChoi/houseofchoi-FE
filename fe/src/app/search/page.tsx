@@ -33,7 +33,6 @@ export default function SearchPage() {
   const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
     if (inputRef.current) {
       inputRef.current.focus();
-      inputRef.current.click();
     }
   };
 
