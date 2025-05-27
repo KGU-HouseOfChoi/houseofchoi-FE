@@ -16,20 +16,9 @@ export default function SearchPage() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    let tries = 0;
-    function tryFocus() {
-      if (inputRef.current) {
-        inputRef.current.focus();
-        if (document.activeElement !== inputRef.current && tries < 5) {
-          tries += 1;
-          setTimeout(tryFocus, 50);
-        }
-      } else if (tries < 5) {
-        tries += 1;
-        setTimeout(tryFocus, 50);
-      }
+    if (inputRef.current) {
+      inputRef.current.focus();
     }
-    tryFocus();
   }, []);
 
   const handleSearch = (kw: string) => {
