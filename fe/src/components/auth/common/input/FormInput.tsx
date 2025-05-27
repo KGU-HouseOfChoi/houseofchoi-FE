@@ -100,7 +100,9 @@ export default function FormInput({
           }
           focus:border-brand-normal focus:outline-none
           placeholder:text-textColor-disabled
-          touch-manipulation`}
+          touch-manipulation
+          cursor-text`}
+        style={{ WebkitTapHighlightColor: 'transparent' }}
       />
 
       {error && (
