@@ -67,9 +67,11 @@ export default function FormInput({
     debouncedOnChange(e.target.value);
   };
 
-  const handleTouchStart = () => {
+  const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
+    e.preventDefault();
     if (inputRef.current) {
       inputRef.current.focus();
+      inputRef.current.click();
     }
   };
 
@@ -105,11 +107,14 @@ export default function FormInput({
           touch-manipulation
           cursor-text
           select-text`}
-        style={{
-          WebkitTapHighlightColor: "transparent",
-          WebkitTouchCallout: "none",
-          WebkitUserSelect: "text",
-          userSelect: "text",
+        style={{ 
+          WebkitTapHighlightColor: 'transparent',
+          WebkitTouchCallout: 'none',
+          WebkitUserSelect: 'text',
+          userSelect: 'text',
+          caretColor: '#000000',
+          WebkitAppearance: 'none',
+          appearance: 'none'
         }}
       />
 

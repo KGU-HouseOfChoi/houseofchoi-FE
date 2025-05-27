@@ -60,8 +60,10 @@ export default function Step5_VerificationCode({
   };
 
   const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
+    e.preventDefault();
     if (e.currentTarget) {
       e.currentTarget.focus();
+      e.currentTarget.click();
     }
   };
 
@@ -140,11 +142,14 @@ export default function Step5_VerificationCode({
                 touch-manipulation
                 cursor-text
                 select-text`}
-              style={{
-                WebkitTapHighlightColor: "transparent",
-                WebkitTouchCallout: "none",
-                WebkitUserSelect: "text",
-                userSelect: "text",
+              style={{ 
+                WebkitTapHighlightColor: 'transparent',
+                WebkitTouchCallout: 'none',
+                WebkitUserSelect: 'text',
+                userSelect: 'text',
+                caretColor: '#000000',
+                WebkitAppearance: 'none',
+                appearance: 'none'
               }}
               autoFocus
             />

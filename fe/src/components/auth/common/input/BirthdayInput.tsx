@@ -69,8 +69,10 @@ export default function BirthdayInput({
   };
 
   const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
+    e.preventDefault();
     if (e.currentTarget) {
       e.currentTarget.focus();
+      e.currentTarget.click();
     }
   };
 
@@ -121,11 +123,14 @@ export default function BirthdayInput({
             touch-manipulation
             cursor-text
             select-text`}
-          style={{
-            WebkitTapHighlightColor: "transparent",
-            WebkitTouchCallout: "none",
-            WebkitUserSelect: "text",
-            userSelect: "text",
+          style={{ 
+            WebkitTapHighlightColor: 'transparent',
+            WebkitTouchCallout: 'none',
+            WebkitUserSelect: 'text',
+            userSelect: 'text',
+            caretColor: '#000000',
+            WebkitAppearance: 'none',
+            appearance: 'none'
           }}
           placeholder="예: 700123"
         />
@@ -156,11 +161,14 @@ export default function BirthdayInput({
             touch-manipulation
             cursor-text
             select-text`}
-          style={{
-            WebkitTapHighlightColor: "transparent",
-            WebkitTouchCallout: "none",
-            WebkitUserSelect: "text",
-            userSelect: "text",
+          style={{ 
+            WebkitTapHighlightColor: 'transparent',
+            WebkitTouchCallout: 'none',
+            WebkitUserSelect: 'text',
+            userSelect: 'text',
+            caretColor: '#000000',
+            WebkitAppearance: 'none',
+            appearance: 'none'
           }}
           placeholder="1"
         />
