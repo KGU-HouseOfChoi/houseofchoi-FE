@@ -13,10 +13,14 @@ const nextConfig = {
   },
 
   experimental: {
-    serverActions: true,
+    serverActions: {
+      allowedOrigins: ["houseofchoi-fe.vercel.app"],
+    },
   },
 
-  metadataBase: new URL("https://houseofchoi-fe.vercel.app"),
+  metadata: {
+    metadataBase: new URL("https://houseofchoi-fe.vercel.app"),
+  },
 
   webpack(config: Configuration, _options: WebpackConfigContext) {
     config.module?.rules?.push({

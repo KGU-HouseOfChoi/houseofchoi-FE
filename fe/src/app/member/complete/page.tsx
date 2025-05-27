@@ -11,18 +11,18 @@ export default function CompletePage() {
   const [showFamilyPopup, setShowFamilyPopup] = useState(true);
 
   useEffect(() => {
-    // signupComplete 플래그가 없으면 메인 페이지로 리다이렉트
     const isComplete = localStorage.getItem("signupComplete");
+
+    // 회원가입이 완료되지 않은 경우
     if (!isComplete) {
-      router.replace("/member");
+      router.replace("/auth");
       return;
     }
 
-    // 현재 페이지를 history에 추가
+    // 브라우저 뒤로가기 방지
     window.history.pushState(null, "", location.href);
 
     const preventBack = (e: PopStateEvent) => {
-      // 뒤로가기 시도 시 현재 페이지로 다시 이동하고 기본 동작 방지
       e.preventDefault();
       window.history.pushState(null, "", location.href);
     };

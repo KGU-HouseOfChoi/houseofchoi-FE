@@ -1,11 +1,12 @@
 {
-  "name": "learningwith",
-  "short_name": "learningwith",
+  "name": "배우다",
+  "short_name": "배우다",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#FFFFFF",
   "orientation": "portrait",
+  "viewport": "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
   "icons": [
     {
       "src": "/icons/icon-192x192.png",

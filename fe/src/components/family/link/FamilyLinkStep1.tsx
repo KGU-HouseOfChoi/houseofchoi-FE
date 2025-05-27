@@ -20,7 +20,7 @@ export default function FamilyLinkStep1({
           당신은?
         </p>
 
-        <div className="flex gap-4 w-full max-w-xs">
+        <div className="flex gap-4 w-full px-6">
           <FamilyOptionButton
             label="부모"
             selected={relation === "parent"}

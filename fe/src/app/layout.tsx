@@ -5,7 +5,7 @@ import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "배우다",
-  description: "가족 연동 기능을 통해\n일정을 나누고 챙길 수 있어요",
+  description: "나에게 딱 맞는 활동,\n이제 쉽게 찾아보세요",
   keywords: [
     "시니어복지",
     "추천 서비스",
@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "배우다",
-    description: "가족 연동 기능을 통해\n일정을 나누고 챙길 수 있어요",
+    description: "나에게 딱 맞는 활동,\n이제 쉽게 찾아보세요",
     url: "https://learningwith.co.kr",
-    siteName: "배우다 learningwith",
+    siteName: "배우다",
     images: [
       {
         url: "/images/og-image.png",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "배우다",
-    description: "가족 연동 기능을 통해\n일정을 나누고 챙길 수 있어요",
+    description: "나에게 딱 맞는 활동,\n이제 쉽게 찾아보세요",
     images: ["/images/og-image.png"],
   },
   icons: {
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FFB74D",
+  themeColor: "#FFFFFF",
 };
 
 export default function RootLayout({

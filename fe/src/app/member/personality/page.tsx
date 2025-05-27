@@ -36,7 +36,7 @@ export default function PersonalityAnalysisPage() {
         setShowIntroPopup(true);
       } catch (error: unknown) {
         if (axios.isAxiosError(error) && error.response?.status === 409) {
-          console.log("✅ 409 Conflict → alreadyCompleted 메시지 표시");
+          console.log("409 Conflict → alreadyCompleted 메시지 표시");
           setCompletedVersion("alreadyCompleted");
         } else {
           console.error("질문 불러오기 에러:", error);
