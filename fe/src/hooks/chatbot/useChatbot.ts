@@ -19,27 +19,29 @@ export function useChatbot() {
     loading: scheduleLoading,
     goToCalendar,
   } = useSchedule();
-  
+
   const {
     popupOpen,
     openPopup: openChatbotPopup,
     closePopup,
     cancelAndAsk,
   } = useChatbotSchedule();
-  
+
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  
   function splitBySentences(text: string, groupSize = 2): string[] {
-   
-    const sentences = text.match(/[^.!?\n]+[.!?\n]?/g)?.map(s => s.trim()).filter(Boolean) || [];
+    const sentences =
+      text
+        .match(/[^.!?\n]+[.!?\n]?/g)
+        ?.map((s) => s.trim())
+        .filter(Boolean) || [];
     const grouped: string[] = [];
     for (let i = 0; i < sentences.length; i += groupSize) {
-      grouped.push(sentences.slice(i, i + groupSize).join(' '));
+      grouped.push(sentences.slice(i, i + groupSize).join(" "));
     }
     return grouped;
   }
@@ -47,7 +49,7 @@ export function useChatbot() {
   const pushBotText = (content: string) =>
     setMessages((prev) => [
       ...prev,
-      ...splitBySentences(content, 2).map((bubble) => ({
+      ...(splitBySentences(content, 2).map((bubble) => ({
         id: Date.now().toString() + Math.random(),
         sender: "bot",
         profileUrl: "/images/Chatlogo.svg",
@@ -55,7 +57,7 @@ export function useChatbot() {
         content: bubble,
         timestamp: new Date().toISOString(),
         isUser: false,
-      })) as import("@/types/chatbot").TextMessage[],
+      })) as import("@/types/chatbot").TextMessage[]),
     ]);
 
   const handleSend = async (text: string) => {
@@ -82,8 +84,11 @@ export function useChatbot() {
       const answer = await fetchChatAnswer(text);
       pushBotText(answer);
 
-      
-      if (answer.includes("진행") || answer.includes("프로그램") || answer.includes("추천")) {
+      if (
+        answer.includes("진행") ||
+        answer.includes("프로그램") ||
+        answer.includes("추천")
+      ) {
         const confirmCard: ScheduleConfirmMessage = {
           id: `${Date.now()}-confirm`,
           sender: "bot",
@@ -131,7 +136,7 @@ export function useChatbot() {
         isUser: false,
       };
 
-      setIsActivityConfirm(true); 
+      setIsActivityConfirm(true);
       setMessages((prev) => [...prev, ...recMsgs, confirmCard]);
     } catch {
       pushBotText("추천 정보를 가져오지 못했어요. 다시 시도해 주세요.");
@@ -147,10 +152,9 @@ export function useChatbot() {
         if (result.length === 0) {
           openChatbotPopup();
         } else {
-          setMessages(prev => [...prev, ...result]);
+          setMessages((prev) => [...prev, ...result]);
         }
       } else {
-       
         setMessages((prev) => [
           ...prev,
           {
@@ -162,13 +166,16 @@ export function useChatbot() {
             isUser: true,
           },
         ]);
-        
+
         try {
           const answer = await fetchChatAnswer("예");
           pushBotText(answer);
-          
-          
-          if (answer.includes("일정") || answer.includes("등록") || answer.includes("추가")) {
+
+          if (
+            answer.includes("일정") ||
+            answer.includes("등록") ||
+            answer.includes("추가")
+          ) {
             openChatbotPopup();
           }
         } catch {
