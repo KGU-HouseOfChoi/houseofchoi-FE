@@ -16,7 +16,6 @@ export default function FamilyLinkStep2({ relation }: FamilyLinkStep2Props) {
     "NEW_USER" | "EXISTING_USER" | null
   >(null);
   const [error, setError] = useState("");
-  const [active, setActive] = useState(false);
 
   const handleNext = async () => {
     if (!code) return;
@@ -46,7 +45,7 @@ export default function FamilyLinkStep2({ relation }: FamilyLinkStep2Props) {
     return (
       <FamilyCompletedMessage
         redirectTo="/member/personality"
-        delayMs={0}
+        delayMs={3000}
         message="연동이 완료되었어요 🎉"
         description="이제 성향 분석을 시작할게요!"
       />
@@ -58,7 +57,7 @@ export default function FamilyLinkStep2({ relation }: FamilyLinkStep2Props) {
       <FamilyCompletedMessage
         redirectTo="/member"
         delayMs={3000}
-        message="가족 연동이 완료되었습니다!"
+        message="가족 링크가 완료되었어요!"
         description="이제 가족과 함께 일정을 공유할 수 있어요.\n잠시 후 메인 페이지로 이동합니다."
       />
     );
@@ -75,9 +74,7 @@ export default function FamilyLinkStep2({ relation }: FamilyLinkStep2Props) {
           value={code}
           onChange={setCode}
           placeholder="고유번호 입력"
-          active={active}
-          onFocus={() => setActive(true)}
-          onBlur={() => setActive(false)}
+          active={false}
         />
 
         {error && <p className="text-danger-50 text-sm text-center">{error}</p>}
