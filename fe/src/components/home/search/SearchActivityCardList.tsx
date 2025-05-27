@@ -59,6 +59,7 @@ export default function SearchActivityCardList({ keyword }: Props) {
           }
         }}
         error={error}
+        type="search"
       />
       {!loading && error && (
         <div className="text-center py-8 text-textColor-error">{error}</div>

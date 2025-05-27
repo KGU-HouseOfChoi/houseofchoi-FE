@@ -35,6 +35,7 @@ export default function GuestActivityCardList() {
       isLoading={isLoading}
       error={error}
       onReload={loadData}
+      type="guest"
     />
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/auth/useAuth";
 import SearchAutoComplete from "@/components/home/search/SearchAutoComplete";
@@ -11,9 +11,26 @@ import Image from "next/image";
 export default function SearchPage() {
   const router = useRouter();
   const { isGuest } = useAuth();
-
   const [inputValue, setInputValue] = useState("");
   const [confirmedKeyword, setConfirmedKeyword] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    let tries = 0;
+    function tryFocus() {
+      if (inputRef.current) {
+        inputRef.current.focus();
+        if (document.activeElement !== inputRef.current && tries < 5) {
+          tries += 1;
+          setTimeout(tryFocus, 50);
+        }
+      } else if (tries < 5) {
+        tries += 1;
+        setTimeout(tryFocus, 50);
+      }
+    }
+    tryFocus();
+  }, []);
 
   const handleSearch = (kw: string) => {
     setConfirmedKeyword(kw);
@@ -36,6 +53,8 @@ export default function SearchPage() {
         </button>
         <div className="flex-1 relative text-textColor-body">
           <input
+            ref={inputRef}
+            autoFocus
             value={inputValue}
             onChange={(e) => {
               setInputValue(e.target.value);
