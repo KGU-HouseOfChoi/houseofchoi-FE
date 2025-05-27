@@ -118,6 +118,7 @@ export default function FormInput({
           appearance: "none",
           WebkitOverflowScrolling: "touch",
           touchAction: "manipulation",
+          caretColor: active ? "auto" : "transparent",
           ...style,
         }}
       />
