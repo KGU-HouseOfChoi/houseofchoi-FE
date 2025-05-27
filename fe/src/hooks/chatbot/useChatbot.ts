@@ -20,25 +20,36 @@ export function useChatbot() {
     cancelAndAsk,
     goToCalendar,
   } = useSchedule();
-
+  
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  // 문장 분리 함수: 두 문장씩 묶어서 배열로 반환
+  function splitBySentences(text: string, groupSize = 2): string[] {
+    // 마침표, 물음표, 느낌표, 줄바꿈 뒤에 분리
+    const sentences = text.match(/[^.!?\n]+[.!?\n]?/g)?.map(s => s.trim()).filter(Boolean) || [];
+    const grouped: string[] = [];
+    for (let i = 0; i < sentences.length; i += groupSize) {
+      grouped.push(sentences.slice(i, i + groupSize).join(' '));
+    }
+    return grouped;
+  }
+
   const pushBotText = (content: string) =>
     setMessages((prev) => [
       ...prev,
-      {
-        id: Date.now().toString(),
+      ...splitBySentences(content, 2).map((bubble) => ({
+        id: Date.now().toString() + Math.random(),
         sender: "bot",
         profileUrl: "/images/Chatlogo.svg",
         type: "text",
-        content,
+        content: bubble,
         timestamp: new Date().toISOString(),
         isUser: false,
-      },
+      })) as import("@/types/chatbot").TextMessage[],
     ]);
 
   const handleSend = async (text: string) => {
@@ -57,8 +68,25 @@ export function useChatbot() {
     ]);
 
     try {
+      if (text === "예") {
+        await confirmSchedule("yes");
+        return;
+      }
+
       const answer = await fetchChatAnswer(text);
       pushBotText(answer);
+
+      // 일정 등록 확인 메시지가 포함되어 있는지 확인
+      if (answer.includes("일정을 추가")) {
+        const confirmCard: ScheduleConfirmMessage = {
+          id: `${Date.now()}-confirm`,
+          sender: "bot",
+          type: "schedule-confirm",
+          timestamp: new Date().toISOString(),
+          isUser: false,
+        };
+        setMessages((prev) => [...prev, confirmCard]);
+      }
     } catch {
       pushBotText("답변을 가져오지 못했어요. 잠시 후 다시 시도해 주세요.");
     }
@@ -105,11 +133,14 @@ export function useChatbot() {
 
   /* ─────────── 예/아니요 클릭 ─────────── */
   const handleScheduleConfirm = async (value: "yes" | "no") => {
-    const replyMsgs = await confirmSchedule(value);
-    setMessages((prev) => [...prev, ...replyMsgs]);
+    if (value === "yes") {
+      await handleSend("예");
+    } else {
+      pushBotText("다른 궁금한 사항이 있다면 질문해주세요!");
+    }
   };
 
-  /* ─────────── 팝업 ‘대화하기’ 클릭 ─────────── */
+  /* ─────────── 팝업 '대화하기' 클릭 ─────────── */
   const handlePopupCancel = () => {
     const reply = cancelAndAsk(); // 안내 메시지 생성
     setMessages((prev) => [...prev, ...reply]); // 대화창에 push
