@@ -12,7 +12,7 @@ const ChatbotGreeting: FC<ChatbotGreetingProps> = ({ username }) => {
           {username}님, 안녕하세요
         </p>
         <p className="m-0 text-[19px] whitespace-pre-wrap">
-          반가워요, 어르심이에요!!
+          반가워요, 배우다예요!!
         </p>
       </div>
     </div>
