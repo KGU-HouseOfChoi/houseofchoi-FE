@@ -39,15 +39,16 @@ const CalendarHeader: FC<CalendarHeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-20 w-full bg-white shadow-[0px_3px_10px_rgba(142,142,142,0.25)]">
-      <div className="w-full max-w-[400px] mx-auto pt-4 pb-2 flex items-center px-4 relative">
+      <div className="w-full max-w-[400px] mx-auto pt-4 pb-2 flex items-center px-4">
         <BackButton
           onClick={handleBack}
-          className="mr-4 flex-shrink-0 z-10"
-          iconSize={40}
+          className="flex-shrink-0"
+          iconSize={36}
         />
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl sm:text-3xl font-bold text-textColor-heading w-max pointer-events-none select-none">
+        <div className="flex-1 text-center text-xl sm:text-2xl font-bold text-textColor-heading">
           {monthLabel}
         </div>
+        <div className="w-9 h-9" />
       </div>
 
       <div className="mt-6 grid grid-cols-7 gap-x-2 sm:gap-x-4 justify-items-center mb-2 font-bold px-2">
@@ -62,7 +63,7 @@ const CalendarHeader: FC<CalendarHeaderProps> = ({
               key={d.toISOString()}
               type="button"
               onClick={() => onSelectDay(dayStr)}
-              className={`flex flex-col items-center justify-center w-14 h-16 sm:w-16 sm:h-20 rounded-xl transition-all
+              className={`flex flex-col items-center justify-center w-12 h-16 sm:w-14 sm:h-20 rounded-xl transition-all
                 ${
                   active
                     ? "border-2 border-brand-normal font-extrabold text-brand-normal bg-brand-normal/10"
