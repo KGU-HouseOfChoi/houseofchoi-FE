@@ -24,6 +24,7 @@ interface Props {
   autoFocus?: boolean;
   debounceDelay?: number;
   maxLength?: number;
+  style?: React.CSSProperties;
 }
 
 export default function FormInput({
@@ -38,6 +39,7 @@ export default function FormInput({
   maxLength,
   autoFocus = false,
   debounceDelay = 0,
+  style
 }: Props) {
   const [active, setActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -115,7 +117,8 @@ export default function FormInput({
           WebkitAppearance: 'none',
           appearance: 'none',
           WebkitOverflowScrolling: 'touch',
-          touchAction: 'manipulation'
+          touchAction: 'manipulation',
+          ...style
         }}
       />
 
