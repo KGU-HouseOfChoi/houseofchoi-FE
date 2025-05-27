@@ -38,6 +38,7 @@ export default function AuthPage() {
         if (status === "EXISTING_USER") {
           router.replace("/member");
         } else {
+          localStorage.setItem("signupComplete", "true");
           router.replace("/member/complete");
         }
       },

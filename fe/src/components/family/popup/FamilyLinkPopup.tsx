@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import BottomPopup from "@/components/common/popup/BottomPopup";
+import PopupButtons from "@/components/common/button/PopupButtons";
 import { Calendar, X } from "lucide-react";
 
 interface FamilyLinkPopupProps {
@@ -17,7 +18,7 @@ export default function FamilyLinkPopup({
 
   const handleFamilyLink = () => {
     onClose();
-    router.push("/member/family");
+    router.replace("/member/family");
   };
 
   return (
@@ -41,19 +42,12 @@ export default function FamilyLinkPopup({
           가족을 추가하여 연동하면{"\n"}일정을 공유할 수 있어요!
         </p>
 
-        <button
-          onClick={handleFamilyLink}
-          className="w-full py-3 rounded-xl bg-brand-normal text-white text-lg font-semibold hover:bg-brand-hover"
-        >
-          가족 추가하기
-        </button>
-
-        <button
-          onClick={onClose}
-          className="text-base text-textColor-sub hover:underline"
-        >
-          건너뛰기
-        </button>
+        <PopupButtons
+          onConfirm={handleFamilyLink}
+          onCancel={onClose}
+          confirmLabel="가족 추가하기"
+          cancelLabel="건너뛰기"
+        />
       </div>
     </BottomPopup>
   );

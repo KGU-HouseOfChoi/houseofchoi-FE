@@ -65,7 +65,7 @@ export default function FamilyLinkStep2({ relation }: FamilyLinkStep2Props) {
 
   return (
     <div className="relative flex flex-col min-h-screen px-6 pt-4 pb-20 bg-bgColor-default">
-      <div className="flex flex-col justify-center flex-1 gap-8">
+      <div className="flex flex-col justify-center flex-1 gap-4">
         <p className="text-xl font-semibold text-textColor-heading">
           {relation === "parent" ? "자녀" : "부모"}의 고유 번호를 입력해주세요
         </p>

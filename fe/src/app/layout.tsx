@@ -4,28 +4,36 @@ import LayoutWrapper from "@/components/common/LayoutWrapper";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "어르심 - 노인을 위한 활동 추천 플랫폼",
-  description: "노인 맞춤형 여가/복지 활동을 추천하는 소셜케어 서비스",
-  keywords: ["노인복지", "추천 서비스", "어르심", "Eldermind", "노인 활동"],
+  title: "배우다",
+  description: "가족 연동 기능을 통해\n일정을 나누고 챙길 수 있어요",
+  keywords: [
+    "시니어복지",
+    "추천 서비스",
+    "배우다",
+    "learningwith",
+    "시니어 활동",
+    "가족 연동",
+    "일정 공유",
+  ],
   openGraph: {
-    title: "어르심",
-    description: "노인을 위한 활동 추천 플랫폼",
-    url: "https://houseofchoi-fe.vercel.app",
-    siteName: "어르심 Eldermind",
+    title: "배우다",
+    description: "가족 연동 기능을 통해\n일정을 나누고 챙길 수 있어요",
+    url: "https://learningwith.co.kr",
+    siteName: "배우다 learningwith",
     images: [
       {
         url: "/images/og-image.png",
         width: 1200,
         height: 630,
-        alt: "어르심 대표 이미지",
+        alt: "배우다 대표 이미지",
       },
     ],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "어르심",
-    description: "노인을 위한 활동 추천 플랫폼",
+    title: "배우다",
+    description: "가족 연동 기능을 통해\n일정을 나누고 챙길 수 있어요",
     images: ["/images/og-image.png"],
   },
   icons: {

@@ -11,6 +11,9 @@ module.exports = {
         sans: ["Pretendard", "sans-serif"],
         pretendard: ["Pretendard", "sans-serif"],
       },
+      boxShadow: {
+        header: "0px 3px 10px rgba(142, 142, 142, 0.25)",
+      },
       colors: {
         // Grayscale
         grayscale: {

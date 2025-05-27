@@ -27,7 +27,6 @@ export default function Step5_VerificationCode({
 }: Step5VerificationProps) {
   const router = useRouter();
   const [secondsLeft, setSecondsLeft] = useState(180);
-  const [canResend, setCanResend] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const { phoneNumber } = useAuthStore();
 
@@ -50,11 +49,9 @@ export default function Step5_VerificationCode({
 
   useEffect(() => {
     if (secondsLeft === 0) {
-      setCanResend(true);
-      setCode("");
       setError("인증번호가 만료되었습니다. 다시 요청해주세요.");
     }
-  }, [secondsLeft, setCode, setError]);
+  }, [secondsLeft, setError]);
 
   const handleVerify = (val: string) => {
     const digits = val.replace(/\D/g, "").slice(0, 6);
@@ -72,8 +69,12 @@ export default function Step5_VerificationCode({
       setCode("");
       setError("");
       setSecondsLeft(180);
-      setCanResend(false);
       startTimer();
+
+      // 3초 후 토스트 자동으로 닫기
+      setTimeout(() => {
+        setShowToast(false);
+      }, 3000);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const err = error as AxiosError<{ message: string }>;
@@ -107,7 +108,7 @@ export default function Step5_VerificationCode({
         <div className="flex flex-col gap-2">
           <label
             htmlFor="verificationCode"
-            className="text-xl text-textColor-sub"
+            className="text-xl text-textColor-body font-semibold"
           >
             인증번호
           </label>
@@ -122,14 +123,16 @@ export default function Step5_VerificationCode({
               onChange={(e) => handleVerify(e.target.value)}
               placeholder="6자리 입력"
               maxLength={6}
-              className={`w-full px-4 py-3 pr-20 rounded-xl border-2 text-base outline-none transition-colors
+              className={`w-full h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors bg-bgColor-default
                 ${
                   error
                     ? "border-danger-50"
                     : code
                       ? "border-brand-normal"
                       : "border-borderColor-default"
-                }`}
+                }
+                focus:border-brand-normal focus:outline-none
+                placeholder:text-textColor-disabled`}
               autoFocus
             />
             <span
@@ -145,19 +148,13 @@ export default function Step5_VerificationCode({
           </div>
 
           {error && (
-            <p className="text-danger-50 text-sm font-medium">{error}</p>
+            <p className="text-danger-50 text-sm font-medium mt-1">{error}</p>
           )}
         </div>
 
         <button
-          disabled={!canResend}
           onClick={handleResend}
-          className={`px-3 py-2 border rounded-lg text-sm font-semibold transition-colors
-            ${
-              canResend
-                ? "text-brand-normal border-brand-normal hover:bg-brand-normal hover:text-white"
-                : "text-iconColor-disabled border-borderColor-default cursor-not-allowed"
-            }`}
+          className="px-3 py-2 border rounded-lg text-sm font-semibold transition-colors bg-brand-normal text-white border-brand-normal hover:bg-brand-hover active:bg-brand-active"
         >
           인증번호 다시 받기
         </button>

@@ -59,10 +59,19 @@ export default function BirthdayInput({
     );
   };
 
+  const handleLastDigitChange = (val: string) => {
+    setLast(val);
+    handleChange(front, val);
+
+    if (val.length === 1) {
+      lastInputRef.current?.blur();
+    }
+  };
+
   return (
-    <div className="w-full max-w-[364px] flex flex-col gap-2">
-      <label className="text-xl text-textColor-sub">
-        주민등록번호를 입력해주세요
+    <div className="w-full flex flex-col gap-2 mx-auto">
+      <label className="text-xl text-textColor-body font-semibold">
+        주민번호
       </label>
 
       <div className="flex gap-2 w-full">
@@ -92,18 +101,20 @@ export default function BirthdayInput({
             }
           }}
           autoFocus={autoFocus}
-          className={`flex-1 h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors
+          className={`w-[calc(100%-80px)] h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors bg-bgColor-default
             ${
               error
                 ? "border-danger-50"
-                : front
+                : front || value
                   ? "border-brand-normal"
                   : "border-borderColor-default"
-            }`}
+            }
+            focus:border-brand-normal focus:outline-none
+            placeholder:text-textColor-disabled`}
           placeholder="예: 700123"
         />
 
-        <span className="mt-[14px]">-</span>
+        <span className="mt-[14px] text-textColor-heading">-</span>
 
         <input
           ref={lastInputRef}
@@ -112,24 +123,26 @@ export default function BirthdayInput({
           pattern="[0-9]*"
           maxLength={1}
           value={last}
-          onChange={(e) => {
-            const val = e.target.value.replace(/\D/g, "").slice(0, 1);
-            setLast(val);
-            handleChange(front, val);
-          }}
-          className={`w-[60px] h-[60px] px-4 rounded-xl border-2 text-base text-center outline-none transition-colors
+          onChange={(e) =>
+            handleLastDigitChange(e.target.value.replace(/\D/g, "").slice(0, 1))
+          }
+          className={`w-[60px] h-[60px] px-4 rounded-xl border-2 text-base text-center outline-none transition-colors bg-bgColor-default
             ${
               error
                 ? "border-danger-50"
-                : last
+                : last || value
                   ? "border-brand-normal"
                   : "border-borderColor-default"
-            }`}
+            }
+            focus:border-brand-normal focus:outline-none
+            placeholder:text-textColor-disabled`}
           placeholder="1"
         />
       </div>
 
-      {error && <p className="text-danger-50 text-sm font-medium">{error}</p>}
+      {error && (
+        <p className="text-danger-50 text-sm font-medium mt-1">{error}</p>
+      )}
     </div>
   );
 }
