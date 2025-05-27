@@ -73,11 +73,9 @@ export default function FormInput({
     debouncedOnChange(e.target.value);
   };
 
-  const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const handleTouchStart = () => {
     if (inputRef.current) {
       inputRef.current.focus();
-      inputRef.current.click();
     }
   };
 

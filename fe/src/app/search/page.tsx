@@ -30,11 +30,9 @@ export default function SearchPage() {
     router.push(isGuest ? "/guest" : "/member");
   };
 
-  const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (e.currentTarget) {
-      e.currentTarget.focus();
-      e.currentTarget.click();
+  const handleTouchStart = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
     }
   };
 
@@ -79,6 +77,7 @@ export default function SearchPage() {
             onTouchStart={handleTouchStart}
             placeholder="검색어를 입력하세요"
             aria-label="검색어 입력"
+            inputMode="search"
             className="w-full border-2 border-brand-normal focus:border-brand-normal focus:outline-none rounded-xl py-2 px-4 pr-10 text-lg touch-manipulation cursor-text select-text"
             style={{
               WebkitTapHighlightColor: "transparent",

@@ -19,11 +19,9 @@ const ChatbotBottom: React.FC<ChatbotBottomProps> = ({ onSend }) => {
     inputRef.current?.focus();
   };
 
-  const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const handleTouchStart = () => {
     if (inputRef.current) {
       inputRef.current.focus();
-      inputRef.current.click();
     }
   };
 
@@ -40,6 +38,7 @@ const ChatbotBottom: React.FC<ChatbotBottomProps> = ({ onSend }) => {
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
             onTouchStart={handleTouchStart}
             placeholder="궁금한 내용을 입력해주세요."
+            inputMode="text"
             className="w-full bg-transparent outline-none text-textColor-heading placeholder:text-textColor-sub touch-manipulation cursor-text select-text"
             style={{
               WebkitTapHighlightColor: "transparent",
