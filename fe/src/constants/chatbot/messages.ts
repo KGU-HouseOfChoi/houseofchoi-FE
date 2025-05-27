@@ -11,6 +11,9 @@ export const CONFIRM_KEYWORDS = {
   CALENDAR_KEYWORDS: ["일정", "등록", "추가"] as const,
 } as const;
 
-export const containsKeywords = (text: string, keywords: readonly string[]): boolean => {
-  return keywords.some(keyword => text.includes(keyword));
+export const containsKeywords = (
+  text: string,
+  keywords: readonly string[],
+): boolean => {
+  return keywords.some((keyword) => text.includes(keyword));
 };

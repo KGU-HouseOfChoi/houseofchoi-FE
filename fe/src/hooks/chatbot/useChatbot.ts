@@ -7,7 +7,10 @@ import { fetchChatAnswer } from "@/apis/chatbot/fetchChatAnswer";
 import { useActivityRecommendation } from "./useActivityRecommendation";
 import { useSchedule } from "@/hooks/chatbot/useSchedule";
 import { useChatbotSchedule } from "@/hooks/chatbot/useChatbotSchedule";
-import { CONFIRM_KEYWORDS, containsKeywords } from "@/constants/chatbot/messages";
+import {
+  CONFIRM_KEYWORDS,
+  containsKeywords,
+} from "@/constants/chatbot/messages";
 
 export function useChatbot() {
   const [messages, setMessages] = useState<Message[]>(INITIAL_GREETING);
@@ -165,7 +168,7 @@ export function useChatbot() {
     try {
       const answer = await fetchChatAnswer(CONFIRM_KEYWORDS.YES);
       pushBotText(answer);
-      
+
       if (containsKeywords(answer, CONFIRM_KEYWORDS.CALENDAR_KEYWORDS)) {
         openChatbotPopup();
       }
@@ -177,7 +180,9 @@ export function useChatbot() {
   /* ─────────── 예/아니오 클릭 ─────────── */
   const handleScheduleConfirm = async (value: "yes" | "no") => {
     if (value === "yes") {
-      await (isActivityConfirm ? handleActivityConfirmYes() : handleGeneralConfirmYes());
+      await (isActivityConfirm
+        ? handleActivityConfirmYes()
+        : handleGeneralConfirmYes());
     } else {
       setIsActivityConfirm(false);
       pushBotText("다른 궁금한 사항이 있다면 질문해주세요!");
