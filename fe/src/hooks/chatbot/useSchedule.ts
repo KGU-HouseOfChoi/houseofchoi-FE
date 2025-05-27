@@ -23,8 +23,7 @@ export function useSchedule() {
 
     setLoading(true);
     try {
-      const res = await apiRegisterSchedule(programId);
-
+      await apiRegisterSchedule(programId);
       return [];
     } catch (e) {
       console.error(" 일정 저장 실패", e);
