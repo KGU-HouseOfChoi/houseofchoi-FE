@@ -54,11 +54,14 @@ export default function Step5_VerificationCode({
   }, [secondsLeft, setError]);
 
   const handleVerify = (val: string) => {
-    const digits = val.replace(/\D/g, "").slice(0, 6);
-    setCode(digits);
+    const clean = val.replace(/\D/g, "").slice(0, 6);
+    setCode(clean);
+    setError("");
+  };
 
-    if (error && digits.length < 6) {
-      setError("");
+  const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
+    if (e.currentTarget) {
+      e.currentTarget.focus();
     }
   };
 
@@ -121,6 +124,7 @@ export default function Step5_VerificationCode({
               inputMode="numeric"
               value={code}
               onChange={(e) => handleVerify(e.target.value)}
+              onTouchStart={handleTouchStart}
               placeholder="6자리 입력"
               maxLength={6}
               className={`w-full h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors bg-bgColor-default
@@ -132,7 +136,16 @@ export default function Step5_VerificationCode({
                       : "border-borderColor-default"
                 }
                 focus:border-brand-normal focus:outline-none
-                placeholder:text-textColor-disabled`}
+                placeholder:text-textColor-disabled
+                touch-manipulation
+                cursor-text
+                select-text`}
+              style={{ 
+                WebkitTapHighlightColor: 'transparent',
+                WebkitTouchCallout: 'none',
+                WebkitUserSelect: 'text',
+                userSelect: 'text'
+              }}
               autoFocus
             />
             <span
