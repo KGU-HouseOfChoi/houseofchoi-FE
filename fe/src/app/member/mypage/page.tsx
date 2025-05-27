@@ -39,7 +39,7 @@ export default function MyPage() {
 
         <FamilyList userInfoList={familyList} />
 
-        <div className="mt-10 mb-8">
+        <div className="mt-20 mb-8">
           <FamilyAddButton />
         </div>
 

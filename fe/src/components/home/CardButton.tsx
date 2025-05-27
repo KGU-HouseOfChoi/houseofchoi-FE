@@ -18,7 +18,7 @@ const CardButton: FC<CardButtonProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`rounded-2xl bg-brand-normal text-black text-xl font-bold text-center shadow-md ${width} ${height} flex items-center justify-center`}
+      className={`rounded-2xl bg-brand-normal text-textColor-heading text-lg sm:text-xl font-bold text-center shadow-md ${width} ${height} flex items-center justify-center px-2`}
     >
       {text}
     </button>

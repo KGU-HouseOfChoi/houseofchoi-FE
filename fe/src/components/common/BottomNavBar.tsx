@@ -37,7 +37,7 @@ export default function BottomNavBar() {
       isActive: pathname === "/member/calendar",
     },
     {
-      label: "대화",
+      label: "챗봇",
       href: "/member/chatbot",
       icon: MessagesIcon,
       isActive: pathname === "/member/chatbot",

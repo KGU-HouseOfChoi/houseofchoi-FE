@@ -15,6 +15,7 @@ interface Props {
   isLoading: boolean;
   error: string | null;
   onReload: () => void;
+  type?: "member" | "guest" | "search";
 }
 
 export default function ActivityCardListBase({
@@ -22,6 +23,7 @@ export default function ActivityCardListBase({
   isLoading,
   error,
   onReload,
+  type = "member",
 }: Props) {
   const { isGuest } = useAuth();
 
@@ -100,6 +102,14 @@ export default function ActivityCardListBase({
             onMoreClick={() => setInfoProgram(p)}
           />
         ))}
+
+      {!isLoading && !error && uniquePrograms.length > 0 && (
+        <p className="py-6 text-textColor-sub text-md">
+          {type === "member" && "추천 활동이 끝났습니다!"}
+          {type === "guest" && "더 많은 활동을 보려면 로그인해주세요!"}
+          {type === "search" && "검색 결과가 끝났습니다!"}
+        </p>
+      )}
 
       {selectedProgram && (
         <CalendarAddPopup

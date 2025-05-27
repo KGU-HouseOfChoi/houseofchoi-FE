@@ -24,8 +24,10 @@ export default function SearchAutoComplete({ keyword, onSelect }: Props) {
       setLoading(true);
       try {
         const programs = await searchPrograms(debouncedKeyword, 1, 5);
-        const names = programs.filter((p) => p && p.name).map((p) => p.name);
-        setResults(names);
+        const uniqueNames = Array.from(
+          new Set(programs.filter((p) => p.name).map((p) => p.name)),
+        );
+        setResults(uniqueNames);
       } catch {
         setResults([]);
       } finally {
