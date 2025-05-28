@@ -52,15 +52,15 @@ export default function QuestionNavigator({
         (ans) => ans?.match(/\(([AB])\)/)?.[1] ?? ans ?? "",
       );
 
-      console.log("✅ 제출 answers (A/B만):", cleanedAnswers);
+      console.log("제출 answers (A/B만):", cleanedAnswers);
 
       if (cleanedAnswers.includes("")) {
-        throw new Error("⚠️ 모든 질문에 답변해주세요.");
+        throw new Error("모든 질문에 답변해주세요.");
       }
 
       const result: AnalysisResult =
         await postPersonalityAnalyze(cleanedAnswers);
-      console.log("✅ 분석 결과:", result);
+      console.log("분석 결과:", result);
 
       setIsCompleted(true);
       router.push("/member");
@@ -88,17 +88,22 @@ export default function QuestionNavigator({
   }
 
   return (
-    <>
-      <ProgressIndicator current={currentIndex + 1} total={questions.length} />
+    <div className="flex flex-col items-center justify-center pt-16">
+      <div className="flex flex-col items-center gap-6">
+        <ProgressIndicator
+          current={currentIndex + 1}
+          total={questions.length}
+        />
 
-      <Question
-        question={questions[currentIndex].question}
-        choices={questions[currentIndex].choices}
-        selected={currentAnswer}
-        onSelect={handleSelect}
-      />
+        <Question
+          question={questions[currentIndex].question}
+          choices={questions[currentIndex].choices}
+          selected={currentAnswer}
+          onSelect={handleSelect}
+        />
+      </div>
 
-      <div className="absolute bottom-[54px] left-0 right-0 flex justify-center z-10 w-full">
+      <div className="absolute bottom-[24px] left-0 right-0 flex justify-center z-10 w-full">
         <div className="w-[331px]">
           {isFirst ? (
             <button
@@ -123,6 +128,6 @@ export default function QuestionNavigator({
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

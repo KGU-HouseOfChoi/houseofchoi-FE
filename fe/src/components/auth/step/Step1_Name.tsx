@@ -1,11 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import debounce from "lodash/debounce";
 import FormInput from "../common/input/FormInput";
+import GuestConfirmPopup from "../popup/GuestConfirmPopup";
+import { useRouter } from "next/navigation";
 
 export default function Step1_Name() {
+  const router = useRouter();
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { name, setField, errors, setError, clearError, step, nextStep } =
     useAuthStore();
   const hasAdvanced = useRef(false);
@@ -21,7 +25,7 @@ export default function Step1_Name() {
         hasAdvanced.current = true;
         nextStep();
       }
-    }, 400),
+    }, 2000),
   ).current;
 
   const handleChange = (value: string) => {
@@ -36,6 +40,11 @@ export default function Step1_Name() {
     debouncedNextStep(value);
   };
 
+  const handleGuestConfirm = () => {
+    setIsPopupOpen(false);
+    router.push("/guest");
+  };
+
   useEffect(() => {
     return () => {
       debouncedNextStep.cancel();
@@ -44,13 +53,23 @@ export default function Step1_Name() {
   }, []);
 
   return (
-    <FormInput
-      label="이름"
-      value={name}
-      placeholder="이름 입력"
-      onChange={handleChange}
-      error={errors.name}
-      autoFocus
-    />
+    <div className="flex flex-col">
+      <div className="flex flex-col w-full mx-auto">
+        <FormInput
+          label="이름"
+          value={name}
+          placeholder="이름 입력"
+          onChange={handleChange}
+          error={errors.name}
+          autoFocus
+        />
+      </div>
+
+      <GuestConfirmPopup
+        isOpen={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        onConfirm={handleGuestConfirm}
+      />
+    </div>
   );
 }

@@ -33,7 +33,7 @@ export default function Step3_Carrier() {
   }, [step, carrier, errors.carrier, nextStep]);
 
   return (
-    <div>
+    <div className="flex flex-col w-full mx-auto">
       <CarrierInput
         value={carrier}
         onClick={() => setOpen(!open)}

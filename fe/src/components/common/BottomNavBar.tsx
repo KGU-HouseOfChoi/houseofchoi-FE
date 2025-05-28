@@ -37,7 +37,7 @@ export default function BottomNavBar() {
       isActive: pathname === "/member/calendar",
     },
     {
-      label: "대화",
+      label: "챗봇",
       href: "/member/chatbot",
       icon: MessagesIcon,
       isActive: pathname === "/member/chatbot",
@@ -61,7 +61,7 @@ export default function BottomNavBar() {
 
   return (
     <>
-      <nav className="fixed bottom-0 w-full max-w-[414px] h-[124px] bg-white z-50 shadow-[0px_-3px_10px_rgba(142,142,142,0.25)]">
+      <nav className="fixed bottom-0 w-full max-w-[414px] h-[124px] bg-white z-50 shadow-header">
         <div className="h-full px-6 flex items-center justify-between max-w-md mx-auto">
           {navItems.map(({ label, href, icon: Icon, isActive }) => (
             <button

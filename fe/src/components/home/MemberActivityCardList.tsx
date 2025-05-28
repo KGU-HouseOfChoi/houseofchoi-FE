@@ -43,6 +43,7 @@ export default function MemberActivityCardList() {
       isLoading={isLoading}
       error={error}
       onReload={loadData}
+      type="member"
     />
   );
 }

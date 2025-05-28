@@ -1,4 +1,5 @@
 import { useRouter } from "next/navigation";
+import SkipButton from "@/components/common/button/SkipButton";
 
 interface Props {
   current: number;
@@ -10,32 +11,14 @@ export default function OnboardingHeader({ current, total }: Props) {
   const progress = (current / total) * 100;
 
   return (
-    <div className="absolute top-0 left-0 w-full px-6 pt-6 z-10 max-w-[414px] mx-auto">
+    <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[414px] px-6 pt-6 z-10 bg-bgColor-default">
       <div className="flex justify-between items-center text-lg text-textColor-body mb-2">
         <span>
           {current} / {total}
         </span>
-        <button
-          onClick={() => router.push("/guest")}
-          className="inline-flex items-center gap-1 text-lg text-textColor-sub hover:text-brand-normal"
-        >
-          <span>건너뛰기</span>
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </button>
+        <SkipButton onClick={() => router.push("/guest")} />
       </div>
-      <div className="w-full bg-grayscale-20 rounded-full h-2 overflow-hidden">
+      <div className="w-full bg-grayscale-20 rounded-full h-2 overflow-hidden mt-4">
         <div
           className="bg-brand-normal h-full transition-all duration-300"
           style={{ width: `${progress}%` }}

@@ -20,7 +20,7 @@ export default function Question({
       <div className="text-2xl font-semibold text-textColor-heading mb-6">
         {question}
       </div>
-      <div className="flex flex-col gap-4 w-full max-w-xs">
+      <div className="flex flex-col gap-4 w-full max-w-xs mt-12">
         {choices.map((choice, index) => (
           <ChoiceButton
             key={index}

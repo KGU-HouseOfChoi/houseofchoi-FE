@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/auth/useAuth";
 import SearchAutoComplete from "@/components/home/search/SearchAutoComplete";
@@ -11,9 +11,16 @@ import Image from "next/image";
 export default function SearchPage() {
   const router = useRouter();
   const { isGuest } = useAuth();
-
   const [inputValue, setInputValue] = useState("");
   const [confirmedKeyword, setConfirmedKeyword] = useState("");
+  const [active, setActive] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   const handleSearch = (kw: string) => {
     setConfirmedKeyword(kw);
@@ -23,10 +30,33 @@ export default function SearchPage() {
     router.push(isGuest ? "/guest" : "/member");
   };
 
+  const handleTouchStart = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   const clearSearch = () => {
     setInputValue("");
     setConfirmedKeyword("");
   };
+
+  const clearButton = useMemo(() => {
+    if (!inputValue) return null;
+    return (
+      <button
+        onClick={clearSearch}
+        className="absolute right-3 top-1/2 -translate-y-1/2"
+      >
+        <Image
+          src="/images/deleteicon.svg"
+          alt="검색어 지우기"
+          width={18}
+          height={18}
+        />
+      </button>
+    );
+  }, [inputValue]);
 
   return (
     <div className="h-full bg-bgColor-default p-4 space-y-4">
@@ -36,29 +66,34 @@ export default function SearchPage() {
         </button>
         <div className="flex-1 relative text-textColor-body">
           <input
+            ref={inputRef}
+            autoFocus
             value={inputValue}
             onChange={(e) => {
               setInputValue(e.target.value);
               if (confirmedKeyword) setConfirmedKeyword("");
             }}
             onKeyDown={(e) => e.key === "Enter" && handleSearch(inputValue)}
+            onTouchStart={handleTouchStart}
             placeholder="검색어를 입력하세요"
             aria-label="검색어 입력"
-            className="w-full border rounded-xl py-2 px-4 pr-10 text-lg"
+            inputMode="search"
+            className="w-full border-2 border-brand-normal focus:border-brand-normal focus:outline-none rounded-xl py-2 px-4 pr-10 text-lg touch-manipulation cursor-text select-text"
+            style={{
+              WebkitTapHighlightColor: "transparent",
+              WebkitTouchCallout: "none",
+              WebkitUserSelect: "text",
+              userSelect: "text",
+              WebkitAppearance: "none",
+              appearance: "none",
+              WebkitOverflowScrolling: "touch",
+              touchAction: "manipulation",
+              caretColor: active ? "auto" : "transparent",
+            }}
+            onFocus={() => setActive(true)}
+            onBlur={() => setActive(false)}
           />
-          {inputValue && (
-            <button
-              onClick={clearSearch}
-              className="absolute right-3 top-1/2 -translate-y-1/2"
-            >
-              <Image
-                src="/images/deleteicon.svg"
-                alt="검색어 지우기"
-                width={18}
-                height={18}
-              />
-            </button>
-          )}
+          {clearButton}
         </div>
       </div>
       {!inputValue.trim() && !confirmedKeyword && (
