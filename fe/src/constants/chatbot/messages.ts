@@ -6,12 +6,14 @@ export const CHATBOT_MESSAGES = {
 } as const;
 
 export const CONFIRM_KEYWORDS = {
-  YES: "네",
-  NO: "아니요",
-  SCHEDULE_KEYWORDS: ["일정", "등록", "추가", "추천", "참여"] as const,
-  CALENDAR_KEYWORDS: ["달력", "캘린더"] as const,
+  YES: "예",
+  SCHEDULE_KEYWORDS: ["진행", "프로그램", "추천"] as const,
+  CALENDAR_KEYWORDS: ["일정", "등록", "추가"] as const,
 } as const;
 
-export function containsKeywords(text: string, keywords: readonly string[]): boolean {
+export const containsKeywords = (
+  text: string,
+  keywords: readonly string[],
+): boolean => {
   return keywords.some((keyword) => text.includes(keyword));
-}
+};
