@@ -21,6 +21,7 @@ const ChatbotMessageList = () => {
     popupOpen,
     handlePopupCancel,
     goToCalendar,
+    pushBotText,
   } = useChatbot();
 
   const { incrementMessageCount } = useMessageCount();
@@ -146,7 +147,7 @@ const ChatbotMessageList = () => {
           <div ref={bottomRef} />
         </div>
 
-        <ChatbotBottom onSend={handleSendWithErrorHandling} />
+        <ChatbotBottom onSend={handleSendWithErrorHandling} pushBotText={pushBotText} />
       </div>
 
       <SchedulePopup
