@@ -14,15 +14,18 @@ export default function MemberPage() {
     const isPersonalityCompleted = localStorage.getItem("personalityCompleted");
     const isSignupComplete = localStorage.getItem("signupComplete");
 
-    // 성향 분석을 하지 않은 경우 무조건 personality 페이지로 리다이렉트
-    if (!isPersonalityCompleted) {
-      router.replace("/member/personality");
+    // 회원가입을 하지 않은 경우
+    if (!isSignupComplete) {
+      router.replace("/auth");
       return;
     }
 
-    // 회원가입도 하지 않은 경우
-    if (!isSignupComplete) {
-      router.replace("/auth");
+    // 성향 분석을 하지 않은 경우에만 personality 페이지로 리다이렉트
+    if (
+      !isPersonalityCompleted &&
+      !window.location.pathname.includes("/personality")
+    ) {
+      router.replace("/member/personality");
       return;
     }
   }, [router]);

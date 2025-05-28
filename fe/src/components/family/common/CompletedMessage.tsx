@@ -27,7 +27,7 @@ export default function FamilyCompletedMessage({
   }, [redirectTo, delayMs, router]);
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-bgColor-default px-6 text-center">
+    <main className="min-h-screen flex flex-col items-center justify-center bg-bgColor-default px-6 text-center pt-0">
       <div className="flex flex-col items-center gap-4 max-w-md">
         <CheckCircle className="w-16 h-16 text-brand-normal" />
 

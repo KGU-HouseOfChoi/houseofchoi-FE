@@ -41,8 +41,11 @@ export default function BirthdayInput({
     };
   }, [value, debouncedOnChange, debounceDelay]);
 
-  const handleChange = (f: string, l: string) => {
-    debouncedOnChange(f + l);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.length <= 8) {
+      onChange(value);
+    }
   };
 
   const isValidDate = (yymmdd: string) => {
@@ -61,16 +64,13 @@ export default function BirthdayInput({
 
   const handleLastDigitChange = (val: string) => {
     setLast(val);
-    handleChange(front, val);
+    const newValue = front + val;
+    if (newValue.length <= 8) {
+      onChange(newValue);
+    }
 
     if (val.length === 1) {
       lastInputRef.current?.blur();
-    }
-  };
-
-  const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
-    if (e.currentTarget) {
-      e.currentTarget.focus();
     }
   };
 
@@ -96,7 +96,7 @@ export default function BirthdayInput({
               return;
             }
 
-            handleChange(val, last);
+            handleChange(e);
 
             if (val.length === 6) {
               if (!isValidDate(val)) {
@@ -106,7 +106,6 @@ export default function BirthdayInput({
               lastInputRef.current?.focus();
             }
           }}
-          onTouchStart={handleTouchStart}
           autoFocus={autoFocus}
           className={`w-[calc(100%-80px)] h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors bg-bgColor-default
             ${
@@ -130,7 +129,7 @@ export default function BirthdayInput({
             appearance: "none",
             WebkitOverflowScrolling: "touch",
             touchAction: "manipulation",
-            caretColor: front ? "auto" : "transparent",
+            caretColor: "auto",
           }}
           placeholder="예: 700123"
         />
@@ -147,7 +146,6 @@ export default function BirthdayInput({
           onChange={(e) =>
             handleLastDigitChange(e.target.value.replace(/\D/g, "").slice(0, 1))
           }
-          onTouchStart={handleTouchStart}
           className={`w-[60px] h-[60px] px-4 rounded-xl border-2 text-base text-center outline-none transition-colors bg-bgColor-default
             ${
               error
@@ -170,7 +168,7 @@ export default function BirthdayInput({
             appearance: "none",
             WebkitOverflowScrolling: "touch",
             touchAction: "manipulation",
-            caretColor: last ? "auto" : "transparent",
+            caretColor: "auto",
           }}
           placeholder="1"
         />

@@ -20,12 +20,12 @@ export default function FamilyLinkPage() {
 
   return (
     <>
-      <FamilyHeader onBack={handleBack} />
+      {relation === null && <FamilyHeader onBack={handleBack} />}
 
       {relation === null ? (
         <FamilyLinkStep1 onSelectRelation={setRelation} />
       ) : (
-        <FamilyLinkStep2 relation={relation} />
+        <FamilyLinkStep2 relation={relation} onBack={handleBack} />
       )}
     </>
   );

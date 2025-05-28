@@ -37,7 +37,8 @@ export default function PersonalityAnalysisPage() {
       } catch (error: unknown) {
         if (axios.isAxiosError(error) && error.response?.status === 409) {
           console.log("409 Conflict → alreadyCompleted 메시지 표시");
-          setCompletedVersion("alreadyCompleted");
+          localStorage.setItem("personalityCompleted", "true");
+          router.replace("/member");
         } else {
           console.error("질문 불러오기 에러:", error);
           setShowError(true);
@@ -46,7 +47,7 @@ export default function PersonalityAnalysisPage() {
     }
 
     checkIfCompleted();
-  }, []);
+  }, [router]);
 
   const handleRetry = () => {
     window.location.reload();

@@ -73,12 +73,6 @@ export default function FormInput({
     debouncedOnChange(e.target.value);
   };
 
-  const handleTouchStart = () => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
-
   return (
     <div className="w-full flex flex-col gap-2">
       <label className="text-xl text-textColor-body font-semibold">
@@ -94,7 +88,6 @@ export default function FormInput({
         pattern={pattern}
         maxLength={maxLength}
         onChange={handleInput}
-        onTouchStart={handleTouchStart}
         onFocus={() => {
           setActive(true);
           onFocus?.();
@@ -126,7 +119,7 @@ export default function FormInput({
           appearance: "none",
           WebkitOverflowScrolling: "touch",
           touchAction: "manipulation",
-          caretColor: active ? "auto" : "transparent",
+          caretColor: "auto",
           ...style,
         }}
       />

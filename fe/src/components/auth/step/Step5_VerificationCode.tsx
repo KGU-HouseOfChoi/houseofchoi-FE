@@ -29,7 +29,6 @@ export default function Step5_VerificationCode({
   const [secondsLeft, setSecondsLeft] = useState(180);
   const [showToast, setShowToast] = useState(false);
   const { phoneNumber } = useAuthStore();
-  const [active, setActive] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -58,12 +57,6 @@ export default function Step5_VerificationCode({
     const clean = val.replace(/\D/g, "").slice(0, 6);
     setCode(clean);
     setError("");
-  };
-
-  const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
-    if (e.currentTarget) {
-      e.currentTarget.focus();
-    }
   };
 
   const handleResend = async () => {
@@ -125,7 +118,6 @@ export default function Step5_VerificationCode({
               inputMode="numeric"
               value={code}
               onChange={(e) => handleVerify(e.target.value)}
-              onTouchStart={handleTouchStart}
               placeholder="6자리 입력"
               maxLength={6}
               className={`w-full h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors bg-bgColor-default
@@ -150,10 +142,8 @@ export default function Step5_VerificationCode({
                 appearance: "none",
                 WebkitOverflowScrolling: "touch",
                 touchAction: "manipulation",
-                caretColor: active ? "auto" : "transparent",
+                caretColor: "auto",
               }}
-              onFocus={() => setActive(true)}
-              onBlur={() => setActive(false)}
               autoFocus
             />
             <span
