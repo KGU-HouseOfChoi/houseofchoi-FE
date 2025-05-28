@@ -7,6 +7,7 @@ import { fetchChatAnswer } from "@/apis/chatbot/fetchChatAnswer";
 import { useActivityRecommendation } from "./useActivityRecommendation";
 import { useSchedule } from "@/hooks/chatbot/useSchedule";
 import { useChatbotSchedule } from "@/hooks/chatbot/useChatbotSchedule";
+import { useUserTrait } from "@/hooks/chatbot/useUserTrait";
 import {
   CONFIRM_KEYWORDS,
   containsKeywords,
@@ -30,6 +31,8 @@ export function useChatbot() {
     closePopup,
     cancelAndAsk,
   } = useChatbotSchedule();
+
+  const { analyzeTraits } = useUserTrait();
 
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -80,6 +83,17 @@ export function useChatbot() {
     ]);
 
     try {
+      if (containsKeywords(text, CONFIRM_KEYWORDS.PERSONALITY_KEYWORDS)) {
+        pushBotText("성향 분석을 시작할게요. 잠시만 기다려주세요.");
+        try {
+          await analyzeTraits();
+          pushBotText("성향 분석이 완료되었어요! 이제 더 정확한 추천을 해드릴 수 있어요.");
+        } catch (error) {
+          pushBotText("죄송해요, 성향 분석 중에 문제가 발생했어요. 잠시 후 다시 시도해주세요.");
+        }
+        return;
+      }
+
       if (text === CONFIRM_KEYWORDS.YES) {
         openChatbotPopup();
         return;
