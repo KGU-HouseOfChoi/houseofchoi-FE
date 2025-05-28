@@ -29,7 +29,6 @@ export default function Step5_VerificationCode({
   const [secondsLeft, setSecondsLeft] = useState(180);
   const [showToast, setShowToast] = useState(false);
   const { phoneNumber } = useAuthStore();
-  const [active, setActive] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -58,12 +57,6 @@ export default function Step5_VerificationCode({
     const clean = val.replace(/\D/g, "").slice(0, 6);
     setCode(clean);
     setError("");
-  };
-
-  const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
-    if (e.currentTarget) {
-      e.currentTarget.focus();
-    }
   };
 
   const handleResend = async () => {
@@ -151,8 +144,6 @@ export default function Step5_VerificationCode({
                 touchAction: "manipulation",
                 caretColor: "auto",
               }}
-              onFocus={() => setActive(true)}
-              onBlur={() => setActive(false)}
               autoFocus
             />
             <span

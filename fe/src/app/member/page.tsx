@@ -21,7 +21,10 @@ export default function MemberPage() {
     }
 
     // 성향 분석을 하지 않은 경우에만 personality 페이지로 리다이렉트
-    if (!isPersonalityCompleted && !window.location.pathname.includes("/personality")) {
+    if (
+      !isPersonalityCompleted &&
+      !window.location.pathname.includes("/personality")
+    ) {
       router.replace("/member/personality");
       return;
     }

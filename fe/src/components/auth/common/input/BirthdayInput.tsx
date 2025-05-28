@@ -41,8 +41,11 @@ export default function BirthdayInput({
     };
   }, [value, debouncedOnChange, debounceDelay]);
 
-  const handleChange = (f: string, l: string) => {
-    debouncedOnChange(f + l);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.length <= 8) {
+      onChange(value);
+    }
   };
 
   const isValidDate = (yymmdd: string) => {
@@ -61,16 +64,13 @@ export default function BirthdayInput({
 
   const handleLastDigitChange = (val: string) => {
     setLast(val);
-    handleChange(front, val);
+    const newValue = front + val;
+    if (newValue.length <= 8) {
+      onChange(newValue);
+    }
 
     if (val.length === 1) {
       lastInputRef.current?.blur();
-    }
-  };
-
-  const handleTouchStart = (e: React.TouchEvent<HTMLInputElement>) => {
-    if (e.currentTarget) {
-      e.currentTarget.focus();
     }
   };
 
@@ -96,7 +96,7 @@ export default function BirthdayInput({
               return;
             }
 
-            handleChange(val, last);
+            handleChange(e);
 
             if (val.length === 6) {
               if (!isValidDate(val)) {

@@ -14,14 +14,16 @@ interface FamilyLinkStep2Props {
   onBack: () => void;
 }
 
-export default function FamilyLinkStep2({ relation, onBack }: FamilyLinkStep2Props) {
+export default function FamilyLinkStep2({
+  relation,
+  onBack,
+}: FamilyLinkStep2Props) {
   const router = useRouter();
   const [code, setCode] = useState("");
   const [userStatus, setUserStatus] = useState<
     "NEW_USER" | "EXISTING_USER" | "NEED_PERSONALITY" | null
   >(null);
   const [error, setError] = useState("");
-  const [active, setActive] = useState(false);
 
   const clearCode = () => {
     setCode("");
@@ -39,15 +41,16 @@ export default function FamilyLinkStep2({ relation, onBack }: FamilyLinkStep2Pro
       if (res.data.success) {
         const status = res.data.userStatus;
         console.log("유저 상태:", status);
-        
+
         if (status === "NEW_USER") {
           console.log("새로운 유저 - 성향 분석 페이지로 이동");
           setUserStatus("NEW_USER");
         } else {
           // 기존 유저의 경우 성향 분석 완료 여부 확인
-          const isPersonalityCompleted = localStorage.getItem("personalityCompleted") === "true";
+          const isPersonalityCompleted =
+            localStorage.getItem("personalityCompleted") === "true";
           console.log("성향 분석 완료 여부:", isPersonalityCompleted);
-          
+
           if (!isPersonalityCompleted) {
             console.log("성향 분석 미완료 - complete 페이지로 이동");
             setUserStatus("NEED_PERSONALITY");
@@ -69,7 +72,7 @@ export default function FamilyLinkStep2({ relation, onBack }: FamilyLinkStep2Pro
     if (onBack) {
       onBack();
     } else {
-      router.push('/member/family');
+      router.push("/member/family");
     }
   };
 
@@ -123,8 +126,6 @@ export default function FamilyLinkStep2({ relation, onBack }: FamilyLinkStep2Pro
               onChange={(e) => setCode(e.target.value)}
               placeholder="고유번호 입력"
               className="w-full h-[65px] px-4 pr-10 text-lg border-2 border-brand-normal focus:border-brand-normal focus:outline-none rounded-xl"
-              onFocus={() => setActive(true)}
-              onBlur={() => setActive(false)}
             />
             {code && (
               <button
@@ -141,7 +142,9 @@ export default function FamilyLinkStep2({ relation, onBack }: FamilyLinkStep2Pro
             )}
           </div>
 
-          {error && <p className="text-danger-50 text-sm text-center">{error}</p>}
+          {error && (
+            <p className="text-danger-50 text-sm text-center">{error}</p>
+          )}
         </div>
       </div>
 

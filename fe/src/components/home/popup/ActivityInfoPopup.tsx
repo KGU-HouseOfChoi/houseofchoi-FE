@@ -54,14 +54,17 @@ export default function ActivityInfoPopup({
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, []);
 
   const handleMapClick = () => {
-    window.open(`https://map.kakao.com/link/map/${program.center.name},${lat},${lng}`, '_blank');
+    window.open(
+      `https://map.kakao.com/link/map/${program.center.name},${lat},${lng}`,
+      "_blank",
+    );
   };
 
   return (
@@ -75,7 +78,7 @@ export default function ActivityInfoPopup({
           <X className="w-6 h-6 text-textColor-sub" />
         </button>
         <div className="px-4 pt-4 flex flex-col flex-1 overflow-y-auto">
-          <div 
+          <div
             className="w-full h-[200px] rounded-xl overflow-hidden border border-borderColor-default flex-shrink-0 cursor-pointer"
             onClick={handleMapClick}
           >
@@ -105,13 +108,17 @@ export default function ActivityInfoPopup({
                 <h2 className="text-2xl font-semibold text-textColor-heading">
                   {program.name}
                 </h2>
-                <p className="text-xl text-textColor-sub">{program.center.name}</p>
+                <p className="text-xl text-textColor-sub">
+                  {program.center.name}
+                </p>
               </div>
 
               <div className="space-y-2">
                 <p className="text-base">{program.center.address}</p>
                 <p className="text-base">전화번호: {program.center.tel}</p>
-                <p className="text-base">이용 시간: {formatProgramSchedule(program)}</p>
+                <p className="text-base">
+                  이용 시간: {formatProgramSchedule(program)}
+                </p>
                 <p className="text-base">
                   요금:{" "}
                   {program.price !== undefined

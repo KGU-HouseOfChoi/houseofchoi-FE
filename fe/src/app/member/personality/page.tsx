@@ -47,7 +47,7 @@ export default function PersonalityAnalysisPage() {
     }
 
     checkIfCompleted();
-  }, []);
+  }, [router]);
 
   const handleRetry = () => {
     window.location.reload();

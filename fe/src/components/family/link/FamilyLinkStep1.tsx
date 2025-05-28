@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import FamilyOptionButton from "@/components/family/common/FamilyOptionButton";
 import BottomButton from "@/components/common/button/BottomButton";
 
 interface FamilyLinkStep1Props {

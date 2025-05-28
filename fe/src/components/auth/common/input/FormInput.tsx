@@ -73,12 +73,6 @@ export default function FormInput({
     debouncedOnChange(e.target.value);
   };
 
-  const handleTouchStart = () => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
-
   return (
     <div className="w-full flex flex-col gap-2">
       <label className="text-xl text-textColor-body font-semibold">
