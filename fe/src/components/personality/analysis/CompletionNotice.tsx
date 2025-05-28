@@ -13,7 +13,7 @@ interface PersonalityCompletedMessageProps {
 export default function CompletedMessage({
   version = "completed",
   redirectTo = "/member",
-  delayMs = 4000,
+  delayMs = 3000,
 }: PersonalityCompletedMessageProps) {
   const router = useRouter();
 
