@@ -23,7 +23,7 @@ export default function CompletedMessage({
       description: "잠시 후 메인 페이지로 이동합니다.",
     },
     alreadyCompleted: {
-      message: "인증을 완료했습니다!.",
+      message: "인증을 완료했습니다!",
       description: "잠시 후 메인 페이지로 이동합니다.",
     },
     familyLinked: {
