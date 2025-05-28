@@ -52,7 +52,7 @@ export function useDeleteAccount() {
         return state;
       });
 
-      localStorage.removeItem("accessToken");
+      localStorage.clear();
       sessionStorage.clear();
 
       router.replace(redirectPath);

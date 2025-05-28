@@ -94,7 +94,6 @@ export default function FormInput({
         pattern={pattern}
         maxLength={maxLength}
         onChange={handleInput}
-        onTouchStart={handleTouchStart}
         onFocus={() => {
           setActive(true);
           onFocus?.();
@@ -126,7 +125,7 @@ export default function FormInput({
           appearance: "none",
           WebkitOverflowScrolling: "touch",
           touchAction: "manipulation",
-          caretColor: active ? "auto" : "transparent",
+          caretColor: "auto",
           ...style,
         }}
       />

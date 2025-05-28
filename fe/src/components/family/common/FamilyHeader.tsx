@@ -15,6 +15,7 @@ const FamilyHeader: NextPage<FamilyHeaderProps> = ({ onBack }) => {
     e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
   ) => {
     e.preventDefault();
+    e.stopPropagation();
     if (onBack) {
       onBack();
     } else {

@@ -5,7 +5,7 @@ import { CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface PersonalityCompletedMessageProps {
-  version?: "completed" | "alreadyCompleted";
+  version?: "completed" | "alreadyCompleted" | "familyLinked";
   redirectTo?: string;
   delayMs?: number;
 }
@@ -13,7 +13,7 @@ interface PersonalityCompletedMessageProps {
 export default function CompletedMessage({
   version = "completed",
   redirectTo = "/member",
-  delayMs = 3000,
+  delayMs = 4000,
 }: PersonalityCompletedMessageProps) {
   const router = useRouter();
 
@@ -23,7 +23,11 @@ export default function CompletedMessage({
       description: "잠시 후 메인 페이지로 이동합니다.",
     },
     alreadyCompleted: {
-      message: "이미 성향 분석을 완료한 \n 사용자입니다.",
+      message: "인증을 완료했습니다!.",
+      description: "잠시 후 메인 페이지로 이동합니다.",
+    },
+    familyLinked: {
+      message: "가족 연동이 완료되었습니다!",
       description: "잠시 후 메인 페이지로 이동합니다.",
     },
   };
@@ -31,14 +35,17 @@ export default function CompletedMessage({
   const { message, description } = messages[version];
 
   useEffect(() => {
+    if (version === "completed") {
+      localStorage.setItem("personalityCompleted", "true");
+    }
     const timer = setTimeout(() => {
       router.replace(redirectTo);
     }, delayMs);
     return () => clearTimeout(timer);
-  }, [redirectTo, delayMs, router]);
+  }, [redirectTo, delayMs, router, version]);
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-bgColor-default px-6 text-center">
+    <main className="min-h-screen flex flex-col items-center justify-center bg-bgColor-default px-6 text-center pt-0">
       <div className="flex flex-col items-center gap-4 max-w-md">
         <CheckCircle className="w-16 h-16 text-brand-normal" />
 

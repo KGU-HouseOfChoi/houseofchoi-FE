@@ -125,7 +125,6 @@ export default function Step5_VerificationCode({
               inputMode="numeric"
               value={code}
               onChange={(e) => handleVerify(e.target.value)}
-              onTouchStart={handleTouchStart}
               placeholder="6자리 입력"
               maxLength={6}
               className={`w-full h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors bg-bgColor-default
@@ -150,7 +149,7 @@ export default function Step5_VerificationCode({
                 appearance: "none",
                 WebkitOverflowScrolling: "touch",
                 touchAction: "manipulation",
-                caretColor: active ? "auto" : "transparent",
+                caretColor: "auto",
               }}
               onFocus={() => setActive(true)}
               onBlur={() => setActive(false)}

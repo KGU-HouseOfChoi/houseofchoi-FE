@@ -106,7 +106,6 @@ export default function BirthdayInput({
               lastInputRef.current?.focus();
             }
           }}
-          onTouchStart={handleTouchStart}
           autoFocus={autoFocus}
           className={`w-[calc(100%-80px)] h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors bg-bgColor-default
             ${
@@ -130,7 +129,7 @@ export default function BirthdayInput({
             appearance: "none",
             WebkitOverflowScrolling: "touch",
             touchAction: "manipulation",
-            caretColor: front ? "auto" : "transparent",
+            caretColor: "auto",
           }}
           placeholder="예: 700123"
         />
@@ -147,7 +146,6 @@ export default function BirthdayInput({
           onChange={(e) =>
             handleLastDigitChange(e.target.value.replace(/\D/g, "").slice(0, 1))
           }
-          onTouchStart={handleTouchStart}
           className={`w-[60px] h-[60px] px-4 rounded-xl border-2 text-base text-center outline-none transition-colors bg-bgColor-default
             ${
               error
@@ -170,7 +168,7 @@ export default function BirthdayInput({
             appearance: "none",
             WebkitOverflowScrolling: "touch",
             touchAction: "manipulation",
-            caretColor: last ? "auto" : "transparent",
+            caretColor: "auto",
           }}
           placeholder="1"
         />
