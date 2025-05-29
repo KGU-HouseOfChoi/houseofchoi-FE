@@ -29,7 +29,11 @@ const FamilyAddButton = ({ hasFamily }: FamilyAddButtonProps) => {
         {hasFamily ? "가족수정하기" : "가족추가하기"}
       </button>
 
-      <FamilyLinkPopup isOpen={isPopupOpen} onClose={handleClosePopup} hasFamily={hasFamily} />
+      <FamilyLinkPopup
+        isOpen={isPopupOpen}
+        onClose={handleClosePopup}
+        hasFamily={hasFamily}
+      />
     </>
   );
 };

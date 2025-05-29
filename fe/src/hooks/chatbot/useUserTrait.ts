@@ -11,8 +11,8 @@ export function useUserTrait() {
     try {
       const response = await axiosAiInstance.get("/personality/analysis");
       return response.data;
-    } catch (error: any) {
-      throw error;
+    } catch (error) {
+      throw error as Error;
     } finally {
       setLoading(false);
     }

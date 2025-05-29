@@ -1,6 +1,7 @@
 "use client";
 
 import axiosAiInstance from "@/apis/common/axiosAiInstance";
+import type { AxiosError } from "axios";
 
 interface AnalyzeTraitResponse {
   success: boolean;
@@ -21,8 +22,9 @@ export const analyzeUserTrait = async (
     );
     console.log("✅ 새로운 MBTI 분석 결과:", response.data);
     return response.data;
-  } catch (error: any) {
-    console.log("❌ MBTI 분석 실패:", error.response?.data);
-    throw error;
+  } catch (error) {
+    const err = error as AxiosError;
+    console.log("❌ MBTI 분석 실패:", err.response?.data);
+    throw err;
   }
 };

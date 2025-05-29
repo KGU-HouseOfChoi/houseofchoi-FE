@@ -41,7 +41,8 @@ export default function FamilyLinkPopup({
         </h2>
 
         <p className="text-base text-textColor-sub leading-relaxed whitespace-pre-line">
-          가족을 {hasFamily ? "수정하여" : "추가하여"} 연동하면{"\n"}일정을 공유할 수 있어요!
+          가족을 {hasFamily ? "수정하여" : "추가하여"} 연동하면{"\n"}일정을
+          공유할 수 있어요!
         </p>
 
         <PopupButtons

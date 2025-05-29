@@ -27,10 +27,11 @@ export default function MyPage() {
   }, []);
 
   const filteredFamilyList = useMemo(
-    () => familyList.filter(
-      (userInfo) => userInfo.relatedUserName && userInfo.relatedUserBirth
-    ),
-    [familyList]
+    () =>
+      familyList.filter(
+        (userInfo) => userInfo.relatedUserName && userInfo.relatedUserBirth,
+      ),
+    [familyList],
   );
 
   return (
