@@ -147,7 +147,10 @@ const ChatbotMessageList = () => {
           <div ref={bottomRef} />
         </div>
 
-        <ChatbotBottom onSend={handleSendWithErrorHandling} pushBotText={pushBotText} />
+        <ChatbotBottom
+          onSend={handleSendWithErrorHandling}
+          pushBotText={pushBotText}
+        />
       </div>
 
       <SchedulePopup

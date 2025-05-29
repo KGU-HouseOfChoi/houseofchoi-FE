@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useCallback } from "react";
 import axiosAiInstance from "@/apis/common/axiosAiInstance";
@@ -9,7 +9,7 @@ export function useUserTrait() {
   const getCurrentTrait = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axiosAiInstance.get('/personality/analysis');
+      const response = await axiosAiInstance.get("/personality/analysis");
       return response.data;
     } catch (error: any) {
       throw error;
@@ -20,6 +20,6 @@ export function useUserTrait() {
 
   return {
     loading,
-    getCurrentTrait
+    getCurrentTrait,
   };
-} 
+}

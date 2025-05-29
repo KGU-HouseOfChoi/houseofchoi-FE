@@ -9,7 +9,10 @@ interface ChatbotBottomProps {
   pushBotText: (text: string) => void;
 }
 
-const ChatbotBottom: React.FC<ChatbotBottomProps> = ({ onSend, pushBotText }) => {
+const ChatbotBottom: React.FC<ChatbotBottomProps> = ({
+  onSend,
+  pushBotText,
+}) => {
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 

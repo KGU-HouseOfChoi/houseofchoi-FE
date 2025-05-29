@@ -234,4 +234,3 @@ const INITIAL_GREETING: Message[] = [
     ],
   },
 ];
-

@@ -40,7 +40,7 @@ export default function MyPage() {
         <FamilyList userInfoList={familyList} />
 
         <div className="mt-20 mb-8">
-          <FamilyAddButton />
+          <FamilyAddButton hasFamily={familyList.length > 0} />
         </div>
 
         <div className="flex-grow" />
