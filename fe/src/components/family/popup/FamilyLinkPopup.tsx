@@ -37,7 +37,9 @@ export default function FamilyLinkPopup({
         <Calendar className="w-10 h-10 text-brand-normal" />
 
         <h2 className="text-2xl font-semibold text-textColor-heading">
-          {hasFamily ? "가족을 수정해보세요" : "계정에 가족을 추가해보세요"}
+          {hasFamily
+            ? "가족 정보를 수정해보세요"
+            : "계정에 가족을 추가해보세요"}
         </h2>
 
         <p className="text-base text-textColor-sub leading-relaxed whitespace-pre-line">

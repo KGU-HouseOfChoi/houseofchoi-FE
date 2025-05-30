@@ -18,7 +18,9 @@ export const analyzeUserTrait = async (
 ): Promise<AnalyzeTraitResponse> => {
   try {
     const response = await axiosAiInstance.post(
-      `/personality/analysis?days=${days}`,
+      "/personality/analysis",
+      {},
+      { params: { days } },
     );
     console.log("✅ 새로운 MBTI 분석 결과:", response.data);
     return response.data;
