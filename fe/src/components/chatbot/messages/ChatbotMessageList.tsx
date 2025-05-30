@@ -1,12 +1,14 @@
 "use client";
 
 import { useChatbot } from "@/hooks/chatbot/useChatbot";
+import { useMessageCount } from "@/hooks/chatbot/useMessageCount";
+import { useUserTrait } from "@/hooks/chatbot/useUserTrait";
 import ChatbotGreeting from "@/components/chatbot/layout/ChatbotGreeting";
 import ChatbotBottom from "@/components/chatbot/layout/ChatbotBottom";
 import MessageGroup from "@/components/chatbot/messages/MessageGroup";
 import SchedulePopup from "@/components/chatbot/popup/SchedulePopup";
 import { getUserName } from "@/apis/main/user";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AxiosError } from "axios";
 
 const ChatbotMessageList = () => {
@@ -19,11 +21,15 @@ const ChatbotMessageList = () => {
     popupOpen,
     handlePopupCancel,
     goToCalendar,
+    pushBotText,
   } = useChatbot();
 
+  const { incrementMessageCount } = useMessageCount();
+  const { getCurrentTrait } = useUserTrait();
   const [username, setUsername] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
     const fetchUserName = async () => {
@@ -42,6 +48,23 @@ const ChatbotMessageList = () => {
     fetchUserName();
   }, []);
 
+  // 채팅방 입장 시 현재 MBTI 조회
+  useEffect(() => {
+    const fetchCurrentMBTI = async () => {
+      if (isFirstRender.current) {
+        isFirstRender.current = false;
+        try {
+          const result = await getCurrentTrait();
+          console.log("✅ 현재 MBTI 조회 결과:", result);
+        } catch (error) {
+          console.error("❌ MBTI 조회 실패:", error);
+        }
+      }
+    };
+
+    fetchCurrentMBTI();
+  }, [getCurrentTrait]);
+
   const handleError = (error: unknown, defaultMessage: string) => {
     if (error instanceof AxiosError && error.response) {
       console.error("에러 발생:", error.message);
@@ -58,6 +81,7 @@ const ChatbotMessageList = () => {
   const handleSendWithErrorHandling = async (text: string) => {
     try {
       await handleSend(text);
+      await incrementMessageCount();
       setErrorMessage(null);
     } catch (error: unknown) {
       handleError(
@@ -90,7 +114,7 @@ const ChatbotMessageList = () => {
   return (
     <>
       <div className="flex flex-col h-full">
-        <div className="flex-1 overflow-y-auto p-4 min-h-0">
+        <div className="flex-1 overflow-y-auto p-4 pb-[130px] min-h-0">
           {loading && (
             <div className="text-center text-gray-500">로딩 중입니다...</div>
           )}
@@ -123,7 +147,10 @@ const ChatbotMessageList = () => {
           <div ref={bottomRef} />
         </div>
 
-        <ChatbotBottom onSend={handleSendWithErrorHandling} />
+        <ChatbotBottom
+          onSend={handleSendWithErrorHandling}
+          pushBotText={pushBotText}
+        />
       </div>
 
       <SchedulePopup

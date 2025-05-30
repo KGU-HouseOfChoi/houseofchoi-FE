@@ -143,59 +143,45 @@ export function useChatbot() {
     }
   };
 
-  /* ─────────── 활동 추천 후 일정 등록 ─────────── */
-  const handleActivityConfirmYes = async () => {
-    const result = await confirm("yes");
-    if (result.length === 0) {
-      openChatbotPopup();
-    } else {
-      setMessages((prev) => [...prev, ...result]);
-    }
-  };
-
-  /* ─────────── 일반 대화에서 예 응답 처리 ─────────── */
-  const handleGeneralConfirmYes = async () => {
-    const userMessage: import("@/types/chatbot").TextMessage = {
-      id: Date.now().toString(),
-      sender: "user",
-      type: "text",
-      content: CONFIRM_KEYWORDS.YES,
-      timestamp: new Date().toISOString(),
-      isUser: true,
-    };
-    setMessages((prev) => [...prev, userMessage]);
-
-    try {
-      const answer = await fetchChatAnswer(CONFIRM_KEYWORDS.YES);
-      pushBotText(answer);
-
-      if (containsKeywords(answer, CONFIRM_KEYWORDS.CALENDAR_KEYWORDS)) {
-        openChatbotPopup();
-      }
-    } catch {
-      pushBotText("답변을 가져오지 못했어요. 잠시 후 다시 시도해 주세요.");
-    }
-  };
-
   const handleScheduleConfirm = async (value: "yes" | "no") => {
     if (value === "yes") {
-      await (isActivityConfirm
-        ? handleActivityConfirmYes()
-        : handleGeneralConfirmYes());
+      if (isActivityConfirm) {
+        const result = await confirm("yes");
+        if (result.length === 0) {
+          openChatbotPopup();
+        } else {
+          setMessages((prev) => [...prev, ...result]);
+        }
+      } else {
+        const userMessage: import("@/types/chatbot").TextMessage = {
+          id: Date.now().toString(),
+          sender: "user",
+          type: "text",
+          content: CONFIRM_KEYWORDS.YES,
+          timestamp: new Date().toISOString(),
+          isUser: true,
+        };
+        setMessages((prev) => [...prev, userMessage]);
+
+        try {
+          const answer = await fetchChatAnswer(CONFIRM_KEYWORDS.YES);
+          pushBotText(answer);
+        } catch {
+          pushBotText("답변을 가져오지 못했어요. 잠시 후 다시 시도해 주세요.");
+        }
+      }
     } else {
       setIsActivityConfirm(false);
       pushBotText("다른 궁금한 사항이 있다면 질문해주세요!");
     }
   };
 
-  /* ─────────── 팝업 '대화하기' 클릭 ─────────── */
   const handlePopupCancel = () => {
     setIsActivityConfirm(false);
     const reply = cancelAndAsk();
     setMessages((prev) => [...prev, ...reply]);
   };
 
-  /* ─────────── 그룹핑 후 반환 ─────────── */
   const groupedMessages = groupMessages(messages);
 
   return {
@@ -210,6 +196,7 @@ export function useChatbot() {
     scheduleLoading,
     popupOpen,
     closePopup,
+    pushBotText,
   };
 }
 

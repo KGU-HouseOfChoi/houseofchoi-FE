@@ -8,6 +8,7 @@ import StepContainer from "@/components/auth/step/StepContainer";
 import Step5_VerificationCode from "@/components/auth/step/Step5_VerificationCode";
 import Toast from "@/components/common/Toast";
 import AuthHeader from "@/components/auth/common/AuthHeader";
+import CompletedMessage from "@/components/personality/analysis/CompletionNotice";
 
 export default function AuthPage() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function AuthPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
+  const [isExistingUser, setIsExistingUser] = useState(false);
   const { handleSignUp, loading } = useSignup();
 
   const handleMoveToVerification = () => {
@@ -36,8 +38,11 @@ export default function AuthPage() {
         console.log("가입 상태:", status);
 
         if (status === "EXISTING_USER") {
-          router.replace("/member");
+          localStorage.setItem("signupComplete", "true");
+          setIsExistingUser(true);
         } else {
+          localStorage.setItem("signupComplete", "true");
+          localStorage.removeItem("personalityCompleted");
           router.replace("/member/complete");
         }
       },
@@ -46,6 +51,10 @@ export default function AuthPage() {
       },
     });
   };
+
+  if (isExistingUser) {
+    return <CompletedMessage version="alreadyCompleted" />;
+  }
 
   return (
     <div className="min-h-screen px-6 pt-[80px] bg-bgColor-default flex flex-col gap-10">

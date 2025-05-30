@@ -26,7 +26,7 @@ const ChatbotHeader: NextPage = () => {
       <BackButton onClick={handleBackClick} href="/member" className="mr-1" />
 
       <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 font-medium text-[21px] md:text-2xl">
-        배우다
+        챗봇
       </div>
 
       <ChatbotExitPopup

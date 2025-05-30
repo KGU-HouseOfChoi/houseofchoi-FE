@@ -39,11 +39,13 @@ export default function Step2_Birthday() {
   };
 
   return (
-    <BirthdayInput
-      value={birthday}
-      onChange={validate}
-      error={errors.birthday}
-      autoFocus
-    />
+    <div className="flex flex-col w-full mx-auto">
+      <BirthdayInput
+        value={birthday}
+        onChange={validate}
+        error={errors.birthday}
+        autoFocus
+      />
+    </div>
   );
 }

@@ -5,17 +5,17 @@ import { CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface FamilyCompletedMessageProps {
-  redirectTo?: string;
-  delayMs?: number;
-  message?: string;
-  description?: string;
+  redirectTo: string;
+  delayMs: number;
+  message: string;
+  description: string;
 }
 
 export default function FamilyCompletedMessage({
-  redirectTo = "/member",
-  delayMs = 3000,
-  message = "가족 추가가 완료되었습니다!",
-  description = "이제 가족과 함께 일정을 공유할 수 있어요.\n잠시 후 메인 페이지로 이동합니다.",
+  redirectTo,
+  delayMs,
+  message,
+  description,
 }: FamilyCompletedMessageProps) {
   const router = useRouter();
 
@@ -27,7 +27,7 @@ export default function FamilyCompletedMessage({
   }, [redirectTo, delayMs, router]);
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-bgColor-default px-6 text-center">
+    <main className="min-h-screen flex flex-col items-center justify-center bg-bgColor-default px-6 text-center pt-0">
       <div className="flex flex-col items-center gap-4 max-w-md">
         <CheckCircle className="w-16 h-16 text-brand-normal" />
 
@@ -35,8 +35,8 @@ export default function FamilyCompletedMessage({
           {message}
         </h2>
 
-        <p className="text-base text-textColor-sub whitespace-pre-line leading-relaxed">
-          {description}
+        <p className="text-base text-textColor-sub leading-relaxed whitespace-pre-line">
+          {description?.replace(/<br\s*\/?>/gi, "\n")}
         </p>
       </div>
     </main>

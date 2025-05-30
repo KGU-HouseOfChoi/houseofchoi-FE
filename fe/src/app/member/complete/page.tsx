@@ -11,10 +11,20 @@ export default function CompletePage() {
   const [showFamilyPopup, setShowFamilyPopup] = useState(true);
 
   useEffect(() => {
-    history.pushState(null, "", location.href);
+    const isComplete = localStorage.getItem("signupComplete");
 
-    const preventBack = () => {
-      history.pushState(null, "", location.href);
+    // 회원가입이 완료되지 않은 경우
+    if (!isComplete) {
+      router.replace("/auth");
+      return;
+    }
+
+    // 브라우저 뒤로가기 방지
+    window.history.pushState(null, "", location.href);
+
+    const preventBack = (e: PopStateEvent) => {
+      e.preventDefault();
+      window.history.pushState(null, "", location.href);
     };
 
     window.addEventListener("popstate", preventBack);
@@ -22,7 +32,7 @@ export default function CompletePage() {
     return () => {
       window.removeEventListener("popstate", preventBack);
     };
-  }, []);
+  }, [router]);
 
   return (
     <main className="relative min-h-screen bg-white px-6 pt-[100px] pb-[150px] flex flex-col items-center justify-center gap-6 text-center">
@@ -39,7 +49,7 @@ export default function CompletePage() {
 
       <div className="absolute bottom-[54px] left-0 right-0 px-6 z-10">
         <Button fullWidth onClick={() => router.replace("/member/personality")}>
-          어르심 시작하기
+          배우다 시작하기
         </Button>
       </div>
 

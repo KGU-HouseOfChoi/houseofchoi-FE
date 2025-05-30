@@ -7,7 +7,7 @@ export default function SearchBar() {
   const router = useRouter();
 
   const handleSearchClick = () => {
-    router.push("/search");
+    router.push("/search?focus=1");
   };
 
   return (

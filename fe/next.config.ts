@@ -13,10 +13,10 @@ const nextConfig = {
   },
 
   experimental: {
-    serverActions: true,
+    serverActions: {
+      allowedOrigins: ["www.learningwith.co.kr"],
+    },
   },
-
-  metadataBase: new URL("https://houseofchoi-fe.vercel.app"),
 
   webpack(config: Configuration, _options: WebpackConfigContext) {
     config.module?.rules?.push({

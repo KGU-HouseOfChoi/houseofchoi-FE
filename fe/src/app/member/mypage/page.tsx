@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import BottomNavBar from "@/components/common/BottomNavBar";
 import MypageCard from "@/components/mypage/card/MypageCard";
 import FamilyList from "@/components/mypage/layout/FamilyList";
@@ -26,6 +26,14 @@ export default function MyPage() {
     })();
   }, []);
 
+  const filteredFamilyList = useMemo(
+    () =>
+      familyList.filter(
+        (userInfo) => userInfo.relatedUserName && userInfo.relatedUserBirth,
+      ),
+    [familyList],
+  );
+
   return (
     <>
       <div className="flex flex-col items-center min-h-screen pt-10 pb-[124px] bg-white">
@@ -39,8 +47,8 @@ export default function MyPage() {
 
         <FamilyList userInfoList={familyList} />
 
-        <div className="mt-10 mb-8">
-          <FamilyAddButton />
+        <div className="mt-20 mb-8">
+          <FamilyAddButton hasFamily={filteredFamilyList.length > 0} />
         </div>
 
         <div className="flex-grow" />

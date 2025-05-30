@@ -36,17 +36,23 @@ export default function PersonalityAnalysisIntroPopup({
 
           <Info className="w-10 h-10 text-brand-normal" />
 
-          <h2 className="text-2xl font-semibold font-pretendard">
-            부모님의 성향을 먼저 알아볼게요
+          <h2 className="text-2xl font-semibold font-pretendard text-textColor-heading">
+            부모님의 성향을 알아볼게요
           </h2>
 
-          <p className="text-lg text-textColor-sub font-pretendard leading-relaxed whitespace-pre-line">
-            부모님께 맞는 활동을 추천해드리기 위해{"\n"}
-            간단한 질문 몇 가지를 먼저 여쭤볼게요.{"\n\n"}
-            자녀이신 경우에도{"\n"}
-            부모님을 대신해 성향을 알려주세요.{"\n\n"}
-            비회원으로 둘러보면 로그인이 해제돼요.
-          </p>
+          <div className="flex flex-col gap-4 text-lg text-textColor-body font-pretendard leading-relaxed">
+            <p>
+              성향에 맞는 활동을 추천해드리기 위해
+              <br />
+              간단한 질문 몇 가지를 먼저 여쭤볼게요.
+            </p>
+
+            <p>
+              자녀이신 경우에도
+              <br />
+              부모님을 대신해 선택해 주세요.
+            </p>
+          </div>
 
           <PopupButtons
             onConfirm={onClose}

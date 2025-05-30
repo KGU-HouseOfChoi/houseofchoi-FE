@@ -24,8 +24,10 @@ export default function SearchAutoComplete({ keyword, onSelect }: Props) {
       setLoading(true);
       try {
         const programs = await searchPrograms(debouncedKeyword, 1, 5);
-        const names = programs.filter((p) => p && p.name).map((p) => p.name);
-        setResults(names);
+        const uniqueNames = Array.from(
+          new Set(programs.filter((p) => p.name).map((p) => p.name)),
+        );
+        setResults(uniqueNames);
       } catch {
         setResults([]);
       } finally {
@@ -39,11 +41,15 @@ export default function SearchAutoComplete({ keyword, onSelect }: Props) {
   return (
     <ul className="px-4">
       {loading && (
-        <li className="py-2 text-base text-textColor-sub">검색 중...</li>
+        <li className="pt-20 text-center text-textColor-sub">
+          <p className="text-base">검색 중...</p>
+        </li>
       )}
       {!loading && results.length === 0 && (
-        <li className="py-2 text-base text-textColor-sub">
-          검색 결과가 없습니다
+        <li className="pt-20 text-center text-textColor-sub">
+          <p className="text-xl font-semibold text-brand-normal">
+            검색 결과가 없습니다
+          </p>
         </li>
       )}
       {results.map((name, idx) => (

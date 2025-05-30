@@ -24,6 +24,9 @@ interface Props {
   autoFocus?: boolean;
   debounceDelay?: number;
   maxLength?: number;
+  style?: React.CSSProperties;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export default function FormInput({
@@ -38,6 +41,9 @@ export default function FormInput({
   maxLength,
   autoFocus = false,
   debounceDelay = 0,
+  style,
+  onFocus,
+  onBlur,
 }: Props) {
   const [active, setActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -63,9 +69,15 @@ export default function FormInput({
     }
   }, [autoFocus]);
 
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedOnChange(e.target.value);
+  };
+
   return (
-    <div className="w-full max-w-[364px] flex flex-col gap-2">
-      <label className="text-xl text-textColor-sub">{label}</label>
+    <div className="w-full flex flex-col gap-2">
+      <label className="text-xl text-textColor-body font-semibold">
+        {label}
+      </label>
 
       <input
         ref={inputRef}
@@ -75,19 +87,46 @@ export default function FormInput({
         inputMode={inputMode}
         pattern={pattern}
         maxLength={maxLength}
-        onChange={(e) => debouncedOnChange(e.target.value)}
+        onChange={handleInput}
+        onFocus={() => {
+          setActive(true);
+          onFocus?.();
+        }}
+        onBlur={() => {
+          setActive(false);
+          onBlur?.();
+        }}
         autoFocus={autoFocus}
-        className={`w-full h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors
+        className={`w-full h-[60px] px-4 rounded-xl border-2 text-base outline-none transition-colors bg-bgColor-default
           ${
             error
               ? "border-danger-50"
-              : active
+              : active || value
                 ? "border-brand-normal"
                 : "border-borderColor-default"
-          }`}
+          }
+          focus:border-brand-normal focus:outline-none
+          placeholder:text-textColor-disabled
+          touch-manipulation
+          cursor-text
+          select-text`}
+        style={{
+          WebkitTapHighlightColor: "transparent",
+          WebkitTouchCallout: "none",
+          WebkitUserSelect: "text",
+          userSelect: "text",
+          WebkitAppearance: "none",
+          appearance: "none",
+          WebkitOverflowScrolling: "touch",
+          touchAction: "manipulation",
+          caretColor: "auto",
+          ...style,
+        }}
       />
 
-      {error && <p className="text-danger-50 text-sm font-medium">{error}</p>}
+      {error && (
+        <p className="text-danger-50 text-sm font-medium mt-1">{error}</p>
+      )}
     </div>
   );
 }

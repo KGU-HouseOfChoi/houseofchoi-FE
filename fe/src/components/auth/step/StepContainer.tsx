@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useSignup } from "@/hooks/auth/useSignup";
 import Step1_Name from "./Step1_Name";
 import Step2_Birthday from "./Step2_Birthday";
 import Step3_Carrier from "./Step3_Carrier";
@@ -22,6 +23,7 @@ export default function StepContainer({ onNext }: StepContainerProps) {
   const { step, errors, phoneNumber, setStep, name, birthday, carrier } =
     useAuthStore();
   const router = useRouter();
+  const { handleSignUp } = useSignup();
   const [showConsent, setShowConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [code, setCode] = useState("");
@@ -67,6 +69,22 @@ export default function StepContainer({ onNext }: StepContainerProps) {
 
   const handleSuccess = (verifiedCode: string) => {
     console.log("✅ 인증 성공:", verifiedCode);
+    handleSignUp({
+      code: verifiedCode,
+      onSuccess: (status: "EXISTING_USER" | "NEW_USER") => {
+        console.log("가입 상태:", status);
+
+        if (status === "EXISTING_USER") {
+          router.replace("/member");
+        } else {
+          localStorage.setItem("signupComplete", "true");
+          router.replace("/member/complete");
+        }
+      },
+      onError: (msg: string) => {
+        setError(msg);
+      },
+    });
   };
 
   const renderTitle = () => {
@@ -74,7 +92,7 @@ export default function StepContainer({ onNext }: StepContainerProps) {
       case 1:
         return "이름을 입력해주세요";
       case 2:
-        return "주민등록번호 앞 7자리를 입력해주세요";
+        return "주민등록번호 7자리를\n입력해주세요";
       case 3:
         return "통신사를 선택해주세요";
       case 4:
@@ -87,8 +105,8 @@ export default function StepContainer({ onNext }: StepContainerProps) {
   };
 
   return (
-    <div className="min-h-screen w-full bg-bgColor-default px-0 flex flex-col gap-10">
-      <h2 className="text-2xl font-semibold text-textColor-heading">
+    <div className="min-h-screen w-full bg-bgColor-default px-0 flex flex-col gap-10 pb-[80px]">
+      <h2 className="text-2xl font-semibold text-textColor-heading whitespace-pre-line">
         {renderTitle()}
       </h2>
 
