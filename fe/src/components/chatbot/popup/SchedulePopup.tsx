@@ -44,7 +44,7 @@ export default function ScheduleAddedPopup({
         </div>
 
         <PopupButtons
-          onConfirm={() => onConfirm(day)}
+          onConfirm={() => onConfirm(day ? `${day}요일` : undefined)}
           confirmLabel="일정 보러가기"
           onCancel={onCancel}
           cancelLabel="대화하기"

@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Message } from "@/types/chatbot";
 
 export function useChatbotSchedule() {
   const [popupOpen, setPopupOpen] = useState(false);
+  const [selectedDay, setSelectedDay] = useState<string | undefined>();
 
-  const openPopup = () => setPopupOpen(true);
-  const closePopup = () => setPopupOpen(false);
+  const openPopup = (day?: string) => {
+    console.log("[useChatbotSchedule] openPopup called with day:", day);
+    setSelectedDay(day);
+    setPopupOpen(true);
+  };
+  const closePopup = () => {
+    setPopupOpen(false);
+    setSelectedDay(undefined);
+  };
 
   const cancelAndAsk = (): Message[] => {
     setPopupOpen(false);
+    setSelectedDay(undefined);
     return [makeBotText("다른 궁금한 사항이 있다면 질문해주세요!")];
   };
 
@@ -22,10 +31,21 @@ export function useChatbotSchedule() {
     isUser: false,
   });
 
+  useEffect(() => {
+    console.log(
+      "[useChatbotSchedule] popupOpen:",
+      popupOpen,
+      "selectedDay:",
+      selectedDay,
+    );
+  }, [popupOpen, selectedDay]);
+
   return {
     popupOpen,
     openPopup,
     closePopup,
     cancelAndAsk,
+    selectedDay,
+    setSelectedDay,
   };
 }

@@ -7,15 +7,11 @@ import { fetchChatAnswer } from "@/apis/chatbot/fetchChatAnswer";
 import { useActivityRecommendation } from "./useActivityRecommendation";
 import { useSchedule } from "@/hooks/chatbot/useSchedule";
 import { useChatbotSchedule } from "@/hooks/chatbot/useChatbotSchedule";
-import {
-  CONFIRM_KEYWORDS,
-  containsKeywords,
-} from "@/constants/chatbot/messages";
+import { CONFIRM_KEYWORDS } from "@/constants/chatbot/messages";
 
 export function useChatbot() {
   const [messages, setMessages] = useState<Message[]>(INITIAL_GREETING);
-  const [isActivityConfirm, setIsActivityConfirm] = useState(false);
-  const [pendingDay, setPendingDay] = useState<string | null>(null);
+  const [pendingProgramId, setPendingProgramId] = useState<number | null>(null);
 
   const { fetchRecommendation } = useActivityRecommendation();
   const {
@@ -30,6 +26,8 @@ export function useChatbot() {
     openPopup: openChatbotPopup,
     closePopup,
     cancelAndAsk,
+    selectedDay,
+    setSelectedDay,
   } = useChatbotSchedule();
 
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -37,6 +35,23 @@ export function useChatbot() {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    const lastMsg = messages[messages.length - 1];
+    if (
+      lastMsg &&
+      lastMsg.sender === "bot" &&
+      lastMsg.type === "text" &&
+      "content" in lastMsg &&
+      typeof lastMsg.content === "string" &&
+      CONFIRM_KEYWORDS.CALENDAR_KEYWORDS.some((keyword) =>
+        lastMsg.content.includes(keyword),
+      ) &&
+      !popupOpen
+    ) {
+      openChatbotPopup(selectedDay);
+    }
+  }, [messages, openChatbotPopup, selectedDay, popupOpen]);
 
   function splitBySentences(text: string, groupSize = 2): string[] {
     const sentences =
@@ -54,15 +69,18 @@ export function useChatbot() {
   const pushBotText = (content: string) =>
     setMessages((prev) => [
       ...prev,
-      ...(splitBySentences(content, 2).map((bubble) => ({
-        id: Date.now().toString() + Math.random(),
-        sender: "bot",
-        profileUrl: "/images/Chatlogo.svg",
-        type: "text",
-        content: bubble,
-        timestamp: new Date().toISOString(),
-        isUser: false,
-      })) as import("@/types/chatbot").TextMessage[]),
+      ...splitBySentences(content, 2).map(
+        (bubble) =>
+          ({
+            id: Date.now().toString() + Math.random(),
+            sender: "bot",
+            profileUrl: "/images/Chatlogo.svg",
+            type: "text",
+            content: bubble,
+            timestamp: new Date().toISOString(),
+            isUser: false,
+          }) as Message,
+      ),
     ]);
 
   const handleSend = async (text: string) => {
@@ -81,15 +99,18 @@ export function useChatbot() {
     ]);
 
     try {
-      if (text === CONFIRM_KEYWORDS.YES) {
-        openChatbotPopup();
-        return;
-      }
-
       const answer = await fetchChatAnswer(text);
       pushBotText(answer);
 
-      if (containsKeywords(answer, CONFIRM_KEYWORDS.SCHEDULE_KEYWORDS)) {
+      const day = extractDayFromText(answer);
+      if (typeof setSelectedDay === "function" && day) setSelectedDay(day);
+      setPendingProgramId(null);
+
+      if (
+        CONFIRM_KEYWORDS.SCHEDULE_KEYWORDS.some((keyword) =>
+          answer.includes(keyword),
+        )
+      ) {
         const confirmCard: ScheduleConfirmMessage = {
           id: `${Date.now()}-confirm`,
           sender: "bot",
@@ -127,7 +148,14 @@ export function useChatbot() {
       }
 
       const last = recMsgs.at(-1);
-      if (last?.type === "activity") saveProgramId(last.programId);
+      if (last?.type === "activity") {
+        saveProgramId(last.programId);
+        setPendingProgramId(last.programId);
+        const day = extractDayFromText(last.content);
+        if (typeof setSelectedDay === "function" && day) setSelectedDay(day);
+      } else {
+        setPendingProgramId(null);
+      }
 
       const confirmCard: ScheduleConfirmMessage = {
         id: `${Date.now()}-confirm`,
@@ -137,61 +165,47 @@ export function useChatbot() {
         isUser: false,
       };
 
-      setIsActivityConfirm(true);
       setMessages((prev) => [...prev, ...recMsgs, confirmCard]);
     } catch {
       pushBotText("추천 정보를 가져오지 못했어요. 다시 시도해 주세요.");
     }
   };
 
+  function extractDayFromText(text: string): string | undefined {
+    const weeklyMatch = text.match(/매주\s+([월화수목금토일])요일/);
+    if (weeklyMatch) return weeklyMatch[1];
+
+    const scheduleMatch = text.match(/일정:\s*매주\s+([월화수목금토일]+)/);
+    if (scheduleMatch) {
+      const days = scheduleMatch[1].split(/[·,\s]/);
+      return days[0];
+    }
+
+    const dayMatch = text.match(/([월화수목금토일])요일/);
+    return dayMatch ? dayMatch[1] : undefined;
+  }
+
   const handleScheduleConfirm = async (value: "yes" | "no") => {
     if (value === "yes") {
-      if (isActivityConfirm) {
+      if (pendingProgramId) {
         const result = await confirm("yes");
         if (result.length === 0) {
-          const lastActivityMsg = messages
-            .filter((msg): msg is import("@/types/chatbot").ActivityMessage => 
-              msg.type === "activity"
-            )
-            .pop();
-          
-          if (lastActivityMsg) {
-            const dayMatch = lastActivityMsg.content.match(/일정: 매주 ([월화수목금토일]+)/);
-            if (dayMatch) {
-              const day = dayMatch[1].split("·")[0];
-              setPendingDay(day);
-            }
-          }
-          openChatbotPopup();
+          openChatbotPopup(selectedDay ?? undefined);
         } else {
           setMessages((prev) => [...prev, ...result]);
         }
       } else {
-        const userMessage: import("@/types/chatbot").TextMessage = {
-          id: Date.now().toString(),
-          sender: "user",
-          type: "text",
-          content: CONFIRM_KEYWORDS.YES,
-          timestamp: new Date().toISOString(),
-          isUser: true,
-        };
-        setMessages((prev) => [...prev, userMessage]);
-
-        try {
-          const answer = await fetchChatAnswer(CONFIRM_KEYWORDS.YES);
-          pushBotText(answer);
-        } catch {
-          pushBotText("답변을 가져오지 못했어요. 잠시 후 다시 시도해 주세요.");
-        }
+        handleSend("예");
+        openChatbotPopup(selectedDay ?? undefined);
       }
     } else {
-      setIsActivityConfirm(false);
+      closePopup();
       pushBotText("다른 궁금한 사항이 있다면 질문해주세요!");
     }
   };
 
   const handlePopupCancel = () => {
-    setIsActivityConfirm(false);
+    if (typeof setSelectedDay === "function") setSelectedDay(undefined);
     const reply = cancelAndAsk();
     setMessages((prev) => [...prev, ...reply]);
   };
@@ -205,13 +219,16 @@ export function useChatbot() {
     handleButtonClick,
     handleScheduleConfirm,
     handlePopupCancel,
-    goToCalendar: () => goToCalendar(pendingDay || undefined),
+    goToCalendar: () => {
+      goToCalendar(selectedDay ?? undefined);
+    },
     bottomRef,
     scheduleLoading,
     popupOpen,
     closePopup,
     pushBotText,
-    pendingDay,
+    pendingProgramId,
+    selectedDay: selectedDay ? `${selectedDay}요일` : undefined,
   };
 }
 

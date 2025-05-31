@@ -13,17 +13,19 @@ import { useAuth } from "@/hooks/auth/useAuth";
 export default function CalendarFlow() {
   const searchParams = useSearchParams();
   const dayParam = searchParams.get("day");
-  const [selectedDay, setSelectedDay] = useState(dayParam || getTodayDayString());
+  const dateParam = searchParams.get("date");
+  const initialDay = dayParam || dateParam || getTodayDayString();
+  const [selectedDay, setSelectedDay] = useState(initialDay);
   const { data, loading, error, remove } = useSchedules(selectedDay);
 
   const { isGuest, hydrated } = useAuth();
   const [userName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
-    if (dayParam) {
-      setSelectedDay(dayParam);
+    if (dayParam || dateParam) {
+      setSelectedDay(dayParam || dateParam || getTodayDayString());
     }
-  }, [dayParam]);
+  }, [dayParam, dateParam]);
 
   useEffect(() => {
     if (!hydrated || isGuest) return;

@@ -22,6 +22,8 @@ const ChatbotMessageList = () => {
     handlePopupCancel,
     goToCalendar,
     pushBotText,
+    pendingProgramId,
+    selectedDay,
   } = useChatbot();
 
   const { incrementMessageCount } = useMessageCount();
@@ -48,7 +50,6 @@ const ChatbotMessageList = () => {
     fetchUserName();
   }, []);
 
-  // 채팅방 입장 시 현재 MBTI 조회
   useEffect(() => {
     const fetchCurrentMBTI = async () => {
       if (isFirstRender.current) {
@@ -136,7 +137,16 @@ const ChatbotMessageList = () => {
               items={group.items}
               onButtonClick={(value, label) => {
                 if (value === "yes" || value === "no") {
-                  handleScheduleConfirm(value);
+                  if (value === "yes") {
+                    if (!pendingProgramId) {
+                      handleSend("예");
+                    } else {
+                      handleScheduleConfirm("yes");
+                    }
+                  } else {
+                    
+                    handleScheduleConfirm("no");
+                  }
                 } else {
                   handleButtonClickWithErrorHandling(value, label);
                 }
@@ -157,6 +167,7 @@ const ChatbotMessageList = () => {
         isOpen={popupOpen}
         onConfirm={goToCalendar}
         onCancel={handlePopupCancel}
+        day={selectedDay}
       />
     </>
   );
