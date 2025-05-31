@@ -33,8 +33,9 @@ export function useSchedule() {
     }
   };
 
-  const goToCalendar = () => {
-    router.push("/member/calendar");
+  const goToCalendar = (day?: string) => {
+    const url = day ? `/member/calendar?day=${day}` : "/member/calendar";
+    router.push(url);
   };
 
   const makeBotText = (content: string): Message => ({

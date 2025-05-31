@@ -15,6 +15,7 @@ import {
 export function useChatbot() {
   const [messages, setMessages] = useState<Message[]>(INITIAL_GREETING);
   const [isActivityConfirm, setIsActivityConfirm] = useState(false);
+  const [pendingDay, setPendingDay] = useState<string | null>(null);
 
   const { fetchRecommendation } = useActivityRecommendation();
   const {
@@ -148,6 +149,19 @@ export function useChatbot() {
       if (isActivityConfirm) {
         const result = await confirm("yes");
         if (result.length === 0) {
+          const lastActivityMsg = messages
+            .filter((msg): msg is import("@/types/chatbot").ActivityMessage => 
+              msg.type === "activity"
+            )
+            .pop();
+          
+          if (lastActivityMsg) {
+            const dayMatch = lastActivityMsg.content.match(/일정: 매주 ([월화수목금토일]+)/);
+            if (dayMatch) {
+              const day = dayMatch[1].split("·")[0];
+              setPendingDay(day);
+            }
+          }
           openChatbotPopup();
         } else {
           setMessages((prev) => [...prev, ...result]);
@@ -191,12 +205,13 @@ export function useChatbot() {
     handleButtonClick,
     handleScheduleConfirm,
     handlePopupCancel,
-    goToCalendar,
+    goToCalendar: () => goToCalendar(pendingDay || undefined),
     bottomRef,
     scheduleLoading,
     popupOpen,
     closePopup,
     pushBotText,
+    pendingDay,
   };
 }
 

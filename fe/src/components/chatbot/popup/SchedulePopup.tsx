@@ -7,10 +7,11 @@ import { X } from "lucide-react";
 
 interface ScheduleAddedPopupProps {
   isOpen: boolean;
-  onConfirm: () => void;
+  onConfirm: (day?: string) => void;
   onCancel: () => void;
   title?: string;
   subtitle?: string;
+  day?: string;
 }
 
 export default function ScheduleAddedPopup({
@@ -19,6 +20,7 @@ export default function ScheduleAddedPopup({
   onCancel,
   title = "일정을 캘린더에 추가했습니다.",
   subtitle = "나의 일정에서 확인해보세요!",
+  day,
 }: ScheduleAddedPopupProps) {
   return (
     <BottomPopup isOpen={isOpen} onClose={onCancel}>
@@ -42,7 +44,7 @@ export default function ScheduleAddedPopup({
         </div>
 
         <PopupButtons
-          onConfirm={onConfirm}
+          onConfirm={() => onConfirm(day)}
           confirmLabel="일정 보러가기"
           onCancel={onCancel}
           cancelLabel="대화하기"

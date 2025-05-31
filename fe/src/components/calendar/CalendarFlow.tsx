@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import BottomNavBar from "@/components/common/BottomNavBar";
 import CalendarHeader from "@/components/calendar/CalendarHeader";
 import CalendarCard from "@/components/calendar/CalendarCard";
@@ -10,11 +11,19 @@ import { getUserName } from "@/apis/main/user";
 import { useAuth } from "@/hooks/auth/useAuth";
 
 export default function CalendarFlow() {
-  const [selectedDay, setSelectedDay] = useState(getTodayDayString());
+  const searchParams = useSearchParams();
+  const dayParam = searchParams.get("day");
+  const [selectedDay, setSelectedDay] = useState(dayParam || getTodayDayString());
   const { data, loading, error, remove } = useSchedules(selectedDay);
 
   const { isGuest, hydrated } = useAuth();
   const [userName, setUserName] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (dayParam) {
+      setSelectedDay(dayParam);
+    }
+  }, [dayParam]);
 
   useEffect(() => {
     if (!hydrated || isGuest) return;
