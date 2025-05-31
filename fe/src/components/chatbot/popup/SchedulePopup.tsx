@@ -7,7 +7,7 @@ import { X } from "lucide-react";
 
 interface ScheduleAddedPopupProps {
   isOpen: boolean;
-  onConfirm: () => void;
+  onConfirm: (day?: string) => void;
   onCancel: () => void;
   title?: string;
   subtitle?: string;
@@ -42,7 +42,9 @@ export default function ScheduleAddedPopup({
         </div>
 
         <PopupButtons
-          onConfirm={onConfirm}
+          onConfirm={async () => {
+            await onConfirm();
+          }}
           confirmLabel="일정 보러가기"
           onCancel={onCancel}
           cancelLabel="대화하기"

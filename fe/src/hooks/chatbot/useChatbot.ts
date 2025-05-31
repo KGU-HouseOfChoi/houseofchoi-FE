@@ -11,10 +11,18 @@ import {
   CONFIRM_KEYWORDS,
   containsKeywords,
 } from "@/constants/chatbot/messages";
+import { getFirstProgramDay } from "@/utils/schedule/schedule";
+import { fetchProgramList } from "@/apis/main/program";
 
 export function useChatbot() {
   const [messages, setMessages] = useState<Message[]>(INITIAL_GREETING);
   const [isActivityConfirm, setIsActivityConfirm] = useState(false);
+  const [lastRecommendedProgramId, setLastRecommendedProgramId] = useState<
+    number | null
+  >(null);
+  const [lastRecommendText, setLastRecommendText] = useState<string | null>(
+    null,
+  );
 
   const { fetchRecommendation } = useActivityRecommendation();
   const {
@@ -89,6 +97,7 @@ export function useChatbot() {
       pushBotText(answer);
 
       if (containsKeywords(answer, CONFIRM_KEYWORDS.SCHEDULE_KEYWORDS)) {
+        setLastRecommendText(answer);
         const confirmCard: ScheduleConfirmMessage = {
           id: `${Date.now()}-confirm`,
           sender: "bot",
@@ -97,6 +106,8 @@ export function useChatbot() {
           isUser: false,
         };
         setMessages((prev) => [...prev, confirmCard]);
+      } else {
+        setLastRecommendText(null);
       }
     } catch {
       pushBotText("답변을 가져오지 못했어요. 잠시 후 다시 시도해 주세요.");
@@ -125,8 +136,11 @@ export function useChatbot() {
         return;
       }
 
-      const last = recMsgs.at(-1);
-      if (last?.type === "activity") saveProgramId(last.programId);
+      const lastActivityMsg = recMsgs.find((msg) => msg.type === "activity");
+      if (lastActivityMsg) {
+        setLastRecommendedProgramId(lastActivityMsg.programId);
+        saveProgramId(lastActivityMsg.programId);
+      }
 
       const confirmCard: ScheduleConfirmMessage = {
         id: `${Date.now()}-confirm`,
@@ -198,6 +212,29 @@ export function useChatbot() {
   /* ─────────── 그룹핑 후 반환 ─────────── */
   const groupedMessages = groupMessages(messages);
 
+  function extractDayFromText(text: string): string | undefined {
+    const match = text.match(/(월|화|수|목|금|토|일)요일/);
+    return match ? match[1] : undefined;
+  }
+
+  const goToCalendarWithDay = async () => {
+    if (lastRecommendedProgramId) {
+      const programs = await fetchProgramList();
+      const program = programs.find((p) => p.id === lastRecommendedProgramId);
+      if (program) {
+        const day = getFirstProgramDay(program);
+        goToCalendar(day);
+        return;
+      }
+    }
+    if (lastRecommendText) {
+      const day = extractDayFromText(lastRecommendText);
+      goToCalendar(day);
+      return;
+    }
+    goToCalendar();
+  };
+
   return {
     messages,
     groupedMessages,
@@ -205,7 +242,7 @@ export function useChatbot() {
     handleButtonClick,
     handleScheduleConfirm,
     handlePopupCancel,
-    goToCalendar,
+    goToCalendar: goToCalendarWithDay,
     bottomRef,
     scheduleLoading,
     popupOpen,
