@@ -6,9 +6,10 @@ import VoicePopup from "@/components/chatbot/popup/VoicePopup";
 
 interface VoiceInputProps {
   handleSend: (text: string) => void;
+  pushBotText: (text: string) => void;
 }
 
-const VoiceInput = ({ handleSend }: VoiceInputProps) => {
+const VoiceInput = ({ handleSend, pushBotText }: VoiceInputProps) => {
   const [isListening, setIsListening] = useState(false);
 
   const handleVoiceClick = () => {
@@ -28,6 +29,7 @@ const VoiceInput = ({ handleSend }: VoiceInputProps) => {
         isOpen={isListening}
         onClose={() => setIsListening(false)}
         handleSend={handleSend}
+        pushBotText={pushBotText}
       />
     </div>
   );
