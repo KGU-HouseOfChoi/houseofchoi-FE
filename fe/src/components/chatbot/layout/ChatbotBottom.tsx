@@ -21,7 +21,7 @@ const ChatbotBottom: React.FC<ChatbotBottomProps> = ({
     onSend(input);
     setInput("");
     if (inputRef.current) {
-      inputRef.current.style.height = "54px"; 
+      inputRef.current.style.height = "54px";
     }
     inputRef.current?.focus();
   };
@@ -30,10 +30,8 @@ const ChatbotBottom: React.FC<ChatbotBottomProps> = ({
     <div className="fixed bottom-0 left-0 right-0 w-full flex justify-center items-end z-50 pb-[env(safe-area-inset-bottom)] sm:pb-0">
       <div className="w-full max-w-[414px] bg-bgColor-default min-h-[100px] flex items-center justify-center py-4 px-4 text-textColor-body font-pretendard shadow transition-all">
         <div className="flex w-full items-end gap-2">
-          
           <VoiceInput handleSend={onSend} pushBotText={pushBotText} />
 
-         
           <div className="flex-1 max-w-[320px] rounded-2xl bg-bgColor-default border border-borderColor-default focus-within:border-brand-normal flex items-end justify-between px-3 gap-3 transition">
             <textarea
               ref={inputRef}
@@ -67,8 +65,8 @@ const ChatbotBottom: React.FC<ChatbotBottomProps> = ({
                 maxHeight: "120px",
               }}
             />
-            
-            <button onClick={handleSend} className="-translate-y-2" >
+
+            <button onClick={handleSend} className="-translate-y-2">
               <SendIcon
                 width={36}
                 height={36}
