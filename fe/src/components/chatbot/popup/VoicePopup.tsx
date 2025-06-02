@@ -11,12 +11,14 @@ interface VoicePopupProps {
   isOpen: boolean;
   onClose: () => void;
   handleSend: (text: string) => void;
+  pushBotText: (text: string) => void;
 }
 
 export default function VoicePopup({
   isOpen,
   onClose,
   handleSend,
+  pushBotText,
 }: VoicePopupProps) {
   const { startRecording, stopRecording } = useVoiceRecorder();
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
@@ -66,9 +68,7 @@ export default function VoicePopup({
     try {
       await new Promise<void>((resolve) => {
         stopRecording(async (blob, transcript) => {
-          if (transcript.trim()) {
-            await handleSend(transcript);
-          }
+          await handleSendWithLoading(transcript);
           resolve();
         });
       });
@@ -88,10 +88,7 @@ export default function VoicePopup({
     setIsRecording(true);
 
     startRecording(async (blob, transcript) => {
-      if (transcript.trim()) {
-        console.log("📝 텍스트 추출 완료:", transcript);
-        await handleSendWithLoading(transcript);
-      }
+      await handleSendWithLoading(transcript);
     });
 
     const id = setInterval(() => {
@@ -109,7 +106,11 @@ export default function VoicePopup({
     await new Promise((resolve) => setTimeout(resolve, 0));
 
     try {
-      await handleSend(transcript);
+      if (!transcript.trim()) {
+        pushBotText("다시 한 번 말씀해주세요.");
+      } else {
+        await handleSend(transcript);
+      }
     } finally {
       setIsSending(false);
       onClose();
@@ -136,7 +137,7 @@ export default function VoicePopup({
     <BottomPopup isOpen={isOpen} onClose={onClose}>
       <div className="relative text-center flex flex-col items-center justify-center gap-y-5">
         <button
-          onClick={onClose}
+          onClick={handleCancelClick}
           className="absolute top-0 right-3 p-1 rounded hover:bg-bgColor-surface"
           aria-label="닫기"
           type="button"

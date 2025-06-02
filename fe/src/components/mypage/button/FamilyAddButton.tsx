@@ -3,7 +3,11 @@
 import { useState } from "react";
 import FamilyLinkPopup from "@/components/family/popup/FamilyLinkPopup";
 
-const FamilyAddButton = () => {
+interface FamilyAddButtonProps {
+  hasFamily: boolean;
+}
+
+const FamilyAddButton = ({ hasFamily }: FamilyAddButtonProps) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleOpenPopup = () => {
@@ -22,10 +26,14 @@ const FamilyAddButton = () => {
         rounded-xl bg-brand-normal text-white text-2xl font-semibold font-pretendard 
         whitespace-nowrap flex items-center justify-center`}
       >
-        가족 추가하기
+        {hasFamily ? "가족수정하기" : "가족추가하기"}
       </button>
 
-      <FamilyLinkPopup isOpen={isPopupOpen} onClose={handleClosePopup} />
+      <FamilyLinkPopup
+        isOpen={isPopupOpen}
+        onClose={handleClosePopup}
+        hasFamily={hasFamily}
+      />
     </>
   );
 };
