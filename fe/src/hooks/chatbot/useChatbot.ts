@@ -184,6 +184,8 @@ export function useChatbot() {
         } catch {
           pushBotText("답변을 가져오지 못했어요. 잠시 후 다시 시도해 주세요.");
         }
+
+        openChatbotPopup();
       }
     } else {
       setIsActivityConfirm(false);
