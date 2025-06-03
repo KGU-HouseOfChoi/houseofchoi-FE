@@ -4,21 +4,27 @@ import { useRouter } from "next/navigation";
 import BottomPopup from "@/components/common/popup/BottomPopup";
 import PopupButtons from "@/components/common/button/PopupButtons";
 import { Calendar, X } from "lucide-react";
+import axiosMainInstance from "@/apis/common/axiosMainInstance";
 
-interface FamilyLinkPopupProps {
+interface FamilyDeleteConfirmPopupProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export default function FamilyLinkPopup({
+export default function FamilyDeleteConfirmPopup({
   isOpen,
   onClose,
-}: FamilyLinkPopupProps) {
+}: FamilyDeleteConfirmPopupProps) {
   const router = useRouter();
 
-  const handleAddFamily = () => {
-    onClose();
-    router.replace("/member/family");
+  const handleDeleteAndRedirect = async () => {
+    try {
+      await axiosMainInstance.delete("/v1/user/relation/delete");
+      onClose();
+      router.replace("/member/family");
+    } catch (error) {
+      console.error("❌ 가족 삭제 실패:", error);
+    }
   };
 
   return (
@@ -35,18 +41,18 @@ export default function FamilyLinkPopup({
         <Calendar className="w-10 h-10 text-brand-normal" />
 
         <h2 className="text-2xl font-semibold text-textColor-heading">
-          계정에 가족을 추가해보세요
+          가족 정보를 수정할까요?
         </h2>
 
         <p className="text-base text-textColor-sub leading-relaxed whitespace-pre-line">
-          가족을 추가하면 함께{"\n"}일정을 공유할 수 있어요!
+          수정하면 기존 가족 정보는 삭제되고{"\n"}새로운 가족을 연동할 수 있어요.
         </p>
 
         <PopupButtons
-          onConfirm={handleAddFamily}
+          onConfirm={handleDeleteAndRedirect}
           onCancel={onClose}
-          confirmLabel="가족 추가하기"
-          cancelLabel="건너뛰기"
+          confirmLabel="가족 수정하기"
+          cancelLabel="취소"
         />
       </div>
     </BottomPopup>

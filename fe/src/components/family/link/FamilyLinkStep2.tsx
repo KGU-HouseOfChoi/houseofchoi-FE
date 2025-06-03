@@ -125,7 +125,7 @@ export default function FamilyLinkStep2({
               value={code}
               onChange={(e) => setCode(e.target.value)}
               placeholder="고유번호 입력"
-              className="w-full h-[65px] px-4 pr-10 text-lg border-2 border-brand-normal focus:border-brand-normal focus:outline-none rounded-xl"
+              className="w-full h-[65px] px-4 pr-10 text-lg border-2 border-gray-300 focus:border-brand-normal focus:outline-none rounded-xl"
             />
             {code && (
               <button
