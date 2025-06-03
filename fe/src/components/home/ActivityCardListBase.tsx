@@ -72,8 +72,11 @@ export default function ActivityCardListBase({
   return (
     <section className="flex flex-col items-center gap-5">
       {isLoading && (
-        <div className="py-10">
-          <div className="h-10 w-10 animate-spin rounded-full border-b-2 border-brand-normal" />
+        <div className="flex flex-col justify-center items-center w-full min-h-[60vh]">
+          <div className="h-10 w-10 animate-spin rounded-full border-b-2 border-brand-normal mb-6" />
+          <p className="text-xl font-semibold text-brand-normal text-center">
+            활동을 불러오는 중입니다!
+          </p>
         </div>
       )}
 
