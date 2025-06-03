@@ -137,10 +137,11 @@ export function useChatbot() {
         return;
       }
 
-      const lastActivityMsg = recMsgs.find((msg) => msg.type === "activity");
-      if (lastActivityMsg) {
-        setLastRecommendedProgramId(lastActivityMsg.programId);
-        saveProgramId(lastActivityMsg.programId);
+      const activityMsg =
+        recMsgs[0] as import("@/types/chatbot").ActivityMessage;
+      if (activityMsg) {
+        setLastRecommendedProgramId(activityMsg.programId);
+        saveProgramId(activityMsg.programId);
       }
 
       const confirmCard: ScheduleConfirmMessage = {
@@ -208,12 +209,16 @@ export function useChatbot() {
 
   const goToCalendarWithDay = async () => {
     if (lastRecommendedProgramId) {
-      const programs = await fetchProgramList();
-      const program = programs.find((p) => p.id === lastRecommendedProgramId);
-      if (program) {
-        const day = getFirstProgramDay(program);
-        goToCalendar(day);
-        return;
+      try {
+        const programs = await fetchProgramList();
+        const program = programs.find((p) => p.id === lastRecommendedProgramId);
+        if (program) {
+          const day = getFirstProgramDay(program);
+          goToCalendar(day);
+          return;
+        }
+      } catch (error) {
+        console.error("Failed to fetch program list:", error);
       }
     }
     if (lastRecommendText) {
