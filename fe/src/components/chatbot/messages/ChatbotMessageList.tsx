@@ -155,7 +155,7 @@ const ChatbotMessageList = () => {
 
       <SchedulePopup
         isOpen={popupOpen}
-        onConfirm={goToCalendar}
+        onConfirm={() => goToCalendar()}
         onCancel={handlePopupCancel}
       />
     </>

@@ -29,7 +29,9 @@ const MessageGroup: FC<MessageGroupProps> = ({
     !!(items[0].profileUrl || profileUrl);
 
   return (
-    <div className="flex flex-col gap-1">
+    <div
+      className={`flex flex-col gap-1 ${!isUser && showAvatar ? "mt-6" : ""}`}
+    >
       {showAvatar && (
         <div className="flex items-start -mb-[2px]">
           <Image

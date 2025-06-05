@@ -7,6 +7,8 @@ import LoginGuidePopup from "@/components/auth/popup/LoginGuidePopup";
 import ActivityInfoPopup from "@/components/home/popup/ActivityInfoPopup";
 import { UnifiedProgram } from "@/types/program";
 import { useAuth } from "@/hooks/auth/useAuth";
+import { getFirstProgramDay } from "@/utils/schedule/schedule";
+import { useRouter } from "next/navigation";
 
 type PopupStep = "confirm" | "success" | "duplicate";
 
@@ -26,6 +28,7 @@ export default function ActivityCardListBase({
   type = "member",
 }: Props) {
   const { isGuest } = useAuth();
+  const router = useRouter();
 
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupStep, setPopupStep] = useState<PopupStep>("confirm");
@@ -72,8 +75,11 @@ export default function ActivityCardListBase({
   return (
     <section className="flex flex-col items-center gap-5">
       {isLoading && (
-        <div className="py-10">
-          <div className="h-10 w-10 animate-spin rounded-full border-b-2 border-brand-normal" />
+        <div className="flex flex-col justify-center items-center w-full min-h-[60vh]">
+          <div className="h-10 w-10 animate-spin rounded-full border-b-2 border-brand-normal mb-6" />
+          <p className="text-xl font-semibold text-brand-normal text-center">
+            활동을 불러오는 중입니다!
+          </p>
         </div>
       )}
 
@@ -117,7 +123,20 @@ export default function ActivityCardListBase({
           isOpen={popupOpen}
           step={popupStep}
           onClose={() => setPopupOpen(false)}
-          onConfirm={() => handleCalendarAdd(selectedProgram.id)}
+          onConfirm={() => {
+            if (popupStep === "success" || popupStep === "duplicate") {
+              if (selectedProgram) {
+                const programDay = getFirstProgramDay(selectedProgram);
+                if (programDay) {
+                  router.push(
+                    `/member/calendar?day=${encodeURIComponent(programDay)}`,
+                  );
+                }
+              }
+            } else {
+              handleCalendarAdd(selectedProgram.id);
+            }
+          }}
         />
       )}
 

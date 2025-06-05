@@ -7,7 +7,7 @@ export const CHATBOT_MESSAGES = {
 
 export const CONFIRM_KEYWORDS = {
   YES: "예",
-  SCHEDULE_KEYWORDS: ["진행", "프로그램", "추천"] as const,
+  SCHEDULE_KEYWORDS: ["진행", "추천"] as const,
   CALENDAR_KEYWORDS: ["일정", "등록", "추가"] as const,
 } as const;
 
