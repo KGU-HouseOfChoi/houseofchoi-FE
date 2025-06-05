@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BottomButton from "@/components/common/button/BottomButton";
 
 interface FamilyLinkStep1Props {
@@ -11,14 +11,6 @@ export default function FamilyLinkStep1({
   onSelectRelation,
 }: FamilyLinkStep1Props) {
   const [relation, setRelation] = useState<"parent" | "child" | null>(null);
-
-  useEffect(() => {
-    // 페이지 로드 시 localStorage에서 관계 정보 확인
-    const savedRelation = localStorage.getItem("familyRelation");
-    if (savedRelation === "parent" || savedRelation === "child") {
-      setRelation(savedRelation);
-    }
-  }, []);
 
   const handleSelectRelation = (selectedRelation: "parent" | "child") => {
     setRelation(selectedRelation);
