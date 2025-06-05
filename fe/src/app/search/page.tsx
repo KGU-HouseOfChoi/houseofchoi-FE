@@ -13,7 +13,6 @@ export default function SearchPage() {
   const { isGuest } = useAuth();
   const [inputValue, setInputValue] = useState("");
   const [confirmedKeyword, setConfirmedKeyword] = useState("");
-  const [active, setActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -30,12 +29,6 @@ export default function SearchPage() {
     router.push(isGuest ? "/guest" : "/member");
   };
 
-  const handleTouchStart = () => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
-
   const clearSearch = () => {
     setInputValue("");
     setConfirmedKeyword("");
@@ -47,6 +40,8 @@ export default function SearchPage() {
       <button
         onClick={clearSearch}
         className="absolute right-3 top-1/2 -translate-y-1/2"
+        aria-label="검색어 지우기"
+        type="button"
       >
         <Image
           src="/images/deleteicon.svg"
@@ -61,7 +56,7 @@ export default function SearchPage() {
   return (
     <div className="h-full bg-bgColor-default p-4 space-y-4">
       <div className="flex items-center gap-2">
-        <button onClick={handleBack}>
+        <button onClick={handleBack} type="button">
           <BackIcon className="w-10 h-10 text-textColor-body" />
         </button>
         <div className="flex-1 relative text-textColor-body">
@@ -74,7 +69,6 @@ export default function SearchPage() {
               if (confirmedKeyword) setConfirmedKeyword("");
             }}
             onKeyDown={(e) => e.key === "Enter" && handleSearch(inputValue)}
-            onTouchStart={handleTouchStart}
             placeholder="검색어를 입력하세요"
             aria-label="검색어 입력"
             inputMode="search"
@@ -88,10 +82,8 @@ export default function SearchPage() {
               appearance: "none",
               WebkitOverflowScrolling: "touch",
               touchAction: "manipulation",
-              caretColor: active ? "auto" : "transparent",
+              caretColor: "auto",
             }}
-            onFocus={() => setActive(true)}
-            onBlur={() => setActive(false)}
           />
           {clearButton}
         </div>
