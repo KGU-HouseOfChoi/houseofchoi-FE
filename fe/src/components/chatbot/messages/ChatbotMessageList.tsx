@@ -48,7 +48,6 @@ const ChatbotMessageList = () => {
     fetchUserName();
   }, []);
 
-  
   useEffect(() => {
     const fetchCurrentMBTI = async () => {
       if (isFirstRender.current) {

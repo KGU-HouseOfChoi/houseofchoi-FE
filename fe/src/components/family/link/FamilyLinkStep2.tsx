@@ -7,7 +7,7 @@ import FamilyCompletedMessage from "@/components/family/common/CompletedMessage"
 import BottomButton from "@/components/common/button/BottomButton";
 import { verifyRelation } from "@/apis/family/link";
 import CompletionNotice from "@/components/personality/analysis/CompletionNotice";
-import Toast from "@/components/common/Toast"; 
+import Toast from "@/components/common/Toast";
 import FamilyHeader from "@/components/family/common/FamilyHeader";
 import Image from "next/image";
 
@@ -70,9 +70,9 @@ export default function FamilyLinkStep2({
 
       if (axios.isAxiosError(err)) {
         const data = err.response?.data as { code?: string; message?: string };
-      
+
         const code = data?.code;
-      
+
         switch (code) {
           case "SELF_RELATION_NOT_ALLOWED":
             setToastMessage("자기 자신과는 가족으로 연동할 수 없어요.");
@@ -81,7 +81,9 @@ export default function FamilyLinkStep2({
             setToastMessage("동일한 번호로는 여러 가족을 연동할 수 없어요.");
             break;
           case "RELATED_USER_ALREADY_CONNECTED":
-            setToastMessage("입력한 고유번호는 이미 다른 가족과 연동되어 있어요.");
+            setToastMessage(
+              "입력한 고유번호는 이미 다른 가족과 연동되어 있어요.",
+            );
             break;
           default:
             setToastMessage(data?.message || "예상치 못한 오류가 발생했어요.");
@@ -178,11 +180,8 @@ export default function FamilyLinkStep2({
       </BottomButton>
 
       {toastMessage && (
-      <Toast
-        message={toastMessage}
-        onClose={() => setToastMessage("")}
-      />
-    )}
+        <Toast message={toastMessage} onClose={() => setToastMessage("")} />
+      )}
     </div>
   );
 }

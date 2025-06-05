@@ -29,7 +29,9 @@ export function useSchedule() {
       console.error(" 일정 저장 실패", e);
       const errorMessage = (e as Error).message;
       if (errorMessage.includes("이미 등록된 일정입니다")) {
-        return [makeBotText("이미 등록된 일정이에요! 다른 궁금한 점을 입력해주세요!")];
+        return [
+          makeBotText("이미 등록된 일정이에요! 다른 궁금한 점을 입력해주세요!"),
+        ];
       }
       return [makeBotText(errorMessage)];
     } finally {

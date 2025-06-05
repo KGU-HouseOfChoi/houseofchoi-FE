@@ -14,10 +14,8 @@ const FamilyAddButton = ({ hasFamily }: FamilyAddButtonProps) => {
 
   const handleClick = () => {
     if (hasFamily) {
-      
       setIsDeletePopupOpen(true);
     } else {
-     
       setIsLinkPopupOpen(true);
     }
   };
@@ -36,11 +34,12 @@ const FamilyAddButton = ({ hasFamily }: FamilyAddButtonProps) => {
         {hasFamily ? "가족 수정하기" : "가족 추가하기"}
       </button>
 
-      
       <FamilyLinkPopup isOpen={isLinkPopupOpen} onClose={closeLinkPopup} />
 
-      
-      <FamilyDeleteConfirmPopup isOpen={isDeletePopupOpen} onClose={closeDeletePopup} />
+      <FamilyDeleteConfirmPopup
+        isOpen={isDeletePopupOpen}
+        onClose={closeDeletePopup}
+      />
     </>
   );
 };

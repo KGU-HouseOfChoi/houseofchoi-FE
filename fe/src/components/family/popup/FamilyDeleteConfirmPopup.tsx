@@ -45,7 +45,8 @@ export default function FamilyDeleteConfirmPopup({
         </h2>
 
         <p className="text-base text-textColor-sub leading-relaxed whitespace-pre-line">
-          수정하면 기존 가족 정보는 삭제되고{"\n"}새로운 가족을 연동할 수 있어요.
+          수정하면 기존 가족 정보는 삭제되고{"\n"}새로운 가족을 연동할 수
+          있어요.
         </p>
 
         <PopupButtons
