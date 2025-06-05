@@ -137,8 +137,7 @@ export function useChatbot() {
         return;
       }
 
-      const activityMsg =
-        recMsgs[0] as import("@/types/chatbot").ActivityMessage;
+      const activityMsg = recMsgs[1] as import("@/types/chatbot").ActivityMessage;
       if (activityMsg) {
         setLastRecommendedProgramId(activityMsg.programId);
         saveProgramId(activityMsg.programId);

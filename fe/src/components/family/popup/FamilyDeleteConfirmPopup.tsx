@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import BottomPopup from "@/components/common/popup/BottomPopup";
 import PopupButtons from "@/components/common/button/PopupButtons";
-import { Calendar, X } from "lucide-react";
+import { AlertTriangle, X } from "lucide-react";
 import axiosMainInstance from "@/apis/common/axiosMainInstance";
 
 interface FamilyDeleteConfirmPopupProps {
@@ -38,7 +38,7 @@ export default function FamilyDeleteConfirmPopup({
           <X className="w-6 h-6 text-iconColor-sub" />
         </button>
 
-        <Calendar className="w-10 h-10 text-brand-normal" />
+        <AlertTriangle className="w-10 h-10 text-brand-normal" />
 
         <h2 className="text-2xl font-semibold text-textColor-heading">
           가족 정보를 수정할까요?

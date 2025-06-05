@@ -48,7 +48,7 @@ const ChatbotMessageList = () => {
     fetchUserName();
   }, []);
 
-  // 채팅방 입장 시 현재 MBTI 조회
+  
   useEffect(() => {
     const fetchCurrentMBTI = async () => {
       if (isFirstRender.current) {
