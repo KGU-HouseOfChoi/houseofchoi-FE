@@ -33,8 +33,12 @@ export function useSchedule() {
     }
   };
 
-  const goToCalendar = () => {
-    router.push("/member/calendar");
+  const goToCalendar = (day?: string) => {
+    if (day) {
+      router.push(`/member/calendar?day=${encodeURIComponent(day)}`);
+    } else {
+      router.push("/member/calendar");
+    }
   };
 
   const makeBotText = (content: string): Message => ({

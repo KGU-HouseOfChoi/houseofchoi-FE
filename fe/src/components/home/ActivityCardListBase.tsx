@@ -7,6 +7,8 @@ import LoginGuidePopup from "@/components/auth/popup/LoginGuidePopup";
 import ActivityInfoPopup from "@/components/home/popup/ActivityInfoPopup";
 import { UnifiedProgram } from "@/types/program";
 import { useAuth } from "@/hooks/auth/useAuth";
+import { getFirstProgramDay } from "@/utils/schedule/schedule";
+import { useRouter } from "next/navigation";
 
 type PopupStep = "confirm" | "success" | "duplicate";
 
@@ -26,6 +28,7 @@ export default function ActivityCardListBase({
   type = "member",
 }: Props) {
   const { isGuest } = useAuth();
+  const router = useRouter();
 
   const [popupOpen, setPopupOpen] = useState(false);
   const [popupStep, setPopupStep] = useState<PopupStep>("confirm");
@@ -117,7 +120,20 @@ export default function ActivityCardListBase({
           isOpen={popupOpen}
           step={popupStep}
           onClose={() => setPopupOpen(false)}
-          onConfirm={() => handleCalendarAdd(selectedProgram.id)}
+          onConfirm={() => {
+            if (popupStep === "success" || popupStep === "duplicate") {
+              if (selectedProgram) {
+                const programDay = getFirstProgramDay(selectedProgram);
+                if (programDay) {
+                  router.push(
+                    `/member/calendar?day=${encodeURIComponent(programDay)}`,
+                  );
+                }
+              }
+            } else {
+              handleCalendarAdd(selectedProgram.id);
+            }
+          }}
         />
       )}
 

@@ -42,6 +42,14 @@ export function useSchedules(day: string) {
         };
       });
 
+      items.sort((a, b) => {
+        if (a.time === "-") return 1;
+        if (b.time === "-") return -1;
+        const aStart = a.time.split("~")[0].trim();
+        const bStart = b.time.split("~")[0].trim();
+        return aStart.localeCompare(bStart);
+      });
+
       setData(items);
     } catch (err) {
       if (seq === seqRef.current) {

@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
 import BottomPopup from "@/components/common/popup/BottomPopup";
 import PopupButtons from "@/components/common/button/PopupButtons";
@@ -13,7 +12,7 @@ interface CalendarAddPopupProps {
   isOpen: boolean;
   step: PopupStep;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: (day?: string) => void;
 }
 
 export default function CalendarPopup({
@@ -23,13 +22,6 @@ export default function CalendarPopup({
   onClose,
   onConfirm,
 }: CalendarAddPopupProps) {
-  const router = useRouter();
-
-  const goCalendar = () => {
-    onClose();
-    router.push("/member/calendar");
-  };
-
   const isConfirm = step === "confirm";
   const isSuccess = step === "success";
 
@@ -74,7 +66,7 @@ export default function CalendarPopup({
             : "다른 활동도 일정에 추가해보세요!"}
         </p>
         <PopupButtons
-          onConfirm={isConfirm ? onConfirm : goCalendar}
+          onConfirm={() => onConfirm()}
           onCancel={onClose}
           confirmLabel={isConfirm ? "네, 좋아요" : "내 일정 보러가기"}
           cancelLabel={isConfirm ? "아뇨, 더 둘러볼래요" : "닫기"}
