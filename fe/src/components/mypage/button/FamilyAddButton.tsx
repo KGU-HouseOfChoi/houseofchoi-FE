@@ -2,37 +2,43 @@
 
 import { useState } from "react";
 import FamilyLinkPopup from "@/components/family/popup/FamilyLinkPopup";
+import FamilyDeleteConfirmPopup from "@/components/family/popup/FamilyDeleteConfirmPopup";
 
 interface FamilyAddButtonProps {
   hasFamily: boolean;
 }
 
 const FamilyAddButton = ({ hasFamily }: FamilyAddButtonProps) => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isLinkPopupOpen, setIsLinkPopupOpen] = useState(false);
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
-  const handleOpenPopup = () => {
-    setIsPopupOpen(true);
+  const handleClick = () => {
+    if (hasFamily) {
+      setIsDeletePopupOpen(true);
+    } else {
+      setIsLinkPopupOpen(true);
+    }
   };
 
-  const handleClosePopup = () => {
-    setIsPopupOpen(false);
-  };
+  const closeLinkPopup = () => setIsLinkPopupOpen(false);
+  const closeDeletePopup = () => setIsDeletePopupOpen(false);
 
   return (
     <>
       <button
-        onClick={handleOpenPopup}
+        onClick={handleClick}
         className={`h-[55px] min-w-[330px] px-6 shadow-header 
         rounded-xl bg-brand-normal text-white text-2xl font-semibold font-pretendard 
         whitespace-nowrap flex items-center justify-center`}
       >
-        {hasFamily ? "가족수정하기" : "가족추가하기"}
+        {hasFamily ? "가족 수정하기" : "가족 추가하기"}
       </button>
 
-      <FamilyLinkPopup
-        isOpen={isPopupOpen}
-        onClose={handleClosePopup}
-        hasFamily={hasFamily}
+      <FamilyLinkPopup isOpen={isLinkPopupOpen} onClose={closeLinkPopup} />
+
+      <FamilyDeleteConfirmPopup
+        isOpen={isDeletePopupOpen}
+        onClose={closeDeletePopup}
       />
     </>
   );
